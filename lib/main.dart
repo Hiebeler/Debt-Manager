@@ -19,6 +19,10 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         backgroundColor: Color.fromRGBO(18, 19, 20, 1),
         primaryColor: Color.fromRGBO(75, 29, 82, 1),
+        hintColor: Color.fromRGBO(121, 121, 121, 1),
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(color: Color.fromRGBO(121, 121, 121, 1),)
+        )
       ),
       home: Scaffold(
         appBar: AppBar(

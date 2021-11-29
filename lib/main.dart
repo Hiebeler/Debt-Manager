@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Login/login.dart';
+import 'sign-up/sign-up.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Login(),
+      home: SignUp(),
     );
   }
 }

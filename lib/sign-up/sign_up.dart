@@ -11,7 +11,6 @@ class SignUp extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-
           Padding(
             padding: const EdgeInsets.only(left: 40, right: 40),
             child: Row(
@@ -41,7 +40,6 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: Padding(
                     padding:
@@ -57,11 +55,11 @@ class SignUp extends StatelessWidget {
                                 color: Color.fromRGBO(121, 121, 121, 1),
                                 width: 2.7)),
                         focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(121, 121, 121, 1),
-                                width: 2.7)),
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(121, 121, 121, 1),
+                              width: 2.7),
+                        ),
                       ),
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
@@ -69,7 +67,6 @@ class SignUp extends StatelessWidget {
                 ),
               ],
             ),
-
           ),
         ],
       ),

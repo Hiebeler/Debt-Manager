@@ -113,7 +113,7 @@ class SignIn extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an Account?"),
+                    const Text("Don't have an Account?",style: TextStyle(color: Color.fromRGBO(121, 121, 121, 1)),),
                     const SizedBox(
                       width: 10,
                     ),

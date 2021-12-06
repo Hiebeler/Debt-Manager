@@ -1,3 +1,4 @@
+import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'sign-up/sign_up.dart';
 
@@ -31,7 +32,7 @@ class _MyAppState extends State<MyApp> {
             child: Text("Sign-Up")
           ),
         ),
-        body: SignUp(),
+        body: SignIn(),
       )
     );
   }

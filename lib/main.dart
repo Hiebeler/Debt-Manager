@@ -18,21 +18,21 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        backgroundColor: Color.fromRGBO(18, 19, 20, 1),
-        primaryColor: Color.fromRGBO(75, 29, 82, 1),
-        hintColor: Color.fromRGBO(121, 121, 121, 1),
+        backgroundColor: const Color.fromRGBO(18, 19, 20, 1),
+        primaryColor: const Color.fromRGBO(75, 29, 82, 1),
+        hintColor: const Color.fromRGBO(121, 121, 121, 1),
         textTheme: const TextTheme(
-          bodyText1: TextStyle(color: Color.fromRGBO(121, 121, 121, 1),)
+          bodyText1: TextStyle(color: Color.fromRGBO(121, 121, 121, 1), fontSize: 17,)
         )
       ),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(39, 39, 39, 1),
-          title: Center(
+          backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
+          title: const Center(
             child: Text("Sign-Up")
           ),
         ),
-        body: SignIn(),
+        body: SignUp(),
       )
     );
   }

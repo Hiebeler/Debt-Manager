@@ -110,7 +110,7 @@ class SignUp extends StatelessWidget {
                 TextField(
                   onChanged: (input) {},
                   decoration: const InputDecoration(
-                    hintText: 'Username',
+                    hintText: 'E-Mail',
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         borderSide: BorderSide(

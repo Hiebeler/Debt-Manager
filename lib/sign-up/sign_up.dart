@@ -1,3 +1,4 @@
+import 'package:debtmanager/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -9,21 +10,41 @@ class SignUp extends StatelessWidget {
   String email = "";
   String password = "";
 
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   get user => _auth.currentUser;
 
   //SIGN UP METHOD
-  Future signUp() async {
+  Future<bool> signUp() async {
+    bool worked = false;
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return null;
+      print("success");
+      worked = true;
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      if (e.code == "weak-password") {
+        print("weak password");
+      } else if (e.code == "email-already-in-use") {
+        print("Email already exists");
+      }
+    } catch (e) {
+      print(e);
     }
+
+    return worked;
+  }
+
+  Future<bool> checkifsucceeded() async{
+    print(FirebaseAuth.instance.currentUser);
+    if(await FirebaseAuth.instance.currentUser != null){
+      print("true");
+      return true;
+    }
+    print("false");
+    return false;
   }
 
   @override
@@ -81,7 +102,7 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 0, top: 0, right: 10, bottom: 0),
                         child: TextField(
-                          onSubmitted: (input) {},
+                          onChanged: (input) {},
                           decoration: const InputDecoration(
                             hintText: 'First-Name',
                             enabledBorder: OutlineInputBorder(
@@ -106,7 +127,7 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 10, top: 0, right: 0, bottom: 0),
                         child: TextField(
-                          onSubmitted: (input) {},
+                          onChanged: (input) {},
                           decoration: const InputDecoration(
                             hintText: 'Last-Name',
                             enabledBorder: OutlineInputBorder(
@@ -131,7 +152,9 @@ class SignUp extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  onSubmitted: (input) {email = input;},
+                  onChanged: (input) {
+                    email = input;
+                  },
                   decoration: const InputDecoration(
                     hintText: 'E-Mail',
                     enabledBorder: OutlineInputBorder(
@@ -149,7 +172,9 @@ class SignUp extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  onSubmitted: (input) {password = input;},
+                  onChanged: (input) {
+                    password = input;
+                  },
                   decoration: const InputDecoration(
                     hintText: 'Password',
                     enabledBorder: OutlineInputBorder(
@@ -171,7 +196,15 @@ class SignUp extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () => {signUp()},
+                        onPressed: () => {
+                          signUp().then((value) => {
+                            if(value == true){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const Home()))
+                            }
+                          }),
+
+                        },
                         child: const Text("Sign-up",
                             style: TextStyle(
                                 color: Color.fromRGBO(160, 160, 160, 1))),
@@ -189,7 +222,10 @@ class SignUp extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an Account?", style: TextStyle(color: Color.fromRGBO(121, 121, 121, 1)),),
+                    const Text(
+                      "Already have an Account?",
+                      style: TextStyle(color: Color.fromRGBO(121, 121, 121, 1)),
+                    ),
                     const SizedBox(
                       width: 10,
                     ),

@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatelessWidget {
-  const SignUp({Key? key}) : super(key: key);
+  SignUp({Key? key}) : super(key: key);
+
+  String firstName = "";
+  String lastName = "";
+  String email = "";
+  String password = "";
+
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  get user => _auth.currentUser;
+
+  //SIGN UP METHOD
+  Future signUp() async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +81,7 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 0, top: 0, right: 10, bottom: 0),
                         child: TextField(
-                          onChanged: (input) {},
+                          onSubmitted: (input) {},
                           decoration: const InputDecoration(
                             hintText: 'First-Name',
                             enabledBorder: OutlineInputBorder(
@@ -83,7 +106,7 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 10, top: 0, right: 0, bottom: 0),
                         child: TextField(
-                          onChanged: (input) {},
+                          onSubmitted: (input) {},
                           decoration: const InputDecoration(
                             hintText: 'Last-Name',
                             enabledBorder: OutlineInputBorder(
@@ -108,7 +131,7 @@ class SignUp extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  onChanged: (input) {},
+                  onSubmitted: (input) {email = input;},
                   decoration: const InputDecoration(
                     hintText: 'E-Mail',
                     enabledBorder: OutlineInputBorder(
@@ -126,7 +149,7 @@ class SignUp extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  onChanged: (input) {},
+                  onSubmitted: (input) {password = input;},
                   decoration: const InputDecoration(
                     hintText: 'Password',
                     enabledBorder: OutlineInputBorder(
@@ -148,7 +171,7 @@ class SignUp extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () => {signUp()},
                         child: const Text("Sign-up",
                             style: TextStyle(
                                 color: Color.fromRGBO(160, 160, 160, 1))),

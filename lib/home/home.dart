@@ -5,6 +5,23 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("Home"));
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
+        title: const Center(child: Text("Debt-Manager")),
+        automaticallyImplyLeading: false,
+      ),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(child: ElevatedButton(onPressed: () => {}, child: Text(""))),
+              Expanded(child: ElevatedButton(onPressed: () => {}, child: Text("")))
+            ],
+          )
+
+        ],
+      ),
+    );
   }
 }

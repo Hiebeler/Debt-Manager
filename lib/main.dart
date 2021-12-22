@@ -1,6 +1,6 @@
-import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'sign-up/sign_up.dart';
 
 void main() async {
@@ -25,18 +25,13 @@ class _MyAppState extends State<MyApp> {
         primaryColor: const Color.fromRGBO(75, 29, 82, 1),
         hintColor: const Color.fromRGBO(121, 121, 121, 1),
         textTheme: const TextTheme(
-          bodyText1: TextStyle(color: Color.fromRGBO(121, 121, 121, 1), fontSize: 17,)
-        )
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
-          title: const Center(
-            child: Text("Sign-Up")
+          bodyText1: TextStyle(
+            color: Color.fromRGBO(121, 121, 121, 1),
+            fontSize: 17,
           ),
         ),
-        body: SignUp(),
-      )
+      ),
+      home: SignUp(),
     );
   }
 }

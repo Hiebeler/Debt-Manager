@@ -1,3 +1,4 @@
+import 'package:debtmanager/sign-up/sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,12 @@ class SignIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
+        title: const Center(child: Text("Sign-In")),
+      ),
+        body: Container(
       color: Theme.of(context).colorScheme.background,
       height: double.infinity,
       child: Padding(
@@ -57,7 +63,7 @@ class SignIn extends StatelessWidget {
                 TextField(
                   onChanged: (input) {},
                   decoration: const InputDecoration(
-                    hintText: 'User-Name',
+                    hintText: 'Email',
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         borderSide: BorderSide(
@@ -118,7 +124,10 @@ class SignIn extends StatelessWidget {
                       width: 10,
                     ),
                     MaterialButton(
-                      onPressed: () => {},
+                      onPressed: () => {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => SignUp()))
+                      },
                       child: Text(
                         "Sign-Up",
                         style: TextStyle(color: Theme.of(context).primaryColor),
@@ -131,7 +140,7 @@ class SignIn extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ),),
       ),
     );
   }

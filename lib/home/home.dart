@@ -1,3 +1,4 @@
+import 'package:debtmanager/home/add_debt.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -13,6 +14,11 @@ class Home extends StatelessWidget {
       body: Container(
         child: Text("Home"),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => const AddDebt()))
+              }),
     );
   }
 }

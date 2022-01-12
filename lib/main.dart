@@ -19,7 +19,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   Future<bool> checkIfSignedIn() async {
     var test = FirebaseAuth.instance.currentUser;
     if (test == null) {
@@ -43,18 +42,18 @@ class _MyAppState extends State<MyApp> {
             ))),
         home: Scaffold(
             body: FutureBuilder(
-              future: checkIfSignedIn(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data == true) {
-                    return const Home();
-                  } else {
-                    return SignUp();
-                  }
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            )));
+          future: checkIfSignedIn(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data == true) {
+                return Home();
+              } else {
+                return SignUp();
+              }
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        )));
   }
 }

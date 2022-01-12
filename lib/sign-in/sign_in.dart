@@ -1,9 +1,35 @@
+import 'package:debtmanager/home/home.dart';
 import 'package:debtmanager/sign-up/sign_up.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
-  const SignIn({Key? key}) : super(key: key);
+  SignIn({Key? key}) : super(key: key);
+
+  String email = "";
+  String password = "";
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  get user => _auth.currentUser;
+  //SIGN UP METHOD
+  Future<bool> signIn() async {
+    bool worked = false;
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password
+      );
+      print("successfull");
+      worked =  true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+    return worked;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +87,7 @@ class SignIn extends StatelessWidget {
                 const SizedBox(height: 30),
 
                 TextField(
-                  onChanged: (input) {},
+                  onChanged: (input) => {email = input},
                   decoration: const InputDecoration(
                     hintText: 'Email',
                     enabledBorder: OutlineInputBorder(
@@ -79,7 +105,7 @@ class SignIn extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  onChanged: (input) {},
+                  onChanged: (input) => {password =  input},
                   decoration: const InputDecoration(
                     hintText: 'Password',
                     enabledBorder: OutlineInputBorder(
@@ -101,7 +127,18 @@ class SignIn extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () => {
+                          signIn().then((value) => {
+                            print(value),
+                            if (value == true)
+                              {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const Home()))
+                              }
+                          }),
+                        },
                         child: const Text("Sign-in",
                             style: TextStyle(
                                 color: Color.fromRGBO(160, 160, 160, 1))),

@@ -1,3 +1,4 @@
+import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/home.dart';
 import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +11,35 @@ class SignUp extends StatelessWidget {
   String lastName = "";
   String email = "";
   String password = "";
+  String confpassword = "";
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   get user => _auth.currentUser;
 
+  errorDialog(BuildContext context, explanation) {
+    ErrorDialog alert = ErrorDialog("Error", explanation);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   //SIGN UP METHOD
-  Future<bool> signUp() async {
+  Future<bool> signUp(BuildContext context) async {
     bool worked = false;
+
+    if (email == "" || password == "" || confpassword == "") {
+      print("nicht alle felder ausgefüllt");
+      errorDialog(context, "Missing arguments");
+      return false;
+    } else if (password != confpassword) {
+      errorDialog(context, "your passwords don't match");
+      return false;
+    }
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -199,13 +221,35 @@ class SignUp extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyText1,
                     obscureText: true,
                   ),
+                  const SizedBox(height: 20),
+                  TextField(
+                    onChanged: (input) {
+                      confpassword = input;
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'confirm Password',
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(121, 121, 121, 1),
+                              width: 2.7)),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        borderSide: BorderSide(
+                            color: Color.fromRGBO(121, 121, 121, 1),
+                            width: 2.7),
+                      ),
+                    ),
+                    style: Theme.of(context).textTheme.bodyText1,
+                    obscureText: true,
+                  ),
                   const SizedBox(height: 40),
                   Row(
                     children: [
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () => {
-                            signUp().then((value) => {
+                            signUp(context).then((value) => {
                                   if (value == true)
                                     {
                                       Navigator.of(context).push(
@@ -243,7 +287,8 @@ class SignUp extends StatelessWidget {
                       MaterialButton(
                         onPressed: () => {
                           Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => const SignIn()))
+                              MaterialPageRoute(
+                                  builder: (context) => SignIn()))
                         },
                         child: Text(
                           "Sign-In",

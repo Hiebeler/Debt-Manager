@@ -2,6 +2,8 @@ import 'package:debtmanager/home/add_debt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
+import 'SideBar.dart';
+
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
 
@@ -21,6 +23,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
         title: const Center(child: Text("Debt Manager")),
@@ -107,7 +110,7 @@ class IGetIOweButton extends StatelessWidget {
       onPressed: () => {
         changeIOweOrIGet(text)
       },
-      child: Text(text),
+      child: Text(text, style: Theme.of(context).textTheme.bodyText1,),
       style: ElevatedButton.styleFrom(
         onPrimary: const Color.fromRGBO(121, 121, 121, 1),
         primary: const Color.fromRGBO(23, 23, 23, 1),

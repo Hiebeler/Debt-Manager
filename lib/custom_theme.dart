@@ -7,6 +7,12 @@ class CustomTheme {
         fontSize: 14,
         color: Color.fromRGBO(121, 121, 121, 1),
       ),
+      headline1: TextStyle(
+        fontSize: 20,
+        color: Colors.white,
+        fontWeight: FontWeight.w600,
+        fontFamily: "Roboto"
+      )
     );
 
     InputDecorationTheme textFieldTheme = const InputDecorationTheme(
@@ -33,8 +39,8 @@ class CustomTheme {
       secondaryVariant: Color.fromRGBO(185, 61, 25, 1),
       background: Color.fromRGBO(18, 19, 20, 1.0),
       onSurface: Color.fromRGBO(255, 255, 255, 1.0),
-      onPrimary: Color.fromRGBO(0, 0, 0, 1.0),
-      surface: Color.fromRGBO(0, 0, 0, 1.0),
+      onPrimary: Color.fromRGBO(121, 121, 121, 1.0),
+      surface: Color.fromRGBO(121, 121, 121, 1.0),
       primaryVariant: Color.fromRGBO(121, 121, 121, 1.0),
       error: Color.fromRGBO(0, 0, 0, 1.0),
       onError: Color.fromRGBO(0, 0, 0, 1.0),

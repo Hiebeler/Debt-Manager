@@ -35,10 +35,10 @@ class _HomeState extends State<Home> {
                 Expanded(
                   child: IOweOrIGet == "I Owe"
                       ? Container(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             border: Border(
                               bottom:
-                                  BorderSide(width: 3, color: Color.fromRGBO(185, 61, 25, 1)),
+                                  BorderSide(width: 3, color: Theme.of(context).colorScheme.secondaryVariant),
                             ),
                           ),
                           child: IGetIOweButton(
@@ -54,10 +54,10 @@ class _HomeState extends State<Home> {
                 Expanded(
                   child: IOweOrIGet == "I Get"
                       ? Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       border: Border(
                         bottom:
-                        BorderSide(width: 3, color: Color.fromRGBO(134, 194, 50, 1)),
+                        BorderSide(width: 3, color: Theme.of(context).colorScheme.secondary),
                       ),
                     ),
                     child: IGetIOweButton(
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
           ),
           onPressed: () => {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => AddDebt()))
+                    .pushReplacement(MaterialPageRoute(builder: (context) => AddDebt()))
               },
           backgroundColor: Colors.transparent,
           shape: const CircleBorder(
@@ -114,10 +114,6 @@ class IGetIOweButton extends StatelessWidget {
         fixedSize: const Size(200, 48),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(0),
-        ),
-        side: const BorderSide(
-          color: Color.fromRGBO(121, 121, 121, 1),
-          width: 0.5,
         ),
         textStyle: const TextStyle(
           fontSize: 12,

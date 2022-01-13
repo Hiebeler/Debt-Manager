@@ -2,6 +2,7 @@ import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'custom_theme.dart';
 import 'home/home.dart';
 import 'sign-up/sign_up.dart';
 
@@ -31,15 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-            backgroundColor: const Color.fromRGBO(18, 19, 20, 1),
-            primaryColor: const Color.fromRGBO(75, 29, 82, 1),
-            hintColor: const Color.fromRGBO(121, 121, 121, 1),
-            textTheme: const TextTheme(
-                bodyText1: TextStyle(
-              color: Color.fromRGBO(121, 121, 121, 1),
-              fontSize: 17,
-            ))),
+        theme: CustomTheme.darkTheme,
         home: Scaffold(
             body: FutureBuilder(
           future: checkIfSignedIn(),

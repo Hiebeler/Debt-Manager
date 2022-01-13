@@ -55,12 +55,9 @@ class SignIn extends StatelessWidget {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () => {},
-                        child: const Text(
+                        child: Text(
                           "Sign-up with Google",
-                          style: TextStyle(
-                            color: Color.fromRGBO(121, 121, 121, 1),
-                            fontSize: 17,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.only(top: 17, bottom: 17),
@@ -77,47 +74,28 @@ class SignIn extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 30),
-                const Text(
+                Text(
                   "or",
-                  style: TextStyle(
-                    color: Color.fromRGBO(160, 160, 160, 1),
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1
                 ),
                 const SizedBox(height: 30),
 
                 TextField(
                   onChanged: (input) => {email = input},
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Email',
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(121, 121, 121, 1),
-                            width: 2.7)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(121, 121, 121, 1),
-                            width: 2.7)),
+                    enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+                    focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
                   ),
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   onChanged: (input) => {password =  input},
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Password',
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(121, 121, 121, 1),
-                            width: 2.7)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(121, 121, 121, 1),
-                            width: 2.7)),
+                    enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+                    focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
                   ),
                   style: Theme.of(context).textTheme.bodyText1,
                   obscureText: true,
@@ -132,7 +110,7 @@ class SignIn extends StatelessWidget {
                             print(value),
                             if (value == true)
                               {
-                                Navigator.of(context).push(
+                                Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
                                         Home()))
@@ -143,7 +121,7 @@ class SignIn extends StatelessWidget {
                             style: TextStyle(
                                 color: Color.fromRGBO(160, 160, 160, 1))),
                         style: ElevatedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
+                          primary: Theme.of(context).colorScheme.primary,
                           padding: const EdgeInsets.only(top: 17, bottom: 17),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -156,7 +134,7 @@ class SignIn extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an Account?",style: TextStyle(color: Color.fromRGBO(121, 121, 121, 1)),),
+                    Text("Don't have an Account?",style: Theme.of(context).textTheme.bodyText1),
                     const SizedBox(
                       width: 10,
                     ),
@@ -167,7 +145,7 @@ class SignIn extends StatelessWidget {
                       },
                       child: Text(
                         "Sign-Up",
-                        style: TextStyle(color: Theme.of(context).primaryColor),
+                        style: TextStyle(color: Theme.of(context).colorScheme.primary,),
                       ),
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,

@@ -1,6 +1,8 @@
 import 'package:debtmanager/home/debt_card.dart';
 import 'package:flutter/material.dart';
 
+import 'SideBar.dart';
+
 class AddDebt extends StatelessWidget {
   final Color color;
   AddDebt({required this.color});
@@ -12,6 +14,10 @@ class AddDebt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
+        title: const Center(child: Text("Debt Manager")),
+      ),
       body: Container(
         color: Theme.of(context).colorScheme.background,
         child: Padding(

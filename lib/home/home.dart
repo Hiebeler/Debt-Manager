@@ -1,4 +1,5 @@
 import 'package:debtmanager/home/add_debt.dart';
+import 'package:debtmanager/home/debt_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -88,6 +89,9 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
+
+            DebtCard(),
+
           ],
         ),
       ),

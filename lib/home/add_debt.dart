@@ -2,7 +2,8 @@ import 'package:debtmanager/home/debt_card.dart';
 import 'package:flutter/material.dart';
 
 class AddDebt extends StatelessWidget {
-  AddDebt({Key? key}) : super(key: key);
+  final Color color;
+  AddDebt({required this.color});
 
   var person = "";
   var description = "";
@@ -63,13 +64,12 @@ class AddDebt extends StatelessWidget {
                 const SizedBox(height: 35),
                 ElevatedButton(
                   onPressed: () => {},
-                  child: const Text("Add new Debt",
-                      style:
-                          TextStyle(color: Color.fromRGBO(160, 160, 160, 1))),
+                  child: Text("Add new Debt",
+                      style: Theme.of(context).textTheme.bodyText1),
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(340, 50),
                     maximumSize: const Size(340, 50),
-                    primary: Theme.of(context).primaryColor,
+                    primary: color,
                     padding: const EdgeInsets.only(top: 17, bottom: 17),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),

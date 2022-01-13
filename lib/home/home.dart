@@ -14,9 +14,22 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String IOweOrIGet = "I Owe";
 
+  final Color green = const Color.fromRGBO(134, 194, 50, 1);
+  final Color red = const Color.fromRGBO(185, 61, 25, 1);
+
+  Color homeColor = const Color.fromRGBO(185, 61, 25, 1);
+
+
   changeIOweOrIGet(changeValue) {
     setState(() {
       IOweOrIGet = changeValue;
+
+      if (IOweOrIGet == "I Owe") {
+        homeColor = red;
+      } else {
+        homeColor = green;
+      }
+
     });
   }
 
@@ -41,7 +54,7 @@ class _HomeState extends State<Home> {
                           decoration: BoxDecoration(
                             border: Border(
                               bottom:
-                                  BorderSide(width: 3, color: Theme.of(context).colorScheme.secondaryVariant),
+                                  BorderSide(width: 3, color: homeColor),
                             ),
                           ),
                           child: IGetIOweButton(
@@ -60,7 +73,7 @@ class _HomeState extends State<Home> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom:
-                        BorderSide(width: 3, color: Theme.of(context).colorScheme.secondary),
+                        BorderSide(width: 3, color: homeColor),
                       ),
                     ),
                     child: IGetIOweButton(
@@ -85,12 +98,12 @@ class _HomeState extends State<Home> {
           ),
           onPressed: () => {
                 Navigator.of(context)
-                    .pushReplacement(MaterialPageRoute(builder: (context) => AddDebt()))
+                    .push(MaterialPageRoute(builder: (context) => AddDebt(color: homeColor,)))
               },
           backgroundColor: Colors.transparent,
-          shape: const CircleBorder(
+          shape: CircleBorder(
             side: BorderSide(
-              color: Color.fromRGBO(134, 194, 50, 1),
+              color: homeColor,
               width: 1,
             ),
           )),

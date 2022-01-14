@@ -15,7 +15,7 @@ class AddDebt extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
         title: const Center(child: Text("Debt Manager")),
       ),
       body: Container(

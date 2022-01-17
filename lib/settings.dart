@@ -28,6 +28,7 @@ class _SettingsState extends State<Settings> {
           ),
         ),
         title: const Center(child: Text("Settings")),
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
       ),
       body: Column(
         children: [

@@ -52,6 +52,10 @@ class SignUp extends StatelessWidget {
       errorDialog(context, "your passwords don't match");
       return false;
     }
+    if (!email.contains('@')) {
+      errorDialog(context, "email isnt right");
+      return false;
+    }
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email,

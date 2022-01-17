@@ -36,7 +36,7 @@ class SignIn extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
-        title: const Center(child: Text("Sign-In")),
+        title: const Center(child: Text("App")),
       ),
         body: Container(
       color: Theme.of(context).colorScheme.background,

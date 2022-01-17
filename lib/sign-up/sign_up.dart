@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/home.dart';
 import 'package:debtmanager/sign-in/sign_in.dart';
@@ -16,6 +17,7 @@ class SignUp extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   get user => _auth.currentUser;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   errorDialog(BuildContext context, explanation) {
     ErrorDialog alert = ErrorDialog("Error", explanation);
@@ -28,11 +30,21 @@ class SignUp extends StatelessWidget {
     );
   }
 
+  void addUser() {
+   var firebaseUser = FirebaseAuth.instance.currentUser;
+   FirebaseFirestore.instance.collection("users").doc(firebaseUser!.uid).set({
+     "firstname" : firstName,
+     "lastname" : lastName,
+     "email" : email
+   }).then((_) => print("success added User"));
+  }
+
   //SIGN UP METHOD
   Future<bool> signUp(BuildContext context) async {
+
     bool worked = false;
 
-    if (email == "" || password == "" || confpassword == "") {
+    if (email == "" || password == "" || confpassword == "" || firstName ==""|| lastName == ""){
       print("nicht alle felder ausgefüllt");
       errorDialog(context, "Missing arguments");
       return false;
@@ -46,6 +58,7 @@ class SignUp extends StatelessWidget {
         password: password,
       );
       print("success");
+      addUser();
       worked = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
@@ -121,7 +134,9 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 0, top: 0, right: 10, bottom: 0),
                         child: TextField(
-                          onChanged: (input) {},
+                          onChanged: (input) {
+                            firstName = input;
+                          },
                           decoration: InputDecoration(
                             hintText: 'First-Name',
                             enabledBorder: Theme.of(context)
@@ -140,7 +155,9 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 10, top: 0, right: 0, bottom: 0),
                         child: TextField(
-                          onChanged: (input) {},
+                          onChanged: (input) {
+                            lastName = input;
+                          },
                           decoration: InputDecoration(
                             hintText: 'Last-Name',
                             enabledBorder: Theme.of(context)

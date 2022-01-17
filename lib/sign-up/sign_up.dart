@@ -17,7 +17,6 @@ class SignUp extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   get user => _auth.currentUser;
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   errorDialog(BuildContext context, explanation) {
     ErrorDialog alert = ErrorDialog("Error", explanation);

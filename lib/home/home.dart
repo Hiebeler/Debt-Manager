@@ -20,7 +20,6 @@ class _HomeState extends State<Home> {
 
   Color homeColor = const Color.fromRGBO(185, 61, 25, 1);
 
-
   changeIOweOrIGet(changeValue) {
     setState(() {
       IOweOrIGet = changeValue;
@@ -30,16 +29,15 @@ class _HomeState extends State<Home> {
       } else {
         homeColor = green;
       }
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavDrawer(),
+      drawer: const NavDrawer(),
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(39, 39, 39, 1),
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
         title: const Center(child: Text("Debt Manager")),
       ),
       body: Container(
@@ -104,7 +102,7 @@ class _HomeState extends State<Home> {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) => AddDebt(color: homeColor,)))
               },
-          backgroundColor: Colors.transparent,
+          backgroundColor: Theme.of(context).colorScheme.background,
           shape: CircleBorder(
             side: BorderSide(
               color: homeColor,
@@ -129,8 +127,8 @@ class IGetIOweButton extends StatelessWidget {
       },
       child: Text(text, style: Theme.of(context).textTheme.bodyText1,),
       style: ElevatedButton.styleFrom(
-        onPrimary: const Color.fromRGBO(121, 121, 121, 1),
-        primary: const Color.fromRGBO(23, 23, 23, 1),
+        onPrimary: Theme.of(context).colorScheme.primaryVariant,
+        primary: Theme.of(context).colorScheme.background,
         fixedSize: const Size(200, 48),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(0),

@@ -1,3 +1,4 @@
+import 'package:debtmanager/settings.dart';
 import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,8 @@ class NavDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
-              onTap: () => {Navigator.of(context).pop()},
+              onTap: () => {Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Settings()))},
             ),
             ListTile(
               leading: Icon(Icons.exit_to_app),

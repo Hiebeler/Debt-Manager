@@ -4,7 +4,7 @@ import 'package:debtmanager/home/debt_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-
+import '/generated/l10n.dart';
 import 'SideBar.dart';
 
 class Home extends StatefulWidget {
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
       drawer: const NavDrawer(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: const Center(child: Text("Debt Manager")),
+        title: Center(child: Text(S.of(context).welcome)),
       ),
       body: Container(
         color: Theme.of(context).colorScheme.background,

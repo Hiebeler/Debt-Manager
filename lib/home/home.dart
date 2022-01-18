@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/add_debt.dart';
 import 'package:debtmanager/home/debt_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -14,6 +16,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String IOweOrIGet = "I Owe";
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  var firebaseUser = FirebaseAuth.instance.currentUser;
 
   final Color green = const Color.fromRGBO(134, 194, 50, 1);
   final Color red = const Color.fromRGBO(185, 61, 25, 1);
@@ -52,8 +57,7 @@ class _HomeState extends State<Home> {
                       ? Container(
                           decoration: BoxDecoration(
                             border: Border(
-                              bottom:
-                                  BorderSide(width: 3, color: homeColor),
+                              bottom: BorderSide(width: 3, color: homeColor),
                             ),
                           ),
                           child: IGetIOweButton(
@@ -63,33 +67,48 @@ class _HomeState extends State<Home> {
                         )
                       : IGetIOweButton(
                           text: "I Owe",
-                    changeIOweOrIGet: changeIOweOrIGet,
-                  ),
+                          changeIOweOrIGet: changeIOweOrIGet,
+                        ),
                 ),
                 Expanded(
                   child: IOweOrIGet == "I Get"
                       ? Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom:
-                        BorderSide(width: 3, color: homeColor),
-                      ),
-                    ),
-                    child: IGetIOweButton(
-                      text: "I Get",
-                      changeIOweOrIGet: changeIOweOrIGet,
-                    ),
-                  )
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(width: 3, color: homeColor),
+                            ),
+                          ),
+                          child: IGetIOweButton(
+                            text: "I Get",
+                            changeIOweOrIGet: changeIOweOrIGet,
+                          ),
+                        )
                       : IGetIOweButton(
-                    text: "I Get",
-                    changeIOweOrIGet: changeIOweOrIGet,
-                  ),
+                          text: "I Get",
+                          changeIOweOrIGet: changeIOweOrIGet,
+                        ),
                 ),
               ],
             ),
-
-            DebtCard(),
-
+            FutureBuilder(
+                future: users.doc(firebaseUser!.uid).get(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if(snapshot.hasData){
+                    Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                    if(data["debts"] == null){
+                      return Container();
+                    }
+                    return Column(
+                      children: [
+                        ...(data["debts"]).map((debt){
+                          return DebtCard(person: debt["person"], description: debt["description"], value: debt["value"]);
+                        })
+                      ],
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                })
           ],
         ),
       ),
@@ -99,8 +118,10 @@ class _HomeState extends State<Home> {
             color: Color.fromRGBO(121, 121, 121, 1),
           ),
           onPressed: () => {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => AddDebt(color: homeColor,)))
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AddDebt(
+                          color: homeColor,
+                        )))
               },
           backgroundColor: Theme.of(context).colorScheme.background,
           shape: CircleBorder(
@@ -122,10 +143,11 @@ class IGetIOweButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => {
-        changeIOweOrIGet(text)
-      },
-      child: Text(text, style: Theme.of(context).textTheme.bodyText1,),
+      onPressed: () => {changeIOweOrIGet(text)},
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
       style: ElevatedButton.styleFrom(
         onPrimary: Theme.of(context).colorScheme.primaryVariant,
         primary: Theme.of(context).colorScheme.background,

@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class DebtCard extends StatelessWidget {
-  const DebtCard({Key? key}) : super(key: key);
+  final String person;
+  final String description;
+  final double value;
+
+  DebtCard({
+    required this.person,
+    required this.description,
+    required this.value
+});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +29,7 @@ class DebtCard extends StatelessWidget {
           child: Column(
             children: [
               Center(
-                child: Text("Kim",
+                child: Text(person,
                     style: TextStyle(
                         fontSize: 20, color: Theme.of(context).colorScheme.onSecondary)),
               ),
@@ -29,14 +37,14 @@ class DebtCard extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Text("50,00€",
+                    child: Text(value.toString() + " €",
                         style: TextStyle(
                             fontSize: 17,
                             color: Theme.of(context).colorScheme.secondary)),
                   ),
                   Expanded(
                     child: Text(
-                      "Gesamte schulden",
+                      description,
                       style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
                       textAlign: TextAlign.right,
                     ),

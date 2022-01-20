@@ -4,11 +4,13 @@ class DebtCard extends StatelessWidget {
   final String person;
   final String description;
   final double value;
+  final Color color;
 
   DebtCard({
     required this.person,
     required this.description,
-    required this.value
+    required this.value,
+    required this.color
 });
 
   @override
@@ -40,7 +42,7 @@ class DebtCard extends StatelessWidget {
                     child: Text(value.toString() + " €",
                         style: TextStyle(
                             fontSize: 17,
-                            color: Theme.of(context).colorScheme.secondary)),
+                            color: color)),
                   ),
                   Expanded(
                     child: Text(

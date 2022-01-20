@@ -117,7 +117,9 @@ class _HomeState extends State<Home> {
                               return DebtCard(
                                   person: debt["person"],
                                   description: debt["description"],
-                                  value: debt["value"]);
+                                  value: debt["value"].toDouble(),
+                                  color: homeColor,)
+                              ;
                             })
                           ],
                         );

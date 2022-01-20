@@ -50,11 +50,151 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Welcome`
-  String get welcome {
+  // skipped getter for the 'sign-up' key
+
+  // skipped getter for the 'sign-up_google' key
+
+  /// `or`
+  String get or {
     return Intl.message(
-      'Welcome',
-      name: 'welcome',
+      'or',
+      name: 'or',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First name`
+  String get firstname {
+    return Intl.message(
+      'First name',
+      name: 'firstname',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last name`
+  String get lastname {
+    return Intl.message(
+      'Last name',
+      name: 'lastname',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm your Password`
+  String get confirmpassword {
+    return Intl.message(
+      'Confirm your Password',
+      name: 'confirmpassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get alreadyHaveAcc {
+    return Intl.message(
+      'Already have an account?',
+      name: 'alreadyHaveAcc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'sign-in' key
+
+  // skipped getter for the 'sign-in_google' key
+
+  /// `Don't have an Account yet?`
+  String get dontHaveAcc {
+    return Intl.message(
+      'Don\'t have an Account yet?',
+      name: 'dontHaveAcc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'debt-manager' key
+
+  /// `I Owe`
+  String get iOwe {
+    return Intl.message(
+      'I Owe',
+      name: 'iOwe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I Get`
+  String get iGet {
+    return Intl.message(
+      'I Get',
+      name: 'iGet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Person`
+  String get person {
+    return Intl.message(
+      'Person',
+      name: 'person',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Value`
+  String get value {
+    return Intl.message(
+      'Value',
+      name: 'value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add new Debt`
+  String get addNewDebt {
+    return Intl.message(
+      'Add new Debt',
+      name: 'addNewDebt',
       desc: '',
       args: [],
     );

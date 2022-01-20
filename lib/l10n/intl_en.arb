@@ -1,3 +1,25 @@
 {
-  "welcome": "Welcome"
+  "sign-up" : "Sign up",
+  "sign-up_google" : "Sign up with Google",
+  "or" : "or",
+  "firstname" : "First name",
+  "lastname" : "Last name",
+  "email" : "Email",
+  "password" : "Password",
+  "confirmpassword" : "Confirm your Password",
+  "alreadyHaveAcc" : "Already have an account?",
+
+  "sign-in" : "Sign in",
+  "sign-in_google" : "Sign in with Google",
+  "dontHaveAcc" : "Don't have an Account yet?",
+
+  "debt-manager" : "Debt-Manager",
+  "iOwe" : "I Owe",
+  "iGet" : "I Get",
+
+  "person" : "Person",
+  "description" : "Description",
+  "value" : "Value",
+  "addNewDebt" : "Add new Debt"
+
 }

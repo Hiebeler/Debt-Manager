@@ -1,3 +1,24 @@
 {
-  "welcome": "Wilkommen"
+  "sign-up" : "Anmelden",
+  "sign-up_google" : "Über Google Anmelden",
+  "or" : "oder",
+  "firstname" : "Vorname",
+  "lastname" : "Nachname",
+  "email" : "Email",
+  "password" : "Passwort",
+  "confirmpassword" : "Passwort bestätigen",
+  "alreadyHaveAcc" : "Du hast schon einen Account?",
+
+  "sign-in" : "Einloggen",
+  "sign-in_google" : "Über Google einloggen",
+  "dontHaveAcc" : "Du hast noch keinen Account?",
+
+  "debt-manager" : "Schulden-Manager",
+  "iOwe" : "Ich Schulde",
+  "iGet" : "Ich bekomme",
+
+  "person" : "Person",
+  "description" : "Beschreibung",
+  "value" : "Wert",
+  "addNewDebt" : "Neue Schulden hinzufügens"
 }

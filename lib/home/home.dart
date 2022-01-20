@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
                         )
                       : IGetIOweButton(
                           text: S.of(context).iOwe,
-                    isIOwe: true,
+                          isIOwe: true,
                           changeIOweOrIGet: changeIOweOrIGet,
                         ),
                 ),
@@ -95,25 +95,37 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
-            FutureBuilder(
-                future: users.doc(firebaseUser!.uid).get(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  if(snapshot.hasData){
-                    Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                    if(data["debts"] == null){
-                      return Container();
-                    }
-                    return Column(
-                      children: [
-                        ...(data["debts"]).map((debt){
-                          return DebtCard(person: debt["person"], description: debt["description"], value: debt["value"]);
-                        })
-                      ],
-                    );
-                  }
-                  return const CircularProgressIndicator();
-                })
+            Expanded(
+              child: SingleChildScrollView(
+                child: FutureBuilder(
+                    future: users.doc(firebaseUser!.uid).get(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<DocumentSnapshot> snapshot) {
+                      if (snapshot.hasData) {
+                        String field = "debts_Iget";
+                        if (isIOwe) {
+                          field = "debts_Iowe";
+                        }
+                        Map<String, dynamic> data =
+                            snapshot.data!.data() as Map<String, dynamic>;
+                        if (data[field] == null) {
+                          return Container();
+                        }
+                        return Column(
+                          children: [
+                            ...(data[field]).map((debt) {
+                              return DebtCard(
+                                  person: debt["person"],
+                                  description: debt["description"],
+                                  value: debt["value"]);
+                            })
+                          ],
+                        );
+                      }
+                      return const CircularProgressIndicator();
+                    }),
+              ),
+            ),
           ],
         ),
       ),
@@ -144,7 +156,10 @@ class IGetIOweButton extends StatelessWidget {
   final Function changeIOweOrIGet;
   final bool isIOwe;
 
-  IGetIOweButton({required this.text,required this.isIOwe, required this.changeIOweOrIGet});
+  IGetIOweButton(
+      {required this.text,
+      required this.isIOwe,
+      required this.changeIOweOrIGet});
 
   @override
   Widget build(BuildContext context) {

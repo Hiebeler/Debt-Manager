@@ -30,8 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Passwort bestätigen"),
         "debtManager": MessageLookupByLibrary.simpleMessage("Schulden-Manager"),
         "description": MessageLookupByLibrary.simpleMessage("Beschreibung"),
-        "dontHaveAcc": MessageLookupByLibrary.simpleMessage(
-            "Du hast noch keinen Account?"),
+        "dontHaveAcc":
+            MessageLookupByLibrary.simpleMessage("Noch keinen Account?"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "firstname": MessageLookupByLibrary.simpleMessage("Vorname"),
         "iGet": MessageLookupByLibrary.simpleMessage("Ich bekomme"),

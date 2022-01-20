@@ -16,6 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String IOweOrIGet = "I Owe";
+  bool isIOwe = true;
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -27,9 +28,9 @@ class _HomeState extends State<Home> {
 
   changeIOweOrIGet(changeValue) {
     setState(() {
-      IOweOrIGet = changeValue;
+      isIOwe = changeValue;
 
-      if (IOweOrIGet == "I Owe") {
+      if (isIOwe == true) {
         homeColor = red;
       } else {
         homeColor = green;
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
             Row(
               children: [
                 Expanded(
-                  child: IOweOrIGet == "I Owe"
+                  child: isIOwe
                       ? Container(
                           decoration: BoxDecoration(
                             border: Border(
@@ -62,16 +63,18 @@ class _HomeState extends State<Home> {
                           ),
                           child: IGetIOweButton(
                             text: S.of(context).iOwe,
+                            isIOwe: isIOwe,
                             changeIOweOrIGet: changeIOweOrIGet,
                           ),
                         )
                       : IGetIOweButton(
-                          text: "I Owe",
+                          text: S.of(context).iOwe,
+                    isIOwe: isIOwe,
                           changeIOweOrIGet: changeIOweOrIGet,
                         ),
                 ),
                 Expanded(
-                  child: IOweOrIGet == "I Get"
+                  child: !isIOwe
                       ? Container(
                           decoration: BoxDecoration(
                             border: Border(
@@ -80,11 +83,13 @@ class _HomeState extends State<Home> {
                           ),
                           child: IGetIOweButton(
                             text: S.of(context).iGet,
+                            isIOwe: isIOwe,
                             changeIOweOrIGet: changeIOweOrIGet,
                           ),
                         )
                       : IGetIOweButton(
                           text: S.of(context).iGet,
+                          isIOwe: isIOwe,
                           changeIOweOrIGet: changeIOweOrIGet,
                         ),
                 ),
@@ -137,13 +142,14 @@ class _HomeState extends State<Home> {
 class IGetIOweButton extends StatelessWidget {
   final String text;
   final Function changeIOweOrIGet;
+  final bool isIOwe;
 
-  IGetIOweButton({required this.text, required this.changeIOweOrIGet});
+  IGetIOweButton({required this.text,required this.isIOwe, required this.changeIOweOrIGet});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => {changeIOweOrIGet(text)},
+      onPressed: () => {changeIOweOrIGet(!isIOwe)},
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodyText1,

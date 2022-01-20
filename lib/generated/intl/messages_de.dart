@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Du hast schon einen Account?"),
         "confirmpassword":
             MessageLookupByLibrary.simpleMessage("Passwort bestätigen"),
+        "debtManager": MessageLookupByLibrary.simpleMessage("Schulden-Manager"),
         "description": MessageLookupByLibrary.simpleMessage("Beschreibung"),
         "dontHaveAcc": MessageLookupByLibrary.simpleMessage(
             "Du hast noch keinen Account?"),
@@ -39,6 +40,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "or": MessageLookupByLibrary.simpleMessage("oder"),
         "password": MessageLookupByLibrary.simpleMessage("Passwort"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
+        "signIn": MessageLookupByLibrary.simpleMessage("Einloggen"),
+        "signIn_google":
+            MessageLookupByLibrary.simpleMessage("Über Google einloggen"),
+        "signUp": MessageLookupByLibrary.simpleMessage("Anmelden"),
+        "signUp_google":
+            MessageLookupByLibrary.simpleMessage("Über Google Anmelden"),
         "value": MessageLookupByLibrary.simpleMessage("Wert")
       };
 }

@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
       drawer: const NavDrawer(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: Center(child: Text(S.of(context).welcome)),
+        title: Center(child: Text(S.of(context).debtManager)),
       ),
       body: Container(
         color: Theme.of(context).colorScheme.background,
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           child: IGetIOweButton(
-                            text: "I Owe",
+                            text: S.of(context).iOwe,
                             changeIOweOrIGet: changeIOweOrIGet,
                           ),
                         )
@@ -79,12 +79,12 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           child: IGetIOweButton(
-                            text: "I Get",
+                            text: S.of(context).iGet,
                             changeIOweOrIGet: changeIOweOrIGet,
                           ),
                         )
                       : IGetIOweButton(
-                          text: "I Get",
+                          text: S.of(context).iGet,
                           changeIOweOrIGet: changeIOweOrIGet,
                         ),
                 ),

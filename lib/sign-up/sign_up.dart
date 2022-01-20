@@ -4,6 +4,8 @@ import 'package:debtmanager/home/home.dart';
 import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '/generated/l10n.dart';
+
 
 class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
@@ -91,7 +93,7 @@ class SignUp extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: const Center(child: Text("Sign-Up")),
+        title: Center(child: Text(S.of(context).signUp)),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 40, right: 40),
@@ -106,8 +108,8 @@ class SignUp extends StatelessWidget {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () => {},
-                        child: const Text(
-                          "Sign-up with Google",
+                        child: Text(
+                          S.of(context).signUp_google,
                           style: TextStyle(
                             color: Color.fromRGBO(121, 121, 121, 1),
                             fontSize: 17,
@@ -128,7 +130,7 @@ class SignUp extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 30),
-                Text("or", style: Theme.of(context).textTheme.bodyText1),
+                Text(S.of(context).or, style: Theme.of(context).textTheme.bodyText1),
                 const SizedBox(height: 30),
                 Row(
                   children: [
@@ -141,7 +143,7 @@ class SignUp extends StatelessWidget {
                             firstName = input;
                           },
                           decoration: InputDecoration(
-                            hintText: 'First-Name',
+                            hintText: S.of(context).firstname,
                             enabledBorder: Theme.of(context)
                                 .inputDecorationTheme
                                 .enabledBorder,
@@ -162,7 +164,7 @@ class SignUp extends StatelessWidget {
                             lastName = input;
                           },
                           decoration: InputDecoration(
-                            hintText: 'Last-Name',
+                            hintText: S.of(context).lastname,
                             enabledBorder: Theme.of(context)
                                 .inputDecorationTheme
                                 .enabledBorder,
@@ -182,7 +184,7 @@ class SignUp extends StatelessWidget {
                     email = input;
                   },
                   decoration: InputDecoration(
-                    hintText: 'E-Mail',
+                    hintText: S.of(context).email,
                     enabledBorder:
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
@@ -196,7 +198,7 @@ class SignUp extends StatelessWidget {
                     password = input;
                   },
                   decoration: InputDecoration(
-                    hintText: 'Password',
+                    hintText: S.of(context).password,
                     enabledBorder:
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
@@ -211,7 +213,7 @@ class SignUp extends StatelessWidget {
                     confpassword = input;
                   },
                   decoration: InputDecoration(
-                    hintText: 'confirm Password',
+                    hintText: S.of(context).confirmpassword,
                     enabledBorder:
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
@@ -235,7 +237,7 @@ class SignUp extends StatelessWidget {
                                   }
                               }),
                         },
-                        child: const Text("Sign-up",
+                        child: Text(S.of(context).signUp,
                             style: TextStyle(
                                 color: Color.fromRGBO(160, 160, 160, 1))),
                         style: ElevatedButton.styleFrom(
@@ -252,7 +254,7 @@ class SignUp extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an Account?",
+                    Text(S.of(context).alreadyHaveAcc,
                         style: Theme.of(context).textTheme.bodyText1),
                     const SizedBox(
                       width: 10,
@@ -263,7 +265,7 @@ class SignUp extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => SignIn()))
                       },
                       child: Text(
-                        "Sign-In",
+                        S.of(context).signIn,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                         ),

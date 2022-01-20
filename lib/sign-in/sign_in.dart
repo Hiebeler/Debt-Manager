@@ -3,6 +3,7 @@ import 'package:debtmanager/sign-up/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '/generated/l10n.dart';
 
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class SignIn extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: const Center(child: Text("Sign-In")),
+        title: Center(child: Text(S.of(context).signIn)),
       ),
         body: Container(
       color: Theme.of(context).colorScheme.background,
@@ -56,7 +57,7 @@ class SignIn extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () => {},
                         child: Text(
-                          "Sign-up with Google",
+                          S.of(context).signIn_google,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         style: ElevatedButton.styleFrom(
@@ -75,7 +76,7 @@ class SignIn extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  "or",
+                  S.of(context).or,
                   style: Theme.of(context).textTheme.bodyText1
                 ),
                 const SizedBox(height: 30),
@@ -83,7 +84,7 @@ class SignIn extends StatelessWidget {
                 TextField(
                   onChanged: (input) => {email = input},
                   decoration: InputDecoration(
-                    hintText: 'Email',
+                    hintText: S.of(context).email,
                     enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
                   ),
@@ -93,7 +94,7 @@ class SignIn extends StatelessWidget {
                 TextField(
                   onChanged: (input) => {password =  input},
                   decoration: InputDecoration(
-                    hintText: 'Password',
+                    hintText: S.of(context).password,
                     enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
                   ),
@@ -117,7 +118,7 @@ class SignIn extends StatelessWidget {
                               }
                           }),
                         },
-                        child: const Text("Sign-in",
+                        child: Text(S.of(context).signIn,
                             style: TextStyle(
                                 color: Color.fromRGBO(160, 160, 160, 1))),
                         style: ElevatedButton.styleFrom(
@@ -134,7 +135,7 @@ class SignIn extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an Account?",style: Theme.of(context).textTheme.bodyText1),
+                    Text(S.of(context).dontHaveAcc,style: Theme.of(context).textTheme.bodyText1),
                     const SizedBox(
                       width: 10,
                     ),
@@ -144,7 +145,7 @@ class SignIn extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => SignUp()))
                       },
                       child: Text(
-                        "Sign-Up",
+                        S.of(context).signUp,
                         style: TextStyle(color: Theme.of(context).colorScheme.primary,),
                       ),
                       splashColor: Colors.transparent,

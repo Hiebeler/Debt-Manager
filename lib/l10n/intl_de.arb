@@ -1,6 +1,6 @@
 {
-  "sign-up" : "Anmelden",
-  "sign-up_google" : "Über Google Anmelden",
+  "signUp" : "Anmelden",
+  "signUp_google" : "Über Google Anmelden",
   "or" : "oder",
   "firstname" : "Vorname",
   "lastname" : "Nachname",
@@ -9,11 +9,11 @@
   "confirmpassword" : "Passwort bestätigen",
   "alreadyHaveAcc" : "Du hast schon einen Account?",
 
-  "sign-in" : "Einloggen",
-  "sign-in_google" : "Über Google einloggen",
+  "signIn" : "Einloggen",
+  "signIn_google" : "Über Google einloggen",
   "dontHaveAcc" : "Du hast noch keinen Account?",
 
-  "debt-manager" : "Schulden-Manager",
+  "debtManager" : "Schulden-Manager",
   "iOwe" : "Ich Schulde",
   "iGet" : "Ich bekomme",
 

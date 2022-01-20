@@ -50,9 +50,25 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  // skipped getter for the 'sign-up' key
+  /// `Sign up`
+  String get signUp {
+    return Intl.message(
+      'Sign up',
+      name: 'signUp',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'sign-up_google' key
+  /// `Sign up with Google`
+  String get signUp_google {
+    return Intl.message(
+      'Sign up with Google',
+      name: 'signUp_google',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `or`
   String get or {
@@ -124,9 +140,25 @@ class S {
     );
   }
 
-  // skipped getter for the 'sign-in' key
+  /// `Sign in`
+  String get signIn {
+    return Intl.message(
+      'Sign in',
+      name: 'signIn',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'sign-in_google' key
+  /// `Sign in with Google`
+  String get signIn_google {
+    return Intl.message(
+      'Sign in with Google',
+      name: 'signIn_google',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Don't have an Account yet?`
   String get dontHaveAcc {
@@ -138,7 +170,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'debt-manager' key
+  /// `Debt-Manager`
+  String get debtManager {
+    return Intl.message(
+      'Debt-Manager',
+      name: 'debtManager',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `I Owe`
   String get iOwe {

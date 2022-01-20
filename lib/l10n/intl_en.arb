@@ -1,6 +1,6 @@
 {
-  "sign-up" : "Sign up",
-  "sign-up_google" : "Sign up with Google",
+  "signUp" : "Sign up",
+  "signUp_google" : "Sign up with Google",
   "or" : "or",
   "firstname" : "First name",
   "lastname" : "Last name",
@@ -9,11 +9,11 @@
   "confirmpassword" : "Confirm your Password",
   "alreadyHaveAcc" : "Already have an account?",
 
-  "sign-in" : "Sign in",
-  "sign-in_google" : "Sign in with Google",
+  "signIn" : "Sign in",
+  "signIn_google" : "Sign in with Google",
   "dontHaveAcc" : "Don't have an Account yet?",
 
-  "debt-manager" : "Debt-Manager",
+  "debtManager" : "Debt-Manager",
   "iOwe" : "I Owe",
   "iGet" : "I Get",
 

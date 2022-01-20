@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:debtmanager/home/debt_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'SideBar.dart';
+import '/generated/l10n.dart';
 
 class AddDebt extends StatelessWidget {
   final Color color;
@@ -31,7 +29,7 @@ class AddDebt extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: const Center(child: Text("Debt Manager")),
+        title: Center(child: Text(S.of(context).debtManager)),
       ),
       body: Container(
         color: Theme.of(context).colorScheme.background,
@@ -45,7 +43,7 @@ class AddDebt extends StatelessWidget {
                 TextField(
                   onChanged: (input) => {person = input},
                   decoration: InputDecoration(
-                    hintText: 'Person',
+                    hintText: S.of(context).person,
                     enabledBorder:
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
@@ -59,7 +57,7 @@ class AddDebt extends StatelessWidget {
                   maxLines: null,
                   onChanged: (input) => {description = input},
                   decoration: InputDecoration(
-                    hintText: 'Description',
+                    hintText: S.of(context).description,
                     enabledBorder:
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
@@ -72,7 +70,7 @@ class AddDebt extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   onChanged: (input) => {value = double.parse(input)},
                   decoration: InputDecoration(
-                    hintText: 'Value',
+                    hintText: S.of(context).value,
                     enabledBorder:
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
@@ -83,7 +81,7 @@ class AddDebt extends StatelessWidget {
                 const SizedBox(height: 35),
                 ElevatedButton(
                   onPressed: () => {addDebttoDB()},
-                  child: Text("Add new Debt",
+                  child: Text(S.of(context).addNewDebt,
                       style: Theme.of(context).textTheme.bodyText1),
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(340, 50),

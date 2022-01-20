@@ -63,13 +63,13 @@ class _HomeState extends State<Home> {
                           ),
                           child: IGetIOweButton(
                             text: S.of(context).iOwe,
-                            isIOwe: isIOwe,
+                            isIOwe: true,
                             changeIOweOrIGet: changeIOweOrIGet,
                           ),
                         )
                       : IGetIOweButton(
                           text: S.of(context).iOwe,
-                    isIOwe: isIOwe,
+                    isIOwe: true,
                           changeIOweOrIGet: changeIOweOrIGet,
                         ),
                 ),
@@ -83,13 +83,13 @@ class _HomeState extends State<Home> {
                           ),
                           child: IGetIOweButton(
                             text: S.of(context).iGet,
-                            isIOwe: isIOwe,
+                            isIOwe: false,
                             changeIOweOrIGet: changeIOweOrIGet,
                           ),
                         )
                       : IGetIOweButton(
                           text: S.of(context).iGet,
-                          isIOwe: isIOwe,
+                          isIOwe: false,
                           changeIOweOrIGet: changeIOweOrIGet,
                         ),
                 ),
@@ -149,7 +149,7 @@ class IGetIOweButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => {changeIOweOrIGet(!isIOwe)},
+      onPressed: () => {changeIOweOrIGet(isIOwe)},
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodyText1,

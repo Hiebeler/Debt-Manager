@@ -6,7 +6,7 @@ import 'custom_theme.dart';
 
 class MyTheme with ChangeNotifier {
   static bool _isDark = true;
-  
+
   MyTheme() {
     if (box.containsKey("theme")) {
       _isDark = box.get("theme");
@@ -19,13 +19,18 @@ class MyTheme with ChangeNotifier {
     return _isDark ? CustomTheme.darkTheme : CustomTheme.lightTheme;
   }
 
-  bool get_isDark() {
-    return _isDark;
+  int currentThemeInt() {
+    return _isDark ? 1 : 2;
   }
 
-  switchTheme() {
+  switchTheme(i) {
+
+    if(i == 1) {
+      box.put("theme", true);
+    } else {
+      box.put("theme", false);
+    }
     _isDark = !_isDark;
-    box.put("theme", _isDark);
     notifyListeners();
   }
 }

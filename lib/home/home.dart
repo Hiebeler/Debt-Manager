@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String IOweOrIGet = "I Owe";
   bool isIOwe = true;
+  double iOweMargin = 0;
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -115,11 +116,11 @@ class _HomeState extends State<Home> {
                           children: [
                             ...(data[field]).map((debt) {
                               return DebtCard(
-                                  person: debt["person"],
-                                  description: debt["description"],
-                                  value: debt["value"].toDouble(),
-                                  color: homeColor,)
-                              ;
+                                person: debt["person"],
+                                description: debt["description"],
+                                value: debt["value"].toDouble(),
+                                color: homeColor,
+                              );
                             })
                           ],
                         );
@@ -161,12 +162,14 @@ class IGetIOweButton extends StatelessWidget {
   IGetIOweButton(
       {required this.text,
       required this.isIOwe,
-      required this.changeIOweOrIGet});
+      required this.changeIOweOrIGet,});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => {changeIOweOrIGet(isIOwe)},
+      onPressed: () => {
+        changeIOweOrIGet(isIOwe)
+      },
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodyText1,

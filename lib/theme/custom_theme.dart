@@ -12,7 +12,12 @@ class CustomTheme {
         color: Colors.white,
         fontWeight: FontWeight.w600,
         fontFamily: "Roboto"
-      )
+      ),
+      headline2: TextStyle(
+      fontSize: 16,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+    )
     );
 
     InputDecorationTheme textFieldTheme = const InputDecorationTheme(
@@ -34,7 +39,7 @@ class CustomTheme {
 
     ColorScheme colorScheme = const ColorScheme(
       brightness: Brightness.dark,
-      primary: Color.fromRGBO(75, 29, 82, 1),
+      primary: Color.fromRGBO(98, 0, 238, 1),
       secondary: Color.fromRGBO(134, 194, 50, 1),
       secondaryVariant: Color.fromRGBO(185, 61, 25, 1),
       background: Color.fromRGBO(18, 19, 20, 1.0),
@@ -64,8 +69,12 @@ class CustomTheme {
             fontSize: 20,
             color: Colors.black,
             fontWeight: FontWeight.w600,
-            fontFamily: "Roboto"
-        )
+        ),
+        headline2: TextStyle(
+        fontSize: 16,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+    )
     );
 
     InputDecorationTheme textFieldTheme = const InputDecorationTheme(
@@ -87,7 +96,7 @@ class CustomTheme {
 
     ColorScheme colorScheme = const ColorScheme(
       brightness: Brightness.light,
-      primary: Color.fromRGBO(75, 29, 82, 1),
+      primary: Color.fromRGBO(98, 0, 238, 1),
       secondary: Color.fromRGBO(134, 194, 50, 1),
       secondaryVariant: Color.fromRGBO(185, 61, 25, 1),
       background: Color.fromRGBO(221, 221, 221, 1.0),

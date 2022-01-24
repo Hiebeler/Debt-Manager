@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("Sprache"),
         "lastname": MessageLookupByLibrary.simpleMessage("Nachname"),
         "lightMode": MessageLookupByLibrary.simpleMessage("Heller Modus"),
+        "logout": MessageLookupByLibrary.simpleMessage("Ausloggen"),
         "or": MessageLookupByLibrary.simpleMessage("oder"),
         "password": MessageLookupByLibrary.simpleMessage("Passwort"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),

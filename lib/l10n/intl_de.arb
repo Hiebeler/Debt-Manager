@@ -28,5 +28,7 @@
   "lightMode": "Heller Modus",
   "language": "Sprache",
   "english": "Englisch",
-  "german": "Deutsch"
+  "german": "Deutsch",
+
+  "logout": "Ausloggen"
 }

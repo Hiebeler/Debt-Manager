@@ -2,13 +2,13 @@ import 'package:debtmanager/settings.dart';
 import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '/generated/l10n.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key}) : super(key: key);
 
   Future<String> loggout() async {
     await FirebaseAuth.instance.signOut();
-    print(FirebaseAuth.instance);
     return "worked";
   }
 
@@ -20,39 +20,29 @@ class NavDrawer extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               Theme.of(context).colorScheme.primary,
-              Color(0x000),
+              const Color(0x000),
             ],
-            begin: FractionalOffset(0.0, 0.0),
-            end: FractionalOffset(0.0, 1.0),
-            stops: [0.0, 1.0],
+            begin: const FractionalOffset(0.0, 0.0),
+            end: const FractionalOffset(0.0, 1.0),
+            stops: const [0.0, 1.0],
             tileMode: TileMode.clamp,
           ),
         ),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             ListTile(
-              leading: Icon(Icons.input),
-              title: Text('Welcome'),
-              onTap: () => {},
-            ),
-            ListTile(
-              leading: Icon(Icons.verified_user),
-              title: Text('Profile'),
-              onTap: () => {Navigator.of(context).pop()},
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
+              leading: const Icon(Icons.settings),
+              title: Text(S.of(context).settings),
               onTap: () => {Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Settings()))},
+                  MaterialPageRoute(builder: (context) => const Settings()))},
             ),
             ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Logout'),
+              leading: const Icon(Icons.exit_to_app),
+              title: Text(S.of(context).logout),
               onTap: () => {
                 loggout().then((value) => {
                       if (value == "worked")

@@ -28,6 +28,8 @@
   "lightMode": "Light Mode",
   "language": "Language",
   "english": "English",
-  "german": "German"
+  "german": "German",
+
+  "logout": "Logout"
 
 }

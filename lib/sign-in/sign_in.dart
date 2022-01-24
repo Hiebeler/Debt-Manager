@@ -3,6 +3,7 @@ import 'package:debtmanager/sign-up/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '/generated/l10n.dart';
 
 class SignIn extends StatelessWidget {
@@ -11,6 +12,7 @@ class SignIn extends StatelessWidget {
   String email = "";
   String password = "";
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   get user => _auth.currentUser;
   //SIGN UP METHOD
   Future<bool> signIn() async {
@@ -30,6 +32,25 @@ class SignIn extends StatelessWidget {
       }
     }
     return worked;
+  }
+
+  Future<bool> signInwithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+      await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      await _auth.signInWithCredential(credential);
+      print("success google");
+      return true;
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      return false;
+    }
   }
 
   @override
@@ -55,7 +76,15 @@ class SignIn extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () => {
+                          signInwithGoogle().then((value) => {
+                            if (value) {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => Home()))
+                            }
+                          })
+                        },
                         child: Text(
                           S.of(context).signIn_google,
                           style: Theme.of(context).textTheme.bodyText1,

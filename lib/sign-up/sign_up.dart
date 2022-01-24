@@ -4,6 +4,7 @@ import 'package:debtmanager/home/home.dart';
 import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '/generated/l10n.dart';
 
 
@@ -17,6 +18,7 @@ class SignUp extends StatelessWidget {
   String confpassword = "";
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   get user => _auth.currentUser;
 
@@ -31,11 +33,29 @@ class SignUp extends StatelessWidget {
     );
   }
 
+  Future<bool> signInwithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+      await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      await _auth.signInWithCredential(credential);
+      print("success google");
+      addUser();
+      return true;
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      return false;
+    }
+  }
+
   void addUser() {
    var firebaseUser = FirebaseAuth.instance.currentUser;
    FirebaseFirestore.instance.collection("users").doc(firebaseUser!.uid).set({
-     "firstname" : firstName,
-     "lastname" : lastName,
      "email" : email
    }).then((_) => print("success added User"));
   }
@@ -67,9 +87,9 @@ class SignUp extends StatelessWidget {
       worked = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
-        print("weak password");
+        errorDialog(context, "weak password");
       } else if (e.code == "email-already-in-use") {
-        print("Email already exists");
+        errorDialog(context, "Email already exists");
       }
     } catch (e) {
       print(e);
@@ -107,7 +127,15 @@ class SignUp extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () => {
+                          signInwithGoogle().then((value) => {
+                            if (value) {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => Home()))
+                            }
+                          })
+                        },
                         child: Text(
                           S.of(context).signUp_google,
                           style: TextStyle(

@@ -12,7 +12,10 @@ import 'sign-up/sign_up.dart';
 void main() async {
   await Hive.initFlutter();
   await Hive.openBox("theme");
-  box = Hive.box("theme");
+  boxTheme = Hive.box("theme");
+  await Hive.initFlutter();
+  await Hive.openBox("language");
+  boxLanguage = Hive.box("language");
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -30,6 +33,9 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     currentTheme.addListener(() {
+      setState(() {});
+    });
+    currentLanguage.addListener(() {
       setState(() {});
     });
   }
@@ -52,6 +58,8 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate
       ],
+
+      locale: currentLanguage.isSet() ? currentLanguage.currentLocale : null,
       supportedLocales: S.delegate.supportedLocales,
       theme: currentTheme.currentTheme(),
       home: Scaffold(

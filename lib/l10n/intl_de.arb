@@ -20,5 +20,13 @@
   "person" : "Person",
   "description" : "Beschreibung",
   "value" : "Wert",
-  "addNewDebt" : "Neue Schulden hinzufügens"
+  "addNewDebt" : "Neue Schulden hinzufügens",
+
+  "settings": "Einstellungen",
+  "theme": "Design",
+  "darkMode": "Dunkler Modus",
+  "lightMode": "Heller Modus",
+  "language": "Sprache",
+  "english": "Englisch",
+  "german": "Deutsch"
 }

@@ -27,24 +27,31 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "confirmpassword":
             MessageLookupByLibrary.simpleMessage("Confirm your Password"),
+        "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "debtManager": MessageLookupByLibrary.simpleMessage("Debt-Manager"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "dontHaveAcc":
             MessageLookupByLibrary.simpleMessage("Don\'t have an Account yet?"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "english": MessageLookupByLibrary.simpleMessage("English"),
         "firstname": MessageLookupByLibrary.simpleMessage("First name"),
+        "german": MessageLookupByLibrary.simpleMessage("German"),
         "iGet": MessageLookupByLibrary.simpleMessage("I Get"),
         "iOwe": MessageLookupByLibrary.simpleMessage("I Owe"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
         "lastname": MessageLookupByLibrary.simpleMessage("Last name"),
+        "lightMode": MessageLookupByLibrary.simpleMessage("Light Mode"),
         "or": MessageLookupByLibrary.simpleMessage("or"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
         "signIn_google":
             MessageLookupByLibrary.simpleMessage("Sign in with Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
         "signUp_google":
             MessageLookupByLibrary.simpleMessage("Sign up with Google"),
+        "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "value": MessageLookupByLibrary.simpleMessage("Value")
       };
 }

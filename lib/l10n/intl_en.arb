@@ -20,6 +20,14 @@
   "person" : "Person",
   "description" : "Description",
   "value" : "Value",
-  "addNewDebt" : "Add new Debt"
+  "addNewDebt" : "Add new Debt",
+
+  "settings": "Settings",
+  "theme": "Theme",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "language": "Language",
+  "english": "English",
+  "german": "German"
 
 }

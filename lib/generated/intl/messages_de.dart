@@ -28,24 +28,31 @@ class MessageLookup extends MessageLookupByLibrary {
             "Du hast schon einen Account?"),
         "confirmpassword":
             MessageLookupByLibrary.simpleMessage("Passwort bestätigen"),
+        "darkMode": MessageLookupByLibrary.simpleMessage("Dunkler Modus"),
         "debtManager": MessageLookupByLibrary.simpleMessage("Schulden-Manager"),
         "description": MessageLookupByLibrary.simpleMessage("Beschreibung"),
         "dontHaveAcc":
             MessageLookupByLibrary.simpleMessage("Noch keinen Account?"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "english": MessageLookupByLibrary.simpleMessage("Englisch"),
         "firstname": MessageLookupByLibrary.simpleMessage("Vorname"),
+        "german": MessageLookupByLibrary.simpleMessage("Deutsch"),
         "iGet": MessageLookupByLibrary.simpleMessage("Ich bekomme"),
         "iOwe": MessageLookupByLibrary.simpleMessage("Ich Schulde"),
+        "language": MessageLookupByLibrary.simpleMessage("Sprache"),
         "lastname": MessageLookupByLibrary.simpleMessage("Nachname"),
+        "lightMode": MessageLookupByLibrary.simpleMessage("Heller Modus"),
         "or": MessageLookupByLibrary.simpleMessage("oder"),
         "password": MessageLookupByLibrary.simpleMessage("Passwort"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
+        "settings": MessageLookupByLibrary.simpleMessage("Einstellungen"),
         "signIn": MessageLookupByLibrary.simpleMessage("Einloggen"),
         "signIn_google":
             MessageLookupByLibrary.simpleMessage("Über Google einloggen"),
         "signUp": MessageLookupByLibrary.simpleMessage("Registrieren"),
         "signUp_google":
             MessageLookupByLibrary.simpleMessage("Über Google Anmelden"),
+        "theme": MessageLookupByLibrary.simpleMessage("Design"),
         "value": MessageLookupByLibrary.simpleMessage("Wert")
       };
 }

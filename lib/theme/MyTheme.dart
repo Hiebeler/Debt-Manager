@@ -8,10 +8,10 @@ class MyTheme with ChangeNotifier {
   static bool _isDark = true;
 
   MyTheme() {
-    if (box.containsKey("theme")) {
-      _isDark = box.get("theme");
+    if (boxTheme.containsKey("theme")) {
+      _isDark = boxTheme.get("theme");
     } else {
-      box.put("theme", _isDark);
+      boxTheme.put("theme", _isDark);
     }
   }
 
@@ -26,9 +26,9 @@ class MyTheme with ChangeNotifier {
   switchTheme(i) {
 
     if(i == 1) {
-      box.put("theme", true);
+      boxTheme.put("theme", true);
     } else {
-      box.put("theme", false);
+      boxTheme.put("theme", false);
     }
     _isDark = !_isDark;
     notifyListeners();

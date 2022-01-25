@@ -31,7 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "debtManager": MessageLookupByLibrary.simpleMessage("Debt-Manager"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "dontHaveAcc":
-            MessageLookupByLibrary.simpleMessage("Don\'t have an Account yet?"),
+            MessageLookupByLibrary.simpleMessage("Don\'t have an Account?"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
         "firstname": MessageLookupByLibrary.simpleMessage("First name"),

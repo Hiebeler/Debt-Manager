@@ -1,3 +1,4 @@
+import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/home.dart';
 import 'package:debtmanager/sign-up/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,7 @@ class SignIn extends StatelessWidget {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   get user => _auth.currentUser;
   //SIGN UP METHOD
-  Future<bool> signIn() async {
+  Future<bool> signIn(BuildContext context) async {
     bool worked = false;
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -27,8 +28,10 @@ class SignIn extends StatelessWidget {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        errorDialog(context, "User not found");
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+        errorDialog(context, "Wrong Password");
       }
     }
     return worked;
@@ -51,6 +54,17 @@ class SignIn extends StatelessWidget {
       print(e.message);
       return false;
     }
+  }
+
+  errorDialog(BuildContext context, explanation) {
+    ErrorDialog alert = ErrorDialog("Error", explanation);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
@@ -136,7 +150,7 @@ class SignIn extends StatelessWidget {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () => {
-                          signIn().then((value) => {
+                          signIn(context).then((value) => {
                             print(value),
                             if (value == true)
                               {

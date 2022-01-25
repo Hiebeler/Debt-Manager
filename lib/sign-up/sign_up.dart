@@ -65,7 +65,7 @@ class SignUp extends StatelessWidget {
 
     bool worked = false;
 
-    if (email == "" || password == "" || confpassword == "" || firstName ==""|| lastName == ""){
+    if (email == "" || password == "" || confpassword == ""){
       print("nicht alle felder ausgefüllt");
       errorDialog(context, "Missing arguments");
       return false;
@@ -87,9 +87,9 @@ class SignUp extends StatelessWidget {
       worked = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
-        errorDialog(context, "weak password");
+        errorDialog(context, "Weak password");
       } else if (e.code == "email-already-in-use") {
-        errorDialog(context, "Email already exists");
+        errorDialog(context, "An Account with this E-Mail already exists");
       }
     } catch (e) {
       print(e);
@@ -160,52 +160,7 @@ class SignUp extends StatelessWidget {
                 const SizedBox(height: 30),
                 Text(S.of(context).or, style: Theme.of(context).textTheme.bodyText1),
                 const SizedBox(height: 30),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, top: 0, right: 10, bottom: 0),
-                        child: TextField(
-                          onChanged: (input) {
-                            firstName = input;
-                          },
-                          decoration: InputDecoration(
-                            hintText: S.of(context).firstname,
-                            enabledBorder: Theme.of(context)
-                                .inputDecorationTheme
-                                .enabledBorder,
-                            focusedBorder: Theme.of(context)
-                                .inputDecorationTheme
-                                .focusedBorder,
-                          ),
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, top: 0, right: 0, bottom: 0),
-                        child: TextField(
-                          onChanged: (input) {
-                            lastName = input;
-                          },
-                          decoration: InputDecoration(
-                            hintText: S.of(context).lastname,
-                            enabledBorder: Theme.of(context)
-                                .inputDecorationTheme
-                                .enabledBorder,
-                            focusedBorder: Theme.of(context)
-                                .inputDecorationTheme
-                                .focusedBorder,
-                          ),
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+
                 const SizedBox(height: 20),
                 TextField(
                   onChanged: (input) {

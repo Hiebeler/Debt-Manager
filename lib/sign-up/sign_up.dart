@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/home.dart';
 import 'package:debtmanager/sign-in/sign_in.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '/generated/l10n.dart';
 
+import '/generated/l10n.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
@@ -36,9 +36,9 @@ class SignUp extends StatelessWidget {
   Future<bool> signInwithGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
-      await _googleSignIn.signIn();
+          await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
-      await googleSignInAccount!.authentication;
+          await googleSignInAccount!.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
@@ -54,18 +54,19 @@ class SignUp extends StatelessWidget {
   }
 
   void addUser() {
-   var firebaseUser = FirebaseAuth.instance.currentUser;
-   FirebaseFirestore.instance.collection("users").doc(firebaseUser!.uid).set({
-     "email" : email
-   }).then((_) => print("success added User"));
+    var firebaseUser = FirebaseAuth.instance.currentUser;
+    print(FirebaseFirestore.instance.collection("users").doc(firebaseUser!.uid));
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(firebaseUser.uid)
+        .set({"email": email}).then((_) => print("success added User"));
   }
 
   //SIGN UP METHOD
   Future<bool> signUp(BuildContext context) async {
-
     bool worked = false;
 
-    if (email == "" || password == "" || confpassword == ""){
+    if (email == "" || password == "" || confpassword == "") {
       print("nicht alle felder ausgefüllt");
       errorDialog(context, "Missing arguments");
       return false;
@@ -129,20 +130,16 @@ class SignUp extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () => {
                           signInwithGoogle().then((value) => {
-                            if (value) {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => Home()))
-                            }
-                          })
+                                if (value)
+                                  {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) => Home()))
+                                  }
+                              })
                         },
-                        child: Text(
-                          S.of(context).signUp_google,
-                          style: TextStyle(
-                            color: Color.fromRGBO(121, 121, 121, 1),
-                            fontSize: 17,
-                          ),
-                        ),
+                        child: Text(S.of(context).signUp_google,
+                            style: Theme.of(context).textTheme.bodyText1),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.only(top: 17, bottom: 17),
                           primary: Theme.of(context).scaffoldBackgroundColor,
@@ -158,9 +155,9 @@ class SignUp extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 30),
-                Text(S.of(context).or, style: Theme.of(context).textTheme.bodyText1),
+                Text(S.of(context).or,
+                    style: Theme.of(context).textTheme.bodyText1),
                 const SizedBox(height: 30),
-
                 const SizedBox(height: 20),
                 TextField(
                   onChanged: (input) {

@@ -24,15 +24,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addNewDebt":
             MessageLookupByLibrary.simpleMessage("Neue Schulden hinzufügens"),
-        "alreadyHaveAcc": MessageLookupByLibrary.simpleMessage(
-            "Du hast schon einen Account?"),
+        "alreadyHaveAcc":
+            MessageLookupByLibrary.simpleMessage("Schon einen Account?"),
         "confirmpassword":
             MessageLookupByLibrary.simpleMessage("Passwort bestätigen"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dunkler Modus"),
         "debtManager": MessageLookupByLibrary.simpleMessage("Schulden-Manager"),
         "description": MessageLookupByLibrary.simpleMessage("Beschreibung"),
-        "dontHaveAcc":
-            MessageLookupByLibrary.simpleMessage("Noch keinen Account?"),
+        "dontHaveAcc": MessageLookupByLibrary.simpleMessage("Keinen Account?"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "english": MessageLookupByLibrary.simpleMessage("Englisch"),
         "firstname": MessageLookupByLibrary.simpleMessage("Vorname"),

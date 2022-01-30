@@ -7,11 +7,11 @@
   "email" : "Email",
   "password" : "Passwort",
   "confirmpassword" : "Passwort bestätigen",
-  "alreadyHaveAcc" : "Du hast schon einen Account?",
+  "alreadyHaveAcc" : "Schon einen Account?",
 
   "signIn" : "Einloggen",
   "signIn_google" : "Über Google einloggen",
-  "dontHaveAcc" : "Noch keinen Account?",
+  "dontHaveAcc" : "Keinen Account?",
 
   "debtManager" : "Schulden-Manager",
   "iOwe" : "Ich Schulde",

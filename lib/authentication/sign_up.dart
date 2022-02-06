@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:debtmanager/authentication/sign_in.dart';
 import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/home.dart';
-import 'package:debtmanager/sign-in/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -45,7 +45,7 @@ class SignUp extends StatelessWidget {
       );
       await _auth.signInWithCredential(credential);
       print("success google");
-      addUser();
+      checkIfUserExists();
       return true;
     } on FirebaseAuthException catch (e) {
       print(e.message);
@@ -53,12 +53,18 @@ class SignUp extends StatelessWidget {
     }
   }
 
+  void checkIfUserExists() {
+    FirebaseFirestore.instance.collection("users").doc(user!.uid).get().then((value) => {
+      if (!value.exists)
+        addUser()
+    });
+  }
+
   void addUser() {
     var firebaseUser = FirebaseAuth.instance.currentUser;
-    print(FirebaseFirestore.instance.collection("users").doc(firebaseUser!.uid));
     FirebaseFirestore.instance
         .collection("users")
-        .doc(firebaseUser.uid)
+        .doc(firebaseUser!.uid)
         .set({"email": email}).then((_) => print("success added User"));
   }
 
@@ -93,19 +99,16 @@ class SignUp extends StatelessWidget {
         errorDialog(context, "An Account with this E-Mail already exists");
       }
     } catch (e) {
-      print(e);
+      errorDialog(context, "An error occured");
     }
 
     return worked;
   }
 
   Future<bool> checkifsucceeded() async {
-    print(FirebaseAuth.instance.currentUser);
-    if (await FirebaseAuth.instance.currentUser != null) {
-      print("true");
+    if (FirebaseAuth.instance.currentUser != null) {
       return true;
     }
-    print("false");
     return false;
   }
 
@@ -218,7 +221,7 @@ class SignUp extends StatelessWidget {
                               }),
                         },
                         child: Text(S.of(context).signUp,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Color.fromRGBO(160, 160, 160, 1))),
                         style: ElevatedButton.styleFrom(
                           primary: Theme.of(context).colorScheme.primary,

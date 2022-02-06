@@ -7,7 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'generated/l10n.dart';
 import 'theme/config.dart';
 import 'home/home.dart';
-import 'sign-up/sign_up.dart';
+import 'authentication/sign_up.dart';
 
 void main() async {
   await Hive.initFlutter();

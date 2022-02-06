@@ -1,6 +1,6 @@
 import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/home.dart';
-import 'package:debtmanager/sign-up/sign_up.dart';
+import 'package:debtmanager/authentication/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -163,7 +163,7 @@ class SignIn extends StatelessWidget {
                                 }),
                           },
                           child: Text(S.of(context).signIn,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromRGBO(160, 160, 160, 1))),
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).colorScheme.primary,

@@ -3,6 +3,7 @@ import 'package:debtmanager/authentication/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/generated/l10n.dart';
+import 'home.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key}) : super(key: key);
@@ -35,8 +36,20 @@ class NavDrawer extends StatelessWidget {
               height: 60,
             ),
             ListTile(
+              leading: const Icon(Icons.home),
+              title: Text(S.of(context).homescreen),
+              onTap: () => {Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Home()))},
+            ),
+            ListTile(
               leading: const Icon(Icons.settings),
               title: Text(S.of(context).settings),
+              onTap: () => {Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const Settings()))},
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: Text(S.of(context).friends),
               onTap: () => {Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const Settings()))},
             ),

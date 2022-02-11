@@ -319,6 +319,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Friends`
+  String get friends {
+    return Intl.message(
+      'Friends',
+      name: 'friends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get homescreen {
+    return Intl.message(
+      'Home',
+      name: 'homescreen',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

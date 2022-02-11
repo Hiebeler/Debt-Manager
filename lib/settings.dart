@@ -1,6 +1,7 @@
 import 'package:debtmanager/home/home.dart';
 import 'package:flutter/material.dart';
 import 'generated/l10n.dart';
+import 'home/Side_bar.dart';
 import 'theme/config.dart';
 
 class Settings extends StatefulWidget {
@@ -33,16 +34,8 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: const NavDrawer(),
         appBar: AppBar(
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => Home()));
-            },
-            child: const Icon(
-              Icons.arrow_back, // add custom icons also
-            ),
-          ),
           title: Center(child: Text(S.of(context).settings)),
           backgroundColor: Theme.of(context).colorScheme.onBackground,
         ),

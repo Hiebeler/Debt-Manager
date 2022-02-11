@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "227126928604-5ge2ba5i7p8m2p37n7aahelpif220hs4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.debtmanager",
+            "certificate_hash": "6212f92c70670e21bafac8e7bf3aac3389e8bcbc"
+          }
+        },
+        {
           "client_id": "227126928604-ogp82d9po4uj4t9qbjcru34mlcedradf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

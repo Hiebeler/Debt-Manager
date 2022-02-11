@@ -30,6 +30,10 @@
   "english": "English",
   "german": "German",
 
-  "logout": "Logout"
+  "logout": "Logout",
+
+  "friends": "Friends",
+
+  "homescreen": "Home"
 
 }

@@ -24,23 +24,51 @@ class _AddDebtState extends State<AddDebt> {
 
   double value = 0;
 
-  void addDebttoDB() {
+  String getDebt() {
     final String debt;
     if (isIOwe) {
-      debt = "debts_Iowe";
+      return debt = "debts_Iowe";
     } else {
-      debt = "debts_Iget";
+      return debt = "debts_Iget";
     }
+  }
 
+  void addDebttoDB(int maxId) {
     var firebaseUser = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
         .update({
-      debt: FieldValue.arrayUnion([
-        {"person": person, "description": description, "value": value}
+      getDebt(): FieldValue.arrayUnion([
+        {
+          "id": maxId,
+          "person": person,
+          "description": description,
+          "value": value
+        }
       ])
     }).then((value) => {print("success")});
+  }
+
+  Future<bool> maxId() async {
+    int maxId = 0;
+    var collection = FirebaseFirestore.instance.collection('users');
+    var firebaseUser = FirebaseAuth.instance.currentUser;
+    var docSnapshot = await collection.doc(firebaseUser!.uid).get();
+    if (docSnapshot.exists && docSnapshot.data()![getDebt()] != null) {
+      List<dynamic> data = docSnapshot.data()![getDebt()];
+      for (Map i in data) {
+        print(i["id"]);
+        if (i["id"] > maxId) {
+          maxId = i["id"];
+        }
+      }
+      maxId = maxId + 1;
+      addDebttoDB(maxId);
+    } else {
+      addDebttoDB(maxId);
+    }
+    return true;
   }
 
   errorDialog(BuildContext context, explanation) {
@@ -123,9 +151,14 @@ class _AddDebtState extends State<AddDebt> {
                   const SizedBox(height: 35),
                   ElevatedButton(
                     onPressed: () => {
-                      addDebttoDB(),
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => Home()))
+                      maxId().then((value) => {
+                            if (value)
+                              {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => Home()))
+                              }
+                          }),
                     },
                     child: Text(S.of(context).addNewDebt,
                         style: Theme.of(context).textTheme.bodyText1),

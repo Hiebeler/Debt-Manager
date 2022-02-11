@@ -13,7 +13,7 @@ class SignUp extends StatelessWidget {
 
   String firstName = "";
   String lastName = "";
-  String email = "";
+  String? email = "";
   String password = "";
   String confpassword = "";
 
@@ -62,6 +62,9 @@ class SignUp extends StatelessWidget {
 
   void addUser() {
     var firebaseUser = FirebaseAuth.instance.currentUser;
+    if (email == "") {
+      email = _auth.currentUser?.email;
+    }
     FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
@@ -72,24 +75,23 @@ class SignUp extends StatelessWidget {
   Future<bool> signUp(BuildContext context) async {
     bool worked = false;
 
+
     if (email == "" || password == "" || confpassword == "") {
-      print("nicht alle felder ausgefüllt");
       errorDialog(context, "Missing arguments");
       return false;
     } else if (password != confpassword) {
       errorDialog(context, "your passwords don't match");
       return false;
     }
-    if (!email.contains('@')) {
+    if (!email.toString().contains('@')) {
       errorDialog(context, "email isnt right");
       return false;
     }
     try {
       await _auth.createUserWithEmailAndPassword(
-        email: email,
+        email: email.toString(),
         password: password,
       );
-      print("success");
       addUser();
       worked = true;
     } on FirebaseAuthException catch (e) {

@@ -14,7 +14,7 @@ class ErrorDialog extends StatelessWidget {
     return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
         child:  AlertDialog(
-          title: Text(title,style: Theme.of(context).textTheme.bodyText1,),
+          title: Text(title, style: Theme.of(context).textTheme.bodyText1,),
           content: Text(content, style: Theme.of(context).textTheme.bodyText1,),
           actions: <Widget>[
             ElevatedButton(

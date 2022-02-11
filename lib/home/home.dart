@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/add_debt.dart';
-import 'package:debtmanager/home/debt_card.dart';
+import 'package:debtmanager/home/Debt-Card/debt_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -18,6 +18,7 @@ class _HomeState extends State<Home> {
   String IOweOrIGet = "I Owe";
   bool isIOwe = true;
   double iOweMargin = 0;
+  int debtId = -1;
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -116,6 +117,8 @@ class _HomeState extends State<Home> {
                           children: [
                             ...(data[field]).map((debt) {
                               return DebtCard(
+                                field: field,
+                                debtId: debt["id"],
                                 person: debt["person"],
                                 description: debt["description"],
                                 value: debt["value"].toDouble(),

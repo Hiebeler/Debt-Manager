@@ -30,5 +30,9 @@
   "english": "Englisch",
   "german": "Deutsch",
 
-  "logout": "Ausloggen"
+  "logout": "Ausloggen",
+
+  "friends": "Freunde",
+
+  "homescreen": "Startseite"
 }

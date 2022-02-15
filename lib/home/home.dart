@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/add_debt.dart';
 import 'package:debtmanager/home/Debt-Card/debt_card.dart';
+import 'package:debtmanager/home/side_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import '/generated/l10n.dart';
-import 'SideBar.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -37,6 +37,12 @@ class _HomeState extends State<Home> {
       } else {
         homeColor = green;
       }
+    });
+  }
+
+  void update() {
+    setState(() {
+
     });
   }
 
@@ -123,6 +129,7 @@ class _HomeState extends State<Home> {
                                 description: debt["description"],
                                 value: debt["value"].toDouble(),
                                 color: homeColor,
+                                update: update,
                               );
                             })
                           ],

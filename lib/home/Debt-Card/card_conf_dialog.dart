@@ -4,37 +4,45 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../home.dart';
+import '../add_debt.dart';
 
 class Card_conf_dialog extends StatefulWidget {
   final int debtId;
   final String field;
+  final Function update;
+  final Color color;
 
-  Card_conf_dialog({required this.debtId, required this.field});
+  Card_conf_dialog(
+      {required this.debtId, required this.field, required this.update, required this.color});
 
   @override
   State<Card_conf_dialog> createState() => _Card_conf_dialogState();
 }
 
 class _Card_conf_dialogState extends State<Card_conf_dialog> {
+  var collection = FirebaseFirestore.instance.collection('users');
+  var firebaseUser = FirebaseAuth.instance.currentUser;
+
   Future<bool> removeDebt() async {
-    var collection = FirebaseFirestore.instance.collection('users');
-    var firebaseUser = FirebaseAuth.instance.currentUser;
+    Map rightData = await getDebt();
+    collection.doc(firebaseUser?.uid).update({
+      widget.field: FieldValue.arrayRemove([rightData])
+    }).whenComplete(() => print("Debt deleted"));
+    return true;
+  }
+
+  Future<Map> getDebt() async {
     var docSnapshot = await collection.doc(firebaseUser!.uid).get();
+    Map rightData = {};
     if (docSnapshot.exists) {
       List<dynamic> data = docSnapshot.data()![widget.field];
-      Map rightData = {};
       for (Map i in data) {
         if (i["id"] == widget.debtId) {
           rightData = i;
         }
       }
-
-      collection.doc(firebaseUser.uid).update({
-        widget.field: FieldValue.arrayRemove([rightData])
-      }).whenComplete(() => print("Debt deleted"));
     }
-    return true;
+    return rightData;
   }
 
   @override
@@ -55,15 +63,22 @@ class _Card_conf_dialogState extends State<Card_conf_dialog> {
               child: Text("Delete"),
               style: ElevatedButton.styleFrom(primary: Colors.red),
               onPressed: () {
-                removeDebt();
-                Navigator.of(context).pop();
+                removeDebt()
+                    .then((value) => {
+                          widget.update(),
+                        })
+                    .then((value) => Navigator.of(context).pop());
               },
             ),
             ElevatedButton(
               child: Text("Change"),
               style: ElevatedButton.styleFrom(primary: Colors.green),
               onPressed: () {
-                Navigator.of(context).pop();
+                getDebt().then((value) => {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AddDebt.changeDebt(
+                              widget.color, value["person"], value["description"], value["value"], value["id"])))
+                    });
               },
             ),
             ElevatedButton(

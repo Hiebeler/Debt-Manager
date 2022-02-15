@@ -8,66 +8,101 @@ import 'home.dart';
 
 class AddDebt extends StatefulWidget {
   final Color color;
+  String person = "";
+  String description = "";
+  double value = 0;
+  int id = -1;
 
   AddDebt({required this.color});
 
+  AddDebt.changeDebt(
+      this.color, this.person, this.description, this.value, this.id);
+
   @override
-  State<AddDebt> createState() => _AddDebtState();
+  State<AddDebt> createState() => _AddDebtState(person, description, value, id);
 }
 
 class _AddDebtState extends State<AddDebt> {
   bool isIOwe = false;
-
   var person = "";
-
   var description = "";
-
   double value = 0;
+  int id = -1;
 
-  String getDebt() {
-    final String debt;
+  _AddDebtState(this.person, this.description, this.value, this.id);
+
+  var collection = FirebaseFirestore.instance.collection('users');
+  var firebaseUser = FirebaseAuth.instance.currentUser;
+
+  String getIOweOrIGet() {
     if (isIOwe) {
-      return debt = "debts_Iowe";
+      return "debts_Iowe";
     } else {
-      return debt = "debts_Iget";
+      return "debts_Iget";
     }
   }
 
-  void addDebttoDB(int maxId) {
+  Future<Map> getDebt() async {
+    int maxId = 0;
+    Map rightDebt = {};
+    var docSnapshot = await collection.doc(firebaseUser!.uid).get();
+    if (docSnapshot.exists && docSnapshot.data()![getIOweOrIGet()] != null) {
+      List<dynamic> data = docSnapshot.data()![getIOweOrIGet()];
+      if (data.isEmpty) {
+        return rightDebt;
+      }
+      rightDebt = data[0];
+      for (Map i in data) {
+        print(i["id"]);
+        if (id != -1) {
+          if (i["id"] == id) {
+            rightDebt = i;
+          }
+        } else {
+          if (i["id"] > maxId) {
+            maxId = i["id"];
+            rightDebt = i;
+          }
+        }
+      }
+      return rightDebt;
+    } else {
+      return rightDebt;
+    }
+  }
+
+  Future<bool> removeDebt() async {
+    Map rightData = await getDebt();
+    collection.doc(firebaseUser?.uid).update({
+      getIOweOrIGet(): FieldValue.arrayRemove([rightData])
+    }).whenComplete(() => print("Debt deleted"));
+    return true;
+  }
+
+  Future<int> debtId() async {
+    if (id == -1) {
+      int maxId = 0;
+      await getDebt().then((value) => {
+            if (value["id"] != null) {maxId = value["id"] + 1}
+          });
+      return maxId;
+    } else {
+      await removeDebt();
+      return id;
+    }
+  }
+
+  Future addDebttoDB() async {
+    int id = await debtId();
     var firebaseUser = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
         .update({
-      getDebt(): FieldValue.arrayUnion([
-        {
-          "id": maxId,
-          "person": person,
-          "description": description,
-          "value": value
-        }
+      getIOweOrIGet(): FieldValue.arrayUnion([
+        {"id": id, "person": person, "description": description, "value": value}
       ])
     }).then((value) => {print("success")});
-  }
-
-  Future<bool> maxId() async {
-    int maxId = 0;
-    var collection = FirebaseFirestore.instance.collection('users');
-    var firebaseUser = FirebaseAuth.instance.currentUser;
-    var docSnapshot = await collection.doc(firebaseUser!.uid).get();
-    if (docSnapshot.exists && docSnapshot.data()![getDebt()] != null) {
-      List<dynamic> data = docSnapshot.data()![getDebt()];
-      for (Map i in data) {
-        print(i["id"]);
-        if (i["id"] > maxId) {
-          maxId = i["id"];
-        }
-      }
-      maxId = maxId + 1;
-      addDebttoDB(maxId);
-    } else {
-      addDebttoDB(maxId);
-    }
     return true;
   }
 
@@ -111,6 +146,7 @@ class _AddDebtState extends State<AddDebt> {
                     )
                   ]),
                   TextField(
+                    controller: TextEditingController(text: person),
                     onChanged: (input) => {person = input},
                     decoration: InputDecoration(
                       hintText: S.of(context).person,
@@ -123,6 +159,7 @@ class _AddDebtState extends State<AddDebt> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    controller: TextEditingController(text: description),
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     onChanged: (input) => {description = input},
@@ -137,6 +174,7 @@ class _AddDebtState extends State<AddDebt> {
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
+                    controller: TextEditingController(text: value != 0 ? value.toString() : ""),
                     keyboardType: TextInputType.number,
                     onChanged: (input) => {value = double.parse(input)},
                     decoration: InputDecoration(
@@ -151,7 +189,7 @@ class _AddDebtState extends State<AddDebt> {
                   const SizedBox(height: 35),
                   ElevatedButton(
                     onPressed: () => {
-                      maxId().then((value) => {
+                      addDebttoDB().then((value) => {
                             if (value)
                               {
                                 Navigator.of(context).pushReplacement(

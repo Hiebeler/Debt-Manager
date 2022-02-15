@@ -8,6 +8,7 @@ class DebtCard extends StatelessWidget {
   final Color color;
   final int debtId;
   final String field;
+  final Function update;
 
   const DebtCard(
       {
@@ -16,7 +17,8 @@ class DebtCard extends StatelessWidget {
         required this.person,
       required this.description,
       required this.value,
-      required this.color});
+      required this.color,
+      required this.update});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class DebtCard extends StatelessWidget {
                       constraints: const BoxConstraints(),
                       icon: const Icon(Icons.more_vert),
                       onPressed: () {
-                        Card_conf_dialog alert = Card_conf_dialog(debtId: debtId, field: field,);
+                        Card_conf_dialog alert = Card_conf_dialog(debtId: debtId, field: field, update: update, color: color,);
 
                         showDialog(
                           context: context,

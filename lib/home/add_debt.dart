@@ -12,14 +12,15 @@ class AddDebt extends StatefulWidget {
   String description = "";
   double value = 0;
   int id = -1;
+  bool isIOwe = false;
 
   AddDebt({required this.color});
 
   AddDebt.changeDebt(
-      this.color, this.person, this.description, this.value, this.id);
+      this.color, this.person, this.description, this.value, this.id, this.isIOwe);
 
   @override
-  State<AddDebt> createState() => _AddDebtState(person, description, value, id);
+  State<AddDebt> createState() => _AddDebtState(person, description, value, id, isIOwe);
 }
 
 class _AddDebtState extends State<AddDebt> {
@@ -29,7 +30,7 @@ class _AddDebtState extends State<AddDebt> {
   double value = 0;
   int id = -1;
 
-  _AddDebtState(this.person, this.description, this.value, this.id);
+  _AddDebtState(this.person, this.description, this.value, this.id, this.isIOwe);
 
   var collection = FirebaseFirestore.instance.collection('users');
   var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -134,8 +135,9 @@ class _AddDebtState extends State<AddDebt> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  id == -1 ?
                   Row(children: [
-                    const Text("I owe Somebody?"),
+                    Text("I owe Somebody?"),
                     Switch(
                       value: isIOwe,
                       onChanged: (bool value) {
@@ -144,7 +146,7 @@ class _AddDebtState extends State<AddDebt> {
                         });
                       },
                     )
-                  ]),
+                  ]) : Container(),
                   TextField(
                     controller: TextEditingController(text: person),
                     onChanged: (input) => {person = input},
@@ -176,7 +178,11 @@ class _AddDebtState extends State<AddDebt> {
                   TextFormField(
                     controller: TextEditingController(text: value != 0 ? value.toString() : ""),
                     keyboardType: TextInputType.number,
-                    onChanged: (input) => {value = double.parse(input)},
+                    onChanged: (input) => {
+                      if (input != "") {
+                        value = double.parse(input)
+                      }
+                    },
                     decoration: InputDecoration(
                       hintText: S.of(context).value,
                       enabledBorder:

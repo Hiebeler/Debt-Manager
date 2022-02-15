@@ -22,7 +22,14 @@ class Card_conf_dialog extends StatefulWidget {
 class _Card_conf_dialogState extends State<Card_conf_dialog> {
   var collection = FirebaseFirestore.instance.collection('users');
   var firebaseUser = FirebaseAuth.instance.currentUser;
+  bool isIOwe = false;
 
+  bool getIsIOwe() {
+    if(widget.field == "debts_Iowe") {
+      return true;
+    }
+    return false;
+  }
   Future<bool> removeDebt() async {
     Map rightData = await getDebt();
     collection.doc(firebaseUser?.uid).update({
@@ -77,7 +84,7 @@ class _Card_conf_dialogState extends State<Card_conf_dialog> {
                 getDebt().then((value) => {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => AddDebt.changeDebt(
-                              widget.color, value["person"], value["description"], value["value"], value["id"])))
+                              widget.color, value["person"], value["description"], value["value"], value["id"], getIsIOwe())))
                     });
               },
             ),

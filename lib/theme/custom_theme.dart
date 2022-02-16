@@ -3,22 +3,28 @@ import 'package:flutter/material.dart';
 class CustomTheme {
   static ThemeData get darkTheme {
     TextTheme txtTheme = const TextTheme(
-      bodyText1: TextStyle(
-        fontSize: 14,
-        color: Color.fromRGBO(121, 121, 121, 1),
-      ),
-      headline1: TextStyle(
-        fontSize: 20,
-        color: Colors.white,
-        fontWeight: FontWeight.w600,
-        fontFamily: "Roboto"
-      ),
-      headline2: TextStyle(
-      fontSize: 16,
-      color: Colors.white,
-      fontWeight: FontWeight.w500,
-    )
-    );
+        bodyText1: TextStyle(
+          fontSize: 14,
+          color: Color.fromRGBO(121, 121, 121, 1),
+        ),
+        bodyText2: TextStyle(
+          fontSize: 17,
+          color: Color.fromRGBO(121, 121, 121, 1),
+        ),
+        headline1: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontFamily: "Roboto"),
+        headline2: TextStyle(
+          fontSize: 16,
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+        ),
+        headline3: TextStyle(
+            fontSize: 20,
+            color: Color.fromRGBO(121, 121, 121, 1),
+            fontWeight: FontWeight.w600));
 
     InputDecorationTheme textFieldTheme = const InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
@@ -65,17 +71,24 @@ class CustomTheme {
           fontSize: 14,
           color: Color.fromRGBO(45, 45, 45, 1.0),
         ),
+        bodyText2: TextStyle(
+          fontSize: 17,
+          color: Color.fromRGBO(45, 45, 45, 1.0),
+        ),
         headline1: TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
+          fontSize: 20,
+          color: Colors.black,
+          fontWeight: FontWeight.w600,
         ),
         headline2: TextStyle(
-        fontSize: 16,
-        color: Colors.black,
-        fontWeight: FontWeight.w500,
-    )
-    );
+          fontSize: 16,
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
+        headline3: TextStyle(
+            fontSize: 20,
+            color: Color.fromRGBO(45, 45, 45, 1.0),
+            fontWeight: FontWeight.w600));
 
     InputDecorationTheme textFieldTheme = const InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
@@ -83,14 +96,14 @@ class CustomTheme {
           Radius.circular(8.0),
         ),
         borderSide:
-        BorderSide(color: Color.fromRGBO(121, 121, 121, 1.0), width: 2.7),
+            BorderSide(color: Color.fromRGBO(121, 121, 121, 1.0), width: 2.7),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(8.0),
         ),
         borderSide:
-        BorderSide(color: Color.fromRGBO(121, 121, 121, 1.0), width: 2.7),
+            BorderSide(color: Color.fromRGBO(121, 121, 121, 1.0), width: 2.7),
       ),
     );
 

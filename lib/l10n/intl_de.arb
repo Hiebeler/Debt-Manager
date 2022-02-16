@@ -4,6 +4,7 @@
   "or" : "oder",
   "firstname" : "Vorname",
   "lastname" : "Nachname",
+  "username": "Username",
   "email" : "Email",
   "password" : "Passwort",
   "confirmpassword" : "Passwort bestätigen",

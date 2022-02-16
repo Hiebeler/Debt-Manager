@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/authentication/sign_in.dart';
 import 'package:debtmanager/error_dialog.dart';
@@ -8,17 +10,33 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '/generated/l10n.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   SignUp({Key? key}) : super(key: key);
 
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   String firstName = "";
+
   String lastName = "";
+
+  String username = "";
+
   String? email = "";
+
   String password = "";
+
   String confpassword = "";
 
+  Color usernameBorderColor = const Color.fromRGBO(121, 121, 121, 1);
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  late StreamSubscription subscription;
 
   get user => _auth.currentUser;
 
@@ -54,10 +72,12 @@ class SignUp extends StatelessWidget {
   }
 
   void checkIfUserExists() {
-    FirebaseFirestore.instance.collection("users").doc(user!.uid).get().then((value) => {
-      if (!value.exists)
-        addUser()
-    });
+    var firebaseUser = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(firebaseUser!.uid)
+        .get()
+        .then((value) => {if (!value.exists) addUser()});
   }
 
   void addUser() {
@@ -68,15 +88,12 @@ class SignUp extends StatelessWidget {
     FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
-        .set({"email": email}).then((_) => print("success added User"));
+        .set({"email": email, "username": username}).then(
+            (_) => print("success added User"));
   }
 
-  //SIGN UP METHOD
-  Future<bool> signUp(BuildContext context) async {
-    bool worked = false;
-
-
-    if (email == "" || password == "" || confpassword == "") {
+  Future<bool> checkIfParametersAreRight(BuildContext context) async {
+    if (username == "" || email == "" || password == "" || confpassword == "") {
       errorDialog(context, "Missing arguments");
       return false;
     } else if (password != confpassword) {
@@ -87,6 +104,30 @@ class SignUp extends StatelessWidget {
       errorDialog(context, "email isnt right");
       return false;
     }
+
+    subscription = FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isEqualTo: username)
+        .snapshots()
+        .listen((data) {
+      if (data.docs.isNotEmpty) {
+        errorDialog(context, "username already exits safsadfasdfasdf");
+      }
+    });
+
+    return true;
+  }
+
+  //SIGN UP METHOD
+  Future<bool> signUp(BuildContext context) async {
+    bool worked = false;
+
+    bool parametersAreRight = await checkIfParametersAreRight(context);
+    if (!parametersAreRight) {
+      return false;
+    }
+    subscription.cancel();
+
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email.toString(),
@@ -163,6 +204,49 @@ class SignUp extends StatelessWidget {
                 Text(S.of(context).or,
                     style: Theme.of(context).textTheme.bodyText1),
                 const SizedBox(height: 30),
+                const SizedBox(height: 20),
+                TextField(
+                  onChanged: (input) {
+                    username = input;
+                  },
+                  onSubmitted: (input) {
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .where('username', isEqualTo: username)
+                        .snapshots().listen((data) {
+                      if (data.docs.isNotEmpty) {
+                        errorDialog(context, "username already exits");
+                        setState(() {
+                          usernameBorderColor =
+                              Theme.of(context).colorScheme.secondaryVariant;
+                        });
+                      } else {
+                        setState(() {
+                          usernameBorderColor =
+                              Theme.of(context).colorScheme.onSecondary;
+                        });
+                      }
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: S.of(context).username,
+                    enabledBorder: Theme.of(context)
+                        .inputDecorationTheme
+                        .enabledBorder
+                        ?.copyWith(
+                          borderSide: BorderSide(
+                              color: usernameBorderColor, width: 2.7),
+                        ),
+                    focusedBorder: Theme.of(context)
+                        .inputDecorationTheme
+                        .enabledBorder
+                        ?.copyWith(
+                          borderSide: BorderSide(
+                              color: usernameBorderColor, width: 2.7),
+                        ),
+                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
                 const SizedBox(height: 20),
                 TextField(
                   onChanged: (input) {

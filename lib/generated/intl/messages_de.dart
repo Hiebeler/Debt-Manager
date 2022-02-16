@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signUp_google":
             MessageLookupByLibrary.simpleMessage("Über Google Anmelden"),
         "theme": MessageLookupByLibrary.simpleMessage("Design"),
+        "username": MessageLookupByLibrary.simpleMessage("Username"),
         "value": MessageLookupByLibrary.simpleMessage("Wert")
       };
 }

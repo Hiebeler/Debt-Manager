@@ -137,7 +137,7 @@ class _AddDebtState extends State<AddDebt> {
                 children: [
                   id == -1 ?
                   Row(children: [
-                    Text("I owe Somebody?"),
+                    const Text("I owe Somebody?"),
                     Switch(
                       value: isIOwe,
                       onChanged: (bool value) {

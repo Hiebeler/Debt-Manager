@@ -41,9 +41,7 @@ class _HomeState extends State<Home> {
   }
 
   void update() {
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override

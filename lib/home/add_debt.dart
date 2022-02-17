@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:debtmanager/home/entity/debt.dart';
+import 'package:debtmanager/home/entity/debt_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '/generated/l10n.dart';
 import '../error_dialog.dart';
+import 'data_repository.dart';
 import 'home.dart';
 
 class AddDebt extends StatefulWidget {
@@ -95,7 +98,7 @@ class _AddDebtState extends State<AddDebt> {
 
   Future addDebttoDB() async {
     int id = await debtId();
-    var firebaseUser = FirebaseAuth.instance.currentUser;
+
     FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
@@ -198,9 +201,7 @@ class _AddDebtState extends State<AddDebt> {
                       addDebttoDB().then((value) => {
                             if (value)
                               {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => Home()))
+                                Navigator.of(context).pop()
                               }
                           }),
                     },

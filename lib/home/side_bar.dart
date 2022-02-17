@@ -52,7 +52,7 @@ class NavDrawer extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: Text(S.of(context).friends),
               onTap: () => {Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Friends()))},
+                  MaterialPageRoute(builder: (context) => Friends()))},
             ),
             ListTile(
               leading: const Icon(Icons.exit_to_app),

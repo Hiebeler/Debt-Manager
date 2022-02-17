@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/authentication/sign_in.dart';
 import 'package:debtmanager/error_dialog.dart';
+import 'package:debtmanager/home/data_repository.dart';
+import 'package:debtmanager/home/entity/debt_user.dart';
 import 'package:debtmanager/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -81,15 +83,12 @@ class _SignUpState extends State<SignUp> {
   }
 
   void addUser() {
-    var firebaseUser = FirebaseAuth.instance.currentUser;
+    final DataRepository repository = DataRepository();
     if (email == "") {
       email = _auth.currentUser?.email;
     }
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(firebaseUser!.uid)
-        .set({"email": email, "username": username}).then(
-            (_) => print("success added User"));
+    DebtUser user = DebtUser(email: email.toString(), username: username);
+    repository.addUser(user);
   }
 
   Future<bool> checkIfParametersAreRight(BuildContext context) async {

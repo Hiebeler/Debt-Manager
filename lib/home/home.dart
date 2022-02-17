@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/add_debt.dart';
 import 'package:debtmanager/home/Debt-Card/debt_card.dart';
@@ -6,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import '/generated/l10n.dart';
+import 'data_repository.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -15,6 +18,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final DataRepository repository = DataRepository();
   String IOweOrIGet = "I Owe";
   bool isIOwe = true;
   double iOweMargin = 0;
@@ -38,10 +42,6 @@ class _HomeState extends State<Home> {
         homeColor = green;
       }
     });
-  }
-
-  void update() {
-    setState(() {});
   }
 
   @override
@@ -103,8 +103,8 @@ class _HomeState extends State<Home> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: FutureBuilder(
-                    future: users.doc(firebaseUser!.uid).get(),
+                child: StreamBuilder(
+                    stream: repository.getStream(),
                     builder: (BuildContext context,
                         AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasData) {
@@ -127,7 +127,6 @@ class _HomeState extends State<Home> {
                                 description: debt["description"],
                                 value: debt["value"].toDouble(),
                                 color: homeColor,
-                                update: update,
                               );
                             })
                           ],

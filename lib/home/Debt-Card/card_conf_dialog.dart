@@ -9,11 +9,10 @@ import '../add_debt.dart';
 class Card_conf_dialog extends StatefulWidget {
   final int debtId;
   final String field;
-  final Function update;
   final Color color;
 
   Card_conf_dialog(
-      {required this.debtId, required this.field, required this.update, required this.color});
+      {required this.debtId, required this.field, required this.color});
 
   @override
   State<Card_conf_dialog> createState() => _Card_conf_dialogState();
@@ -30,6 +29,7 @@ class _Card_conf_dialogState extends State<Card_conf_dialog> {
     }
     return false;
   }
+
   Future<bool> removeDebt() async {
     Map rightData = await getDebt();
     collection.doc(firebaseUser?.uid).update({
@@ -71,9 +71,6 @@ class _Card_conf_dialogState extends State<Card_conf_dialog> {
               style: ElevatedButton.styleFrom(primary: Colors.red),
               onPressed: () {
                 removeDebt()
-                    .then((value) => {
-                          widget.update(),
-                        })
                     .then((value) => Navigator.of(context).pop());
               },
             ),

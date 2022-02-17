@@ -15,7 +15,7 @@ Map<String, dynamic> _userToJson(DebtUser instance) => <String, dynamic>{
       'email': instance.email,
       'username': instance.username,
       'debts_IGet': instance.debts_IGet,
-      'debts_IOwe': instance.debts_IOwe
+      'debts_IOwe': instance.debts_IOwe,
     };
 
 List<Map<String, dynamic>>? _debtsList(List<Debt>? debts) {

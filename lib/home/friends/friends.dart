@@ -1,13 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/friends/add_friend.dart';
+import 'package:debtmanager/home/friends/friendrequest_card.dart';
+import 'package:debtmanager/home/friends/friends_card.dart';
 import 'package:debtmanager/home/side_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../data_repository.dart';
 
-class Friends extends StatelessWidget {
+class Friends extends StatefulWidget {
   Friends({Key? key}) : super(key: key);
+
+  @override
+  State<Friends> createState() => _FriendsState();
+}
+
+class _FriendsState extends State<Friends> {
   final DataRepository repository = DataRepository();
+
+  String friendRequestOrFriends = "Friends";
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +67,28 @@ class Friends extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Friends",
-                        style: Theme.of(context).textTheme.bodyText2,
+                      GestureDetector(
+                        onTap: () => {
+                          setState(() {
+                            friendRequestOrFriends = "Friends";
+                          })
+                        },
+                        child: Text(
+                          "Friends",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                       ),
-                      Text(
-                        "Friend Requests",
-                        style: Theme.of(context).textTheme.bodyText2,
-                      )
+                      GestureDetector(
+                        onTap: () => {
+                          setState(() {
+                            friendRequestOrFriends = "Friend Requests";
+                          })
+                        },
+                        child: Text(
+                          "Friend Requests",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
                     ],
                   ),
                   Row(
@@ -75,37 +99,12 @@ class Friends extends StatelessWidget {
                       ))
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(const Radius.circular(3)),
-                            border: Border.all(
-                                width: 1.5,
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.person),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text("kim"),
-                              ],
-                            ),
-                          ),
+
+                  friendRequestOrFriends == "Friends"
+                      ? FriendsCard(data: data,)
+                      : FriendRequestCard(
+                          data: data,
                         ),
-                      ),
-                    ],
-                  )
                 ],
               );
             } else {
@@ -114,11 +113,12 @@ class Friends extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: ElevatedButton(onPressed: () {
-        AddFriend addFriend = AddFriend();
-        addFriend.showModal(context);
-      }, child: const Text("add friend")
-    ),
+      floatingActionButton: ElevatedButton(
+          onPressed: () {
+            AddFriend addFriend = AddFriend();
+            addFriend.showModal(context);
+          },
+          child: const Text("add friend")),
     );
   }
 }

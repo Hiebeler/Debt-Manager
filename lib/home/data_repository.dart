@@ -21,8 +21,11 @@ class DataRepository {
   }
 
   Stream<QuerySnapshot> getUsernames(String username) {
-    username = "hiebeler05";
-    return collection.where("username", isEqualTo: username).snapshots();
+    return collection.where("username", isGreaterThanOrEqualTo: username).where("username", isLessThan: username + "z").snapshots();
+  }
+
+  Stream<QuerySnapshot> getStreamFriendRequests(String username) {
+    return collection.where("friendRequests", arrayContains: {"name": username}).snapshots();
   }
 
 }

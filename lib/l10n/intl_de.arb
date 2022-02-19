@@ -15,8 +15,8 @@
   "dontHaveAcc" : "Keinen Account?",
 
   "debtManager" : "Schulden-Manager",
-  "iOwe" : "Ich Schulde",
-  "iGet" : "Ich bekomme",
+  "iOwe" : "Schulden",
+  "iGet" : "Forderungen",
 
   "person" : "Person",
   "description" : "Beschreibung",

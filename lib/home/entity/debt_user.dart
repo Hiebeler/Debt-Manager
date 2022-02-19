@@ -3,10 +3,11 @@ import 'debt.dart';
 class DebtUser {
   String? email;
   String? username;
+  String? profilePicture;
   List<Debt>? debts_IGet;
   List<Debt>? debts_IOwe;
 
-  DebtUser({this.email, this.username, this.debts_IGet, this.debts_IOwe});
+  DebtUser({this.email, this.username,this.profilePicture, this.debts_IGet, this.debts_IOwe});
 
   Map<String, dynamic> toJson() => _userToJson(this);
 }

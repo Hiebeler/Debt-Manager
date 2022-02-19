@@ -212,7 +212,8 @@ class _SignUpState extends State<SignUp> {
                     FirebaseFirestore.instance
                         .collection('users')
                         .where('username', isEqualTo: username)
-                        .snapshots().listen((data) {
+                        .snapshots()
+                        .listen((data) {
                       if (data.docs.isNotEmpty) {
                         errorDialog(context, "username already exits");
                         setState(() {
@@ -319,30 +320,33 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(S.of(context).alreadyHaveAcc,
-                        style: Theme.of(context).textTheme.bodyText1),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    MaterialButton(
-                      onPressed: () => {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => SignIn()))
-                      },
-                      child: Text(
-                        S.of(context).signIn,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(S.of(context).alreadyHaveAcc,
+                          style: Theme.of(context).textTheme.bodyText1),
+                      const SizedBox(
+                        width: 10,
                       ),
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                    )
-                  ],
-                )
+                      MaterialButton(
+                        onPressed: () => {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => SignIn()))
+                        },
+                        child: Text(
+                          S.of(context).signIn,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

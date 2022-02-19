@@ -132,7 +132,7 @@ class FriendRequestCard extends StatelessWidget {
               ],
             );
           } else {
-            return const Text("No Friend Requests yet");
+            return Container();
           }
         });
   }

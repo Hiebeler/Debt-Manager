@@ -1,6 +1,6 @@
+import 'package:debtmanager/authentication/sign_up.dart';
 import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/home.dart';
-import 'package:debtmanager/authentication/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -176,29 +176,33 @@ class SignIn extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(S.of(context).dontHaveAcc,
-                          style: Theme.of(context).textTheme.bodyText1),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      MaterialButton(
-                        onPressed: () => {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => SignUp()))
-                        },
-                        child: Text(
-                          S.of(context).signUp,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(S.of(context).dontHaveAcc,
+                            style: Theme.of(context).textTheme.bodyText1),
+                        const SizedBox(
+                          width: 10,
                         ),
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                      )
-                    ],
+                        MaterialButton(
+                          onPressed: () => {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => SignUp()))
+                          },
+                          child: Text(
+                            S.of(context).signUp,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),

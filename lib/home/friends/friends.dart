@@ -1,14 +1,21 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/friends/add_friend.dart';
 import 'package:debtmanager/home/friends/friendrequest_card.dart';
 import 'package:debtmanager/home/friends/friends_card.dart';
+import 'package:debtmanager/home/friends/get_profile_image.dart';
 import 'package:debtmanager/home/side_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import '../data_repository.dart';
 
 class Friends extends StatefulWidget {
-  Friends({Key? key}) : super(key: key);
+  const Friends({Key? key}) : super(key: key);
 
   @override
   State<Friends> createState() => _FriendsState();
@@ -18,6 +25,51 @@ class _FriendsState extends State<Friends> {
   final DataRepository repository = DataRepository();
 
   String friendRequestOrFriends = "Friends";
+  bool _friendRequestIsSelected = false;
+  bool _friendsIsSelected = true;
+  File? image;
+
+  Future getImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      final File? imageTemporary = File(image.path);
+      this.image = imageTemporary;
+    } on PlatformException catch (e) {
+      print("failed to pick image $e");
+    }
+  }
+
+  Future uploadProfileImage(String username) async {
+    String url = "/profilePictures/$username.jpg";
+
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref("/profilePictures/$username.jpg")
+          .delete();
+    } catch (e) {
+      print("doesnt already exists");
+    }
+
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref("profilePictures/$username.jpg")
+          .putFile(image!);
+    } catch (e) {
+      print(e);
+    }
+
+    await saveToDb(url);
+  }
+
+  Future saveToDb(String url) async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(firebaseUser!.uid)
+        .update({"profilePicture": url});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +93,44 @@ class _FriendsState extends State<Friends> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(
-                        Icons.person,
-                        color: Theme.of(context).colorScheme.onSecondary,
-                        size: 100,
+                      GestureDetector(
+                        onTap: () {
+                          getImage().then((value) {
+                            uploadProfileImage(data["username"])
+                                .then((value) => setState(() {}));
+                          });
+                        },
+                        child: FutureBuilder(
+                            future:
+                                GetProfileImage().getImageFromFirebase(data["profilePicture"]),
+                            builder: (context, snapshot) {
+                              if (snapshot.data == "" ||
+                                  snapshot.data == null) {
+                                return CircleAvatar(
+                                  backgroundColor: const Color(0xff626262),
+                                  radius: 60,
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                    size: 80,
+                                  ),
+                                );
+                              } else {
+                                return Container(
+                                    width: 130.0,
+                                    height: 130.0,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(
+                                                snapshot.data.toString())
+                                        )
+                                    ));
+                              }
+                            }),
                       ),
                       Text(data["username"],
                           style: Theme.of(context).textTheme.headline3)
@@ -67,41 +153,36 @@ class _FriendsState extends State<Friends> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () => {
+                      ChoiceChip(
+                        label: const Text("Friends"),
+                        selected: _friendsIsSelected,
+                        selectedColor: Theme.of(context).colorScheme.primary,
+                        onSelected: (newBoolValue) {
                           setState(() {
+                            _friendsIsSelected = true;
+                            _friendRequestIsSelected = false;
                             friendRequestOrFriends = "Friends";
-                          })
+                          });
                         },
-                        child: Text(
-                          "Friends",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
                       ),
-                      GestureDetector(
-                        onTap: () => {
+                      ChoiceChip(
+                        label: const Text("Friend Request"),
+                        selected: _friendRequestIsSelected,
+                        selectedColor: Theme.of(context).colorScheme.primary,
+                        onSelected: (newBoolValue) {
                           setState(() {
+                            _friendRequestIsSelected = true;
+                            _friendsIsSelected = false;
                             friendRequestOrFriends = "Friend Requests";
-                          })
+                          });
                         },
-                        child: Text(
-                          "Friend Requests",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ),
+                      )
                     ],
                   ),
-                  Row(
-                    children: const [
-                      Expanded(
-                          child: Divider(
-                        color: Colors.white,
-                      ))
-                    ],
-                  ),
-
                   friendRequestOrFriends == "Friends"
-                      ? FriendsCard(data: data,)
+                      ? FriendsCard(
+                          data: data,
+                        )
                       : FriendRequestCard(
                           data: data,
                         ),

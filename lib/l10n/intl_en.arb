@@ -35,6 +35,10 @@
 
   "friends": "Friends",
 
-  "homescreen": "Home"
+  "homescreen": "Home",
+
+  "stats" : "Statistics",
+
+  "profile" : "Profile"
 
 }

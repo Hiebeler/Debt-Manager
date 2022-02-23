@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "or": MessageLookupByLibrary.simpleMessage("oder"),
         "password": MessageLookupByLibrary.simpleMessage("Passwort"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
+        "profile": MessageLookupByLibrary.simpleMessage("Profil"),
         "settings": MessageLookupByLibrary.simpleMessage("Einstellungen"),
         "signIn": MessageLookupByLibrary.simpleMessage("Einloggen"),
         "signIn_google":
@@ -54,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signUp": MessageLookupByLibrary.simpleMessage("Registrieren"),
         "signUp_google":
             MessageLookupByLibrary.simpleMessage("Über Google Anmelden"),
+        "stats": MessageLookupByLibrary.simpleMessage("Statistiken"),
         "theme": MessageLookupByLibrary.simpleMessage("Design"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "value": MessageLookupByLibrary.simpleMessage("Wert")

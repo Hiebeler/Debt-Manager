@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../data_repository.dart';
+import 'data_repository.dart';
 
 class Friends extends StatefulWidget {
   const Friends({Key? key}) : super(key: key);
@@ -71,6 +71,34 @@ class _FriendsState extends State<Friends> {
         .doc(firebaseUser!.uid)
         .update({"profilePicture": url});
   }
+  double getTotalDebts(data){
+    double sum = 0;
+    double sumiget = 0;
+    double sumiowe = 0;
+
+    if (data["debts_Iget"] != null) {
+      List iget = data["debts_Iget"];
+      iget.forEach((element) {
+        sumiget += element["value"];
+      });
+    }
+    if (data["debts_Iowe"] != null) {
+      List iget = data["debts_Iowe"];
+      iget.forEach((element) {
+        sumiowe += element["value"];
+      });
+    }
+    sum = sumiget - sumiowe;
+    return sum;
+  }
+
+  Color textColor(double sum){
+    Color textcolor = Theme.of(context).colorScheme.secondaryVariant;
+    if(sum >= 0){
+      textcolor = Theme.of(context).colorScheme.secondary;
+    }
+    return textcolor;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +118,7 @@ class _FriendsState extends State<Friends> {
               String uid = snapshot.data!.id;
               Map<String, dynamic> data =
                   snapshot.data!.data() as Map<String, dynamic>;
+                  double sum = getTotalDebts(data);
               return Column(
                 children: [
                   Row(
@@ -157,6 +186,19 @@ class _FriendsState extends State<Friends> {
                         const SizedBox(width: 20),
                         Text(data["email"],
                             style: Theme.of(context).textTheme.bodyText1),
+                      ],
+                    ),
+                  ),
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("Balance: ",
+                            style: Theme.of(context).textTheme.bodyText1),
+                        const SizedBox(width: 20),
+                        Text(sum.toString(),
+                            style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textColor(sum))),
                       ],
                     ),
                   ),

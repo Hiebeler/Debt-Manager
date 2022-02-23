@@ -157,6 +157,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: null,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
         title: Center(child: Text(S.of(context).signUp)),

@@ -1,8 +1,9 @@
-import 'package:debtmanager/home/friends/friends.dart';
+import 'package:debtmanager/home/profile.dart';
 import 'package:debtmanager/settings.dart';
 import 'package:debtmanager/authentication/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../stats.dart';
 import '/generated/l10n.dart';
 import 'home.dart';
 
@@ -50,12 +51,18 @@ class NavDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.person),
-              title: Text(S.of(context).friends),
+              title: Text(S.of(context).profile),
               onTap: () => {Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Friends()))},
+                  MaterialPageRoute(builder: (context) => const Friends()))},
             ),
             ListTile(
-              leading: const Icon(Icons.exit_to_app),
+              leading: const Icon(Icons.show_chart),
+              title: Text(S.of(context).stats),
+              onTap: () => {Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Stats()))},
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
               title: Text(S.of(context).logout),
               onTap: () => {
                 loggout().then((value) => {

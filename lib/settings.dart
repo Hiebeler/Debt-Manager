@@ -44,7 +44,7 @@ class _SettingsState extends State<Settings> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Text(
                 S.of(context).theme,
                 style: Theme.of(context).textTheme.headline2,

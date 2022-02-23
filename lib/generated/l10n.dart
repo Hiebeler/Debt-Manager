@@ -349,6 +349,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Statistics`
+  String get stats {
+    return Intl.message(
+      'Statistics',
+      name: 'stats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message(
+      'Profile',
+      name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

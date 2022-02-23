@@ -35,5 +35,9 @@
 
   "friends": "Freunde",
 
-  "homescreen": "Startseite"
+  "homescreen": "Startseite",
+
+  "stats" : "Statistiken",
+
+  "profile" : "Profil"
 }

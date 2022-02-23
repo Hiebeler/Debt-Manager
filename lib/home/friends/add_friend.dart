@@ -4,15 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddFriend {
-
-  void addFriendRequest(String name) {
+  void addFriendRequest(String uid) {
     var firebaseUser = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
         .update({
-       "friendRequests": FieldValue.arrayUnion([
-        {"name": name}
+      "friendRequests": FieldValue.arrayUnion([
+        {"uid": uid}
       ])
     }).then((value) => {print("success")});
   }
@@ -61,16 +60,19 @@ class AddFriend {
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (snapshot.hasData) {
-                          List<String> usernames = [];
+                          List<Map> uidAndUsername = [];
                           snapshot.data!.docs.forEach((element) {
-                            usernames.add(element["username"]);
+                            uidAndUsername.add({
+                              "uid": element.id,
+                              "username": element["username"]
+                            });
                           });
-                          if (username != "" && usernames == []) {
+                          if (username != "" && uidAndUsername == []) {
                             return const Text("no Users found");
                           } else if (username != "") {
                             return Column(
                               children: [
-                                ...(usernames).map((debt) {
+                                ...(uidAndUsername).map((debt) {
                                   return Center(
                                     child: Card(
                                       child: Column(
@@ -83,10 +85,11 @@ class AddFriend {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Text(debt),
+                                                  Text(debt["username"]),
                                                   GestureDetector(
                                                     onTap: () => {
-                                                      addFriendRequest(debt)
+                                                      addFriendRequest(
+                                                          debt["uid"])
                                                     },
                                                     child: const Icon(
                                                         Icons.person_add_alt_1),

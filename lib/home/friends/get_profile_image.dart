@@ -16,15 +16,4 @@ class GetProfileImage {
     print(downloadURL);
     return downloadURL;
   }
-
-  Future<String> getFriendsImageFromFirebase(String username) async{
-    String test1 = "";
-    await FirebaseFirestore.instance.collection("users").where("username", isEqualTo: username).get().then((event) {
-      event.docs.forEach((element) {
-        test1 = element["profilePicture"];
-      });
-    });
-
-    return getImageFromFirebase(test1);
-  }
 }

@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../data_repository.dart';
 
 class Friends extends StatefulWidget {
@@ -86,6 +87,7 @@ class _FriendsState extends State<Friends> {
           builder:
               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
             if (snapshot.hasData) {
+              String uid = snapshot.data!.id;
               Map<String, dynamic> data =
                   snapshot.data!.data() as Map<String, dynamic>;
               return Column(
@@ -101,8 +103,8 @@ class _FriendsState extends State<Friends> {
                           });
                         },
                         child: FutureBuilder(
-                            future:
-                                GetProfileImage().getImageFromFirebase(data["profilePicture"]),
+                            future: GetProfileImage()
+                                .getImageFromFirebase(data["profilePicture"]),
                             builder: (context, snapshot) {
                               if (snapshot.data == "" ||
                                   snapshot.data == null) {
@@ -126,30 +128,39 @@ class _FriendsState extends State<Friends> {
                                         image: DecorationImage(
                                             fit: BoxFit.fill,
                                             image: NetworkImage(
-                                                snapshot.data.toString())
-                                        )
-                                    ));
+                                                snapshot.data.toString()))));
                               }
                             }),
                       ),
-                      Text(data["username"],
-                          style: Theme.of(context).textTheme.headline3)
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(data["username"],
+                                style: Theme.of(context).textTheme.headline3),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("email: ",
-                          style: Theme.of(context).textTheme.bodyText1),
-                      const SizedBox(width: 20),
-                      Text(data["email"],
-                          style: Theme.of(context).textTheme.bodyText1),
-                    ],
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("email: ",
+                            style: Theme.of(context).textTheme.bodyText1),
+                        const SizedBox(width: 20),
+                        Text(data["email"],
+                            style: Theme.of(context).textTheme.bodyText1),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -184,7 +195,7 @@ class _FriendsState extends State<Friends> {
                           data: data,
                         )
                       : FriendRequestCard(
-                          data: data,
+                    uid: uid,
                         ),
                 ],
               );

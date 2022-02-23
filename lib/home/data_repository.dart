@@ -25,7 +25,11 @@ class DataRepository {
   }
 
   Stream<QuerySnapshot> getStreamFriendRequests(String username) {
-    return collection.where("friendRequests", arrayContains: {"name": username}).snapshots();
+    return collection.where("friendRequests", arrayContains: {"uid": username}).snapshots();
+  }
+
+  Stream<DocumentSnapshot> getStreamFriends(String friendsUid) {
+    return collection.doc(friendsUid).snapshots();
   }
 
 }

@@ -4,17 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FriendRequestCard extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final String uid;
 
-  FriendRequestCard({required this.data});
+  FriendRequestCard({required this.uid});
 
   var firebaseUser = FirebaseAuth.instance.currentUser;
   DataRepository repository = DataRepository();
 
-  void acceptFriendRequest(String username, String uid, List friendRequests) {
-    addFriend(data["username"], uid);
-    addFriend(username, firebaseUser!.uid);
-    removeDebt(uid, friendRequests);
+  void acceptFriendRequest(String username, String friendsUid, List friendRequests) {
+    addFriend(friendsUid, firebaseUser!.uid);
+    addFriend(firebaseUser!.uid, friendsUid);
+    removeDebt(friendsUid, friendRequests);
   }
 
   void removeDebt(String uid, List friendRequests) async {
@@ -27,17 +27,17 @@ class FriendRequestCard extends StatelessWidget {
 
   Future<Map> getDebt(String uid, List friendRequests) async {
     for (Map friendRequest in friendRequests) {
-      if (friendRequest["name"] == data["username"]) {
+      if (friendRequest["uid"] == firebaseUser!.uid) {
         return friendRequest;
       }
     }
     return {};
   }
 
-  void addFriend(String name, String uid) {
+  void addFriend(String uid, String uidAdding) {
     FirebaseFirestore.instance.collection("users").doc(uid).update({
       "friends": FieldValue.arrayUnion([
-        {"name": name}
+        {"uid": uidAdding}
       ])
     }).then((value) => {print("success")});
   }
@@ -45,7 +45,7 @@ class FriendRequestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: repository.getStreamFriendRequests(data["username"]),
+        stream: repository.getStreamFriendRequests(uid),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             List<Map> friendRequests = [];

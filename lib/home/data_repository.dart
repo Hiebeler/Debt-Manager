@@ -12,6 +12,10 @@ class DataRepository {
     return collection.doc(firebaseUser!.uid).snapshots();
   }
 
+  Future<DocumentSnapshot> getCurrentDocument() {
+    return collection.doc(firebaseUser!.uid).get();
+  }
+
   void addUser(DebtUser user) async{
     await collection.doc(firebaseUser!.uid).set(user.toJson());
   }

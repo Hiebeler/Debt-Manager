@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:debtmanager/home/data_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import '/generated/l10n.dart';
 import '../error_dialog.dart';
-
 
 class AddDebt extends StatefulWidget {
   final Color color;
@@ -15,11 +16,12 @@ class AddDebt extends StatefulWidget {
 
   AddDebt({required this.color});
 
-  AddDebt.changeDebt(
-      this.color, this.person, this.description, this.value, this.id, this.isIOwe);
+  AddDebt.changeDebt(this.color, this.person, this.description, this.value,
+      this.id, this.isIOwe);
 
   @override
-  State<AddDebt> createState() => _AddDebtState(person, description, value, id, isIOwe);
+  State<AddDebt> createState() =>
+      _AddDebtState(person, description, value, id, isIOwe);
 }
 
 class _AddDebtState extends State<AddDebt> {
@@ -29,10 +31,37 @@ class _AddDebtState extends State<AddDebt> {
   double value = 0;
   int id = -1;
 
-  _AddDebtState(this.person, this.description, this.value, this.id, this.isIOwe);
+  _AddDebtState(
+      this.person, this.description, this.value, this.id, this.isIOwe);
 
   var collection = FirebaseFirestore.instance.collection('users');
   var firebaseUser = FirebaseAuth.instance.currentUser;
+  final DataRepository repository = DataRepository();
+  List<String> friends = [];
+
+  static const List<String> _kOptions = <String>[
+    'emanuel',
+    'bobcat',
+    'chameleon',
+  ];
+
+  @override
+  void initState() {
+    getAllFriends();
+    super.initState();
+  }
+
+  void getAllFriends() async {
+    List<dynamic> friendsMapList = [];
+    await repository
+        .getCurrentDocument()
+        .then((value) => friendsMapList = value["friends"]);
+    friendsMapList.forEach((element) {
+      repository.getStreamFriends(element["uid"]).listen((event) {
+        friends.add(event["username"]);
+      });
+    });
+  }
 
   String getIOweOrIGet() {
     if (isIOwe) {
@@ -134,23 +163,47 @@ class _AddDebtState extends State<AddDebt> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  id == -1 ?
-                  Row(children: [
-                    const Text("I owe Somebody?"),
-                    Switch(
-                      value: isIOwe,
-                      onChanged: (bool value) {
-                        setState(() {
-                          isIOwe = value;
-                        });
-                      },
-                    )
-                  ]) : Container(),
-                  TextField(
+                  id == -1
+                      ? Row(children: [
+                          const Text("I owe Somebody?"),
+                          Switch(
+                            value: isIOwe,
+                            onChanged: (bool value) {
+                              setState(() {
+                                isIOwe = value;
+                              });
+                            },
+                          )
+                        ])
+                      : Container(),
+                  Autocomplete(
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                    if (textEditingValue.text == '') {
+                      return const Iterable<String>.empty();
+                    }
+                    return friends.where((String option) {
+                      return option
+                          .contains(textEditingValue.text.toLowerCase());
+                    });
+                  }, fieldViewBuilder:
+                          (context, controller, focusNode, onEditingComplete) {
+                    return TextField(
+                      controller: controller,
+                      focusNode: focusNode,
+                      onEditingComplete: onEditingComplete,
+                      onChanged: (input) => {person = input},
+                      decoration: InputDecoration(
+                        hintText: S.of(context).person,
+                      ),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    );
+                  }, onSelected: (String selection) {
+                    debugPrint('You just selected $selection');
+                    person = selection;
+                  }),
+                  /* TextField(
                     controller: TextEditingController(text: person),
-                    onChanged: (input) => {
-                      person = input
-                    },
+                    onChanged: (input) => {person = input},
                     decoration: InputDecoration(
                       hintText: S.of(context).person,
                       enabledBorder:
@@ -159,7 +212,7 @@ class _AddDebtState extends State<AddDebt> {
                           Theme.of(context).inputDecorationTheme.focusedBorder,
                     ),
                     style: Theme.of(context).textTheme.bodyText1,
-                  ),
+                  ),*/
                   const SizedBox(height: 20),
                   TextField(
                     controller: TextEditingController(text: description),
@@ -177,12 +230,11 @@ class _AddDebtState extends State<AddDebt> {
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
-                    controller: TextEditingController(text: value != 0 ? value.toString() : ""),
+                    controller: TextEditingController(
+                        text: value != 0 ? value.toString() : ""),
                     keyboardType: TextInputType.number,
                     onChanged: (input) => {
-                      if (input != "") {
-                        value = double.parse(input)
-                      }
+                      if (input != "") {value = double.parse(input)}
                     },
                     decoration: InputDecoration(
                       hintText: S.of(context).value,
@@ -197,10 +249,7 @@ class _AddDebtState extends State<AddDebt> {
                   ElevatedButton(
                     onPressed: () => {
                       addDebttoDB().then((value) => {
-                            if (value)
-                              {
-                                Navigator.of(context).pop()
-                              }
+                            if (value) {Navigator.of(context).pop()}
                           }),
                     },
                     child: Text(S.of(context).addNewDebt,

@@ -1,10 +1,12 @@
+import 'package:debtmanager/authentication/sign_in.dart';
+import 'package:debtmanager/home/friendsDebts.dart';
 import 'package:debtmanager/home/profile.dart';
 import 'package:debtmanager/settings.dart';
-import 'package:debtmanager/authentication/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../stats.dart';
+
 import '/generated/l10n.dart';
+import '../stats.dart';
 import 'home.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -40,26 +42,42 @@ class NavDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.home),
               title: Text(S.of(context).homescreen),
-              onTap: () => {Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Home()))},
+              onTap: () => {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Home()))
+              },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: Text(S.of(context).settings),
-              onTap: () => {Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Settings()))},
+              onTap: () => {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Settings()))
+              },
             ),
             ListTile(
               leading: const Icon(Icons.person),
               title: Text(S.of(context).profile),
-              onTap: () => {Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Friends()))},
+              onTap: () => {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Friends()))
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: Text("Friends Debts"),
+              onTap: () => {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => FriendsDebts()))
+              },
             ),
             ListTile(
               leading: const Icon(Icons.show_chart),
               title: Text(S.of(context).stats),
-              onTap: () => {Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Stats()))},
+              onTap: () => {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Stats()))
+              },
             ),
             ListTile(
               leading: const Icon(Icons.logout),

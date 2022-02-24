@@ -1,12 +1,11 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:debtmanager/home/add_debt.dart';
 import 'package:debtmanager/home/Debt-Card/debt_card.dart';
+import 'package:debtmanager/home/add_debt.dart';
 import 'package:debtmanager/home/side_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+
 import '/generated/l10n.dart';
 import 'data_repository.dart';
 
@@ -52,92 +51,89 @@ class _HomeState extends State<Home> {
         backgroundColor: Theme.of(context).colorScheme.onBackground,
         title: Center(child: Text(S.of(context).debtManager)),
       ),
-      body: Container(
-        color: Theme.of(context).colorScheme.background,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: isIOwe
-                      ? Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(width: 3, color: homeColor),
-                            ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: isIOwe
+                    ? Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(width: 3, color: homeColor),
                           ),
-                          child: IGetIOweButton(
-                            text: S.of(context).iOwe,
-                            isIOwe: true,
-                            changeIOweOrIGet: changeIOweOrIGet,
-                          ),
-                        )
-                      : IGetIOweButton(
+                        ),
+                        child: IGetIOweButton(
                           text: S.of(context).iOwe,
                           isIOwe: true,
                           changeIOweOrIGet: changeIOweOrIGet,
                         ),
-                ),
-                Expanded(
-                  child: !isIOwe
-                      ? Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(width: 3, color: homeColor),
-                            ),
+                      )
+                    : IGetIOweButton(
+                        text: S.of(context).iOwe,
+                        isIOwe: true,
+                        changeIOweOrIGet: changeIOweOrIGet,
+                      ),
+              ),
+              Expanded(
+                child: !isIOwe
+                    ? Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(width: 3, color: homeColor),
                           ),
-                          child: IGetIOweButton(
-                            text: S.of(context).iGet,
-                            isIOwe: false,
-                            changeIOweOrIGet: changeIOweOrIGet,
-                          ),
-                        )
-                      : IGetIOweButton(
+                        ),
+                        child: IGetIOweButton(
                           text: S.of(context).iGet,
                           isIOwe: false,
                           changeIOweOrIGet: changeIOweOrIGet,
                         ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: StreamBuilder(
-                    stream: repository.getStream(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<DocumentSnapshot> snapshot) {
-                      if (snapshot.hasData) {
-                        String field = "debts_Iget";
-                        if (isIOwe) {
-                          field = "debts_Iowe";
-                        }
-                        Map<String, dynamic> data =
-                            snapshot.data!.data() as Map<String, dynamic>;
-                        if (data[field] == null) {
-                          return Container();
-                        }
-                        return Column(
-                          children: [
-                            ...(data[field]).map((debt) {
-                              return DebtCard(
-                                field: field,
-                                debtId: debt["id"],
-                                person: debt["person"],
-                                description: debt["description"],
-                                value: debt["value"].toDouble(),
-                                color: homeColor,
-                              );
-                            })
-                          ],
-                        );
-                      }
-                      return const CircularProgressIndicator();
-                    }),
+                      )
+                    : IGetIOweButton(
+                        text: S.of(context).iGet,
+                        isIOwe: false,
+                        changeIOweOrIGet: changeIOweOrIGet,
+                      ),
               ),
+            ],
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: StreamBuilder(
+                  stream: repository.getStream(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.hasData) {
+                      String field = "debts_Iget";
+                      if (isIOwe) {
+                        field = "debts_Iowe";
+                      }
+                      Map<String, dynamic> data =
+                          snapshot.data!.data() as Map<String, dynamic>;
+                      if (data[field] == null) {
+                        return Container();
+                      }
+                      return Column(
+                        children: [
+                          ...(data[field]).map((debt) {
+                            return DebtCard(
+                              field: field,
+                              debtId: debt["id"],
+                              person: debt["person"],
+                              description: debt["description"],
+                              value: debt["value"].toDouble(),
+                              color: homeColor,
+                            );
+                          })
+                        ],
+                      );
+                    }
+                    return const CircularProgressIndicator();
+                  }),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
           child: const Icon(
@@ -166,17 +162,16 @@ class IGetIOweButton extends StatelessWidget {
   final Function changeIOweOrIGet;
   final bool isIOwe;
 
-  IGetIOweButton(
-      {required this.text,
-      required this.isIOwe,
-      required this.changeIOweOrIGet,});
+  IGetIOweButton({
+    required this.text,
+    required this.isIOwe,
+    required this.changeIOweOrIGet,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => {
-        changeIOweOrIGet(isIOwe)
-      },
+      onPressed: () => {changeIOweOrIGet(isIOwe)},
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodyText1,

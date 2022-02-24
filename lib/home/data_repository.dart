@@ -44,4 +44,8 @@ class DataRepository {
     return collection.doc(friendsUid).get();
   }
 
+  Stream<QuerySnapshot> getFriendsDebts(String uid) {
+    return collection.where("friendsDebts", arrayContains: {"uid": uid}).snapshots();
+  }
+
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/entity/debt_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,8 +46,20 @@ class DataRepository {
     return collection.doc(friendsUid).get();
   }
 
-  Stream<QuerySnapshot> getFriendsDebts(String uid) {
-    return collection.where("friendsDebts", arrayContains: {"uid": uid}).snapshots();
-  }
-
+/*  Stream<List> getFriendsDebts(String uid) {
+    getStream().listen((event) {
+      List friends = event["friends"];
+      friends.forEach((element) async{
+        await getFutureFriends(element["uid"]).then((value) {
+          List everyFriendsDebts = value["friendsDebts"];
+          everyFriendsDebts.forEach((element) {
+            if (element["friendsUid"] == uid) {
+              friendDebts.add(element);
+            }
+          });
+        });
+      });
+    });
+  return friendDebts;
+  }*/
 }

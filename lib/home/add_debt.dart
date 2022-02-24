@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/data_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,8 +33,8 @@ class _AddDebtState extends State<AddDebt> {
   double value = 0;
   int id = -1;
 
-  _AddDebtState(
-      this.person, this.description, this.value, this.id, this.isIOwe);
+  _AddDebtState(this.person, this.description, this.value, this.id,
+      this.isIOwe);
 
   var collection = FirebaseFirestore.instance.collection('users');
   var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -109,9 +111,10 @@ class _AddDebtState extends State<AddDebt> {
   Future<int> debtId() async {
     if (id == -1) {
       int maxId = 0;
-      await getDebt().then((value) => {
-            if (value["id"] != null) {maxId = value["id"] + 1}
-          });
+      await getDebt().then((value) =>
+      {
+        if (value["id"] != null) {maxId = value["id"] + 1}
+      });
       return maxId;
     } else {
       await removeDebt();
@@ -128,23 +131,37 @@ class _AddDebtState extends State<AddDebt> {
         uid = element.id;
       });
       if (isFriend) {
-        addDebtToDB(debtId);
-        addDebtToFriends(uid, debtId);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return checkIfFriendShouldSee(debtId, uid);
+          },
+        );
+        // addDebtToDB(debtId);
+        // addDebtToFriends(uid, debtId);
       } else {
         addDebtToDB(debtId);
+        Navigator.of(context).pop();
       }
     });
   }
 
   void addDebtToFriends(String friendsUID, int debtId) async {
     String myName = "";
-    await repository.getCurrentDocument().then((value) => myName = value["username"]);
+    await repository.getCurrentDocument().then((value) =>
+    myName = value["username"]);
     await FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
         .update({
       "friendsDebts": FieldValue.arrayUnion([
-        {"id": debtId, "person": myName, "description": description, "value": value, "friendsUid": friendsUID}
+        {
+          "id": debtId,
+          "person": myName,
+          "description": description,
+          "value": value,
+          "friendsUid": friendsUID
+        }
       ])
     }).then((value) => {print("success")});
   }
@@ -155,7 +172,12 @@ class _AddDebtState extends State<AddDebt> {
         .doc(firebaseUser!.uid)
         .update({
       getIOweOrIGet(): FieldValue.arrayUnion([
-        {"id": debtId, "person": person, "description": description, "value": value}
+        {
+          "id": debtId,
+          "person": person,
+          "description": description,
+          "value": value
+        }
       ])
     }).then((value) => {print("success")});
   }
@@ -163,7 +185,6 @@ class _AddDebtState extends State<AddDebt> {
   Future addDebt() async {
     int id = await debtId();
     personIsFriend(id);
-    print("fertig");
 
     return true;
   }
@@ -183,11 +204,19 @@ class _AddDebtState extends State<AddDebt> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: Center(child: Text(S.of(context).debtManager)),
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .onBackground,
+        title: Center(child: Text(S
+            .of(context)
+            .debtManager)),
       ),
       body: Container(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme
+            .of(context)
+            .colorScheme
+            .background,
         child: Padding(
           padding: const EdgeInsets.only(left: 40, right: 40),
           child: Center(
@@ -198,28 +227,28 @@ class _AddDebtState extends State<AddDebt> {
                 children: [
                   id == -1
                       ? Row(children: [
-                          const Text("I owe Somebody?"),
-                          Switch(
-                            value: isIOwe,
-                            onChanged: (bool value) {
-                              setState(() {
-                                isIOwe = value;
-                              });
-                            },
-                          )
-                        ])
+                    const Text("I owe Somebody?"),
+                    Switch(
+                      value: isIOwe,
+                      onChanged: (bool value) {
+                        setState(() {
+                          isIOwe = value;
+                        });
+                      },
+                    )
+                  ])
                       : Container(),
                   Autocomplete(
                       optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text == '') {
-                      return const Iterable<String>.empty();
-                    }
-                    return friends.where((String option) {
-                      return option
-                          .contains(textEditingValue.text.toLowerCase());
-                    });
-                  }, fieldViewBuilder:
-                          (context, controller, focusNode, onEditingComplete) {
+                        if (textEditingValue.text == '') {
+                          return const Iterable<String>.empty();
+                        }
+                        return friends.where((String option) {
+                          return option
+                              .contains(textEditingValue.text.toLowerCase());
+                        });
+                      }, fieldViewBuilder:
+                      (context, controller, focusNode, onEditingComplete) {
                     controller.text = person;
                     return TextField(
                       controller: controller,
@@ -227,9 +256,14 @@ class _AddDebtState extends State<AddDebt> {
                       onEditingComplete: onEditingComplete,
                       onChanged: (input) => {person = input},
                       decoration: InputDecoration(
-                        hintText: S.of(context).person,
+                        hintText: S
+                            .of(context)
+                            .person,
                       ),
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText1,
                     );
                   }, onSelected: (String selection) {
                     debugPrint('You just selected $selection');
@@ -242,40 +276,70 @@ class _AddDebtState extends State<AddDebt> {
                     maxLines: null,
                     onChanged: (input) => {description = input},
                     decoration: InputDecoration(
-                      hintText: S.of(context).description,
+                      hintText: S
+                          .of(context)
+                          .description,
                       enabledBorder:
-                          Theme.of(context).inputDecorationTheme.enabledBorder,
+                      Theme
+                          .of(context)
+                          .inputDecorationTheme
+                          .enabledBorder,
                       focusedBorder:
-                          Theme.of(context).inputDecorationTheme.focusedBorder,
+                      Theme
+                          .of(context)
+                          .inputDecorationTheme
+                          .focusedBorder,
                     ),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyText1,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: TextEditingController(
                         text: value != 0 ? value.toString() : ""),
                     keyboardType: TextInputType.number,
-                    onChanged: (input) => {
+                    onChanged: (input) =>
+                    {
                       if (input != "") {value = double.parse(input)}
                     },
                     decoration: InputDecoration(
-                      hintText: S.of(context).value,
+                      hintText: S
+                          .of(context)
+                          .value,
                       enabledBorder:
-                          Theme.of(context).inputDecorationTheme.enabledBorder,
+                      Theme
+                          .of(context)
+                          .inputDecorationTheme
+                          .enabledBorder,
                       focusedBorder:
-                          Theme.of(context).inputDecorationTheme.focusedBorder,
+                      Theme
+                          .of(context)
+                          .inputDecorationTheme
+                          .focusedBorder,
                     ),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyText1,
                   ),
                   const SizedBox(height: 35),
                   ElevatedButton(
-                    onPressed: () => {
-                      addDebt().then((value) => {
-                            if (value) {Navigator.of(context).pop()}
-                          }),
+                    onPressed: () =>
+                    {
+                      addDebt().then((value) =>
+                      {
+                        if (value) {}
+                      }),
                     },
-                    child: Text(S.of(context).addNewDebt,
-                        style: Theme.of(context).textTheme.bodyText1),
+                    child: Text(S
+                        .of(context)
+                        .addNewDebt,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyText1),
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(340, 50),
                       maximumSize: const Size(340, 50),
@@ -294,5 +358,54 @@ class _AddDebtState extends State<AddDebt> {
         ),
       ),
     );
+  }
+
+  Widget checkIfFriendShouldSee(int debtId, String friendsUid) {
+    return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+        child: AlertDialog(
+          title: Text(
+            "Debt settings",
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyText1,
+          ),
+          content: Text(
+            "Do You Want Kim to see it",
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyText1,
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("No"),
+              style: ElevatedButton.styleFrom(primary: Colors.red),
+              onPressed: () {
+                addDebtToDB(debtId);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text("Yes"),
+              style: ElevatedButton.styleFrom(primary: Colors.green),
+              onPressed: () {
+                addDebtToDB(debtId);
+                addDebtToFriends(friendsUid, debtId);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              }
+            ),
+            ElevatedButton(
+              child: Text("Cancel"),
+              style: ElevatedButton.styleFrom(primary: Colors.grey),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ));
   }
 }

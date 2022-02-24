@@ -67,7 +67,8 @@ class _FriendsDebtsState extends State<FriendsDebts> {
                           person: e["person"],
                           description: e["description"],
                           value: e["value"],
-                          color: valueColor);
+                          color: valueColor,
+                      isFriendsDebt: true,);
                     })
                   ],
                 );

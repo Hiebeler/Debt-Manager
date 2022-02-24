@@ -124,6 +124,7 @@ class _HomeState extends State<Home> {
                               description: debt["description"],
                               value: debt["value"].toDouble(),
                               color: homeColor,
+                              isFriendsDebt: false,
                             );
                           })
                         ],

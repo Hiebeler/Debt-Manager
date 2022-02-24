@@ -8,6 +8,7 @@ class DebtCard extends StatelessWidget {
   final Color color;
   final int debtId;
   final String field;
+  final bool isFriendsDebt;
 
   const DebtCard(
       {
@@ -16,7 +17,8 @@ class DebtCard extends StatelessWidget {
         required this.person,
       required this.description,
       required this.value,
-      required this.color,});
+      required this.color,
+      required this.isFriendsDebt});
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class DebtCard extends StatelessWidget {
                             fontSize: 20,
                             color: Theme.of(context).colorScheme.onSecondary)),
                   ),
+                  !isFriendsDebt ?
                   Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
@@ -64,7 +67,7 @@ class DebtCard extends StatelessWidget {
                         );
                       },
                     ),
-                  ),
+                  ) : Container(),
                 ],
               ),
               const SizedBox(height: 7),

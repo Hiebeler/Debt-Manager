@@ -109,7 +109,7 @@ class _FriendsState extends State<Friends> {
         title: const Center(child: Text("Friends")),
         backgroundColor: Theme.of(context).colorScheme.onBackground,
       ),
-      body: Padding(
+    body: Padding(
         padding: const EdgeInsets.all(20),
         child: StreamBuilder(
           stream: repository.getStream(),

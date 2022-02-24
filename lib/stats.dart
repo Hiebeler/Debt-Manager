@@ -11,6 +11,45 @@ class Stats extends StatelessWidget {
 
   DataRepository repository = DataRepository();
 
+  double getTotalIowe(data){
+    double sumiowe = 0;
+
+    if (data["debts_Iowe"] != null) {
+      List iget = data["debts_Iowe"];
+      iget.forEach((element) {
+        sumiowe += element["value"];
+      });
+    }
+
+    return sumiowe;
+  }
+
+  double getTotalIget(data){
+    double sumiget = 0;
+
+    if (data["debts_Iget"] != null) {
+      List iget = data["debts_Iget"];
+      iget.forEach((element) {
+        sumiget += element["value"];
+      });
+    }
+    return sumiget;
+  }
+
+  double getTotalDebts(data) {
+    double sum = 0;
+    sum = getTotalIget(data) - getTotalIowe(data);
+    return sum;
+  }
+
+  Color textColor(double sum, context) {
+    Color textcolor = Theme.of(context).colorScheme.secondaryVariant;
+    if (sum >= 0) {
+      textcolor = Theme.of(context).colorScheme.secondary;
+    }
+    return textcolor;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,66 +59,49 @@ class Stats extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.onBackground,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(3)),
-                      border: Border.all(
-                          width: 1.5,
-                          color: Theme.of(context).colorScheme.onSecondary),
-                    ),
-                    child: Row(
+        padding: const EdgeInsets.fromLTRB(30,30, 30,0),
+        child: StreamBuilder(
+            stream: repository.getStream(),
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasData) {
+                String uid = snapshot.data!.id;
+                Map<String, dynamic> data =
+                    snapshot.data!.data() as Map<String, dynamic>;
+                double sum = getTotalDebts(data);
+                return Column(
+                  children: [
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Balance: "),
-                        StreamBuilder(
-                            stream: repository.getStream(),
-                            builder: (BuildContext build,
-                                AsyncSnapshot<DocumentSnapshot> snapshot) {
-                              if (snapshot.hasData) {
-                                Map<String, dynamic> data = snapshot.data!
-                                    .data() as Map<String, dynamic>;
-                                double sum = 0;
-                                double sumiget = 0;
-                                double sumiowe = 0;
-
-                                if (data["debts_Iget"] != null) {
-                                  List iget = data["debts_Iget"];
-                                  iget.forEach((element) {
-                                    sumiget += element["value"];
-                                  });
-                                }
-                                if (data["debts_Iowe"] != null) {
-                                  List iget = data["debts_Iowe"];
-                                  iget.forEach((element) {
-                                    sumiowe += element["value"];
-                                  });
-                                }
-                                sum = sumiget - sumiowe;
-                                Color textcolor = Theme.of(context).colorScheme.secondaryVariant;
-                                if(sum >= 0){
-                                  textcolor = Theme.of(context).colorScheme.secondary;
-                                }
-                                return Text(sum.toString(),
-                                style: TextStyle(color: textcolor));
-                              }
-                              return Container();
-                            }),
+                        const Text("Total demands: "),
+                        Text(getTotalIget(data).toString(),
+                            style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Theme.of(context).colorScheme.secondary))
                       ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Total liabilities : "),
+                        Text(getTotalIowe(data).toString(),
+                            style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Theme.of(context).colorScheme.secondaryVariant))
+                      ],
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text("Total: "),
+                          Text(sum.toString(),
+                              style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textColor(sum, context))),
+                        ])
+                  ],
+                );
+              } else {
+                return Column(
+                  children: const [Text("not connected to the Internet")],
+                );
+              }
+            }),
       ),
     );
   }

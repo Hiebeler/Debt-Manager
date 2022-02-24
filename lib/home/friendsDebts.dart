@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/Debt-Card/debt_card.dart';
 import 'package:debtmanager/home/data_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,6 +24,7 @@ class _FriendsDebtsState extends State<FriendsDebts> {
   void getFriendDebts(data) async {
     List friendDebtslocal = [];
     List friends = data["friends"];
+    print(friends);
     friends.forEach((element) async {
       await repository.getFutureFriends(element["uid"]).then((value) {
         List everyFriendsDebts = value["friendsDebts"];
@@ -31,11 +33,9 @@ class _FriendsDebtsState extends State<FriendsDebts> {
             friendDebtslocal.add(element);
           }
         });
-        setState(() {
-          friendsDebts = friendDebtslocal;
-        });
       });
     });
+    friendsDebts = friendDebtslocal;
   }
 
   @override
@@ -50,26 +50,45 @@ class _FriendsDebtsState extends State<FriendsDebts> {
         children: [
           StreamBuilder(
             stream: repository.getStream(),
-            builder: (BuildContext context, snapshot) {
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasData) {
                 getFriendDebts(snapshot.data);
                 Color valueColor = Theme.of(context).colorScheme.secondary;
-                print(friendsDebts);
                 return Column(
                   children: [
-                    ...(friendsDebts).map((e) {
-                      if (e["value"] > 0) {
-                        valueColor = Theme.of(context).colorScheme.secondaryVariant;
-                      }
-                      return DebtCard(
-                          debtId: e["id"],
-                          field: "IOwe",
-                          person: e["person"],
-                          description: e["description"],
-                          value: e["value"],
-                          color: valueColor,
-                      isFriendsDebt: true,);
-                    })
+                    ...(snapshot.data!["friends"] as List).map((e) {
+                      return FutureBuilder(
+                          future: repository.getFutureFriends(e["uid"]),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            print(snapshot.data!["friendsDebts"]);
+                            print(e["uid"]);
+                            print(firebaseUser!.uid);
+
+                            return Column(
+                              children: [
+                                ...(snapshot.data!["friendsDebts"]).map((e) {
+                                  return e["friendsUid"] == firebaseUser!.uid
+                                      ? DebtCard(
+                                          debtId: e["id"],
+                                          field: "IOwe",
+                                          person: e["person"],
+                                          description: e["description"],
+                                          value: e["value"],
+                                          color: Colors.red,
+                                          isFriendsDebt: true,
+                                        )
+                                      : Container();
+                                })
+                              ],
+                            );
+
+                            return Container();
+                          });
+                    }),
+
+/*                    */
                   ],
                 );
               } else {

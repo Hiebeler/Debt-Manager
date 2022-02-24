@@ -28,12 +28,20 @@ class DataRepository {
     return collection.where("username", isGreaterThanOrEqualTo: username).where("username", isLessThan: username + "z").snapshots();
   }
 
+  Future<QuerySnapshot> getFriendsFromUsername(String username) {
+    return collection.where("username", isEqualTo: username).get();
+  }
+
   Stream<QuerySnapshot> getStreamFriendRequests(String username) {
     return collection.where("friendRequests", arrayContains: {"uid": username}).snapshots();
   }
 
   Stream<DocumentSnapshot> getStreamFriends(String friendsUid) {
     return collection.doc(friendsUid).snapshots();
+  }
+
+  Future<DocumentSnapshot> getFutureFriends(String friendsUid) {
+    return collection.doc(friendsUid).get();
   }
 
 }

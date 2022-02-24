@@ -53,9 +53,13 @@ class _AddDebtState extends State<AddDebt> {
 
   void getAllFriends() async {
     List<dynamic> friendsMapList = [];
-    await repository
-        .getCurrentDocument()
-        .then((value) => friendsMapList = value["friends"]);
+    await repository.getCurrentDocument().then((value) {
+      try {
+        friendsMapList = value["friends"];
+      } catch (e) {
+        print("no Friends");
+      }
+    });
     friendsMapList.forEach((element) {
       repository.getStreamFriends(element["uid"]).listen((event) {
         friends.add(event["username"]);
@@ -121,17 +125,50 @@ class _AddDebtState extends State<AddDebt> {
     }
   }
 
-  Future addDebttoDB() async {
-    int id = await debtId();
+  Future personIsFriend(int debtId) async {
+    bool isFriend = false;
+    await repository.getFriendsFromUsername(person).then((value) {
+      String uid = "";
+      value.docs.forEach((element) {
+        isFriend = true;
+        uid = element.id;
+      });
+      if (isFriend) {
+        addDebtToDB(debtId);
+        addDebtToFriends(uid, debtId);
+      } else {
+        addDebtToDB(debtId);
+      }
+    });
+  }
 
-    FirebaseFirestore.instance
+  void addDebtToFriends(String friendsUID, int debtId) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(firebaseUser!.uid)
+        .update({
+      "friendsDebts": FieldValue.arrayUnion([
+        {"id": debtId, "person": person, "description": description, "value": value, "friendsUid": friendsUID}
+      ])
+    }).then((value) => {print("success")});
+  }
+
+  void addDebtToDB(int debtId) async {
+    await FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
         .update({
       getIOweOrIGet(): FieldValue.arrayUnion([
-        {"id": id, "person": person, "description": description, "value": value}
+        {"id": debtId, "person": person, "description": description, "value": value}
       ])
     }).then((value) => {print("success")});
+  }
+
+  Future addDebt() async {
+    int id = await debtId();
+    personIsFriend(id);
+    print("fertig");
+
     return true;
   }
 
@@ -187,6 +224,7 @@ class _AddDebtState extends State<AddDebt> {
                     });
                   }, fieldViewBuilder:
                           (context, controller, focusNode, onEditingComplete) {
+                    controller.text = person;
                     return TextField(
                       controller: controller,
                       focusNode: focusNode,
@@ -201,18 +239,6 @@ class _AddDebtState extends State<AddDebt> {
                     debugPrint('You just selected $selection');
                     person = selection;
                   }),
-                  /* TextField(
-                    controller: TextEditingController(text: person),
-                    onChanged: (input) => {person = input},
-                    decoration: InputDecoration(
-                      hintText: S.of(context).person,
-                      enabledBorder:
-                          Theme.of(context).inputDecorationTheme.enabledBorder,
-                      focusedBorder:
-                          Theme.of(context).inputDecorationTheme.focusedBorder,
-                    ),
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),*/
                   const SizedBox(height: 20),
                   TextField(
                     controller: TextEditingController(text: description),
@@ -248,7 +274,7 @@ class _AddDebtState extends State<AddDebt> {
                   const SizedBox(height: 35),
                   ElevatedButton(
                     onPressed: () => {
-                      addDebttoDB().then((value) => {
+                      addDebt().then((value) => {
                             if (value) {Navigator.of(context).pop()}
                           }),
                     },

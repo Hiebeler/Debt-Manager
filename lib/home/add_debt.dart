@@ -39,12 +39,6 @@ class _AddDebtState extends State<AddDebt> {
   final DataRepository repository = DataRepository();
   List<String> friends = [];
 
-  static const List<String> _kOptions = <String>[
-    'emanuel',
-    'bobcat',
-    'chameleon',
-  ];
-
   @override
   void initState() {
     getAllFriends();
@@ -143,12 +137,14 @@ class _AddDebtState extends State<AddDebt> {
   }
 
   void addDebtToFriends(String friendsUID, int debtId) async {
+    String myName = "";
+    await repository.getCurrentDocument().then((value) => myName = value["username"]);
     await FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
         .update({
       "friendsDebts": FieldValue.arrayUnion([
-        {"id": debtId, "person": person, "description": description, "value": value, "friendsUid": friendsUID}
+        {"id": debtId, "person": myName, "description": description, "value": value, "friendsUid": friendsUID}
       ])
     }).then((value) => {print("success")});
   }

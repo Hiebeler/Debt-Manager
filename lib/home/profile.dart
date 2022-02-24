@@ -71,7 +71,8 @@ class _FriendsState extends State<Friends> {
         .doc(firebaseUser!.uid)
         .update({"profilePicture": url});
   }
-  double getTotalDebts(data){
+
+  double getTotalDebts(data) {
     double sum = 0;
     double sumiget = 0;
     double sumiowe = 0;
@@ -92,9 +93,9 @@ class _FriendsState extends State<Friends> {
     return sum;
   }
 
-  Color textColor(double sum){
+  Color textColor(double sum) {
     Color textcolor = Theme.of(context).colorScheme.secondaryVariant;
-    if(sum >= 0){
+    if (sum >= 0) {
       textcolor = Theme.of(context).colorScheme.secondary;
     }
     return textcolor;
@@ -118,7 +119,7 @@ class _FriendsState extends State<Friends> {
               String uid = snapshot.data!.id;
               Map<String, dynamic> data =
                   snapshot.data!.data() as Map<String, dynamic>;
-                  double sum = getTotalDebts(data);
+              double sum = getTotalDebts(data);
               return Column(
                 children: [
                   Row(
@@ -176,31 +177,45 @@ class _FriendsState extends State<Friends> {
                   const SizedBox(
                     height: 20,
                   ),
-                  FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("email: ",
-                            style: Theme.of(context).textTheme.bodyText1),
-                        const SizedBox(width: 20),
-                        Text(data["email"],
-                            style: Theme.of(context).textTheme.bodyText1),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("email: ",
+                                style: Theme.of(context).textTheme.bodyText1),
+                            const SizedBox(width: 20),
+                            Text(data["email"],
+                                style: Theme.of(context).textTheme.bodyText1),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Balance: ",
-                            style: Theme.of(context).textTheme.bodyText1),
-                        const SizedBox(width: 20),
-                        Text(sum.toString(),
-                            style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textColor(sum))),
-                      ],
-                    ),
+                  const SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("Balance: ",
+                                style: Theme.of(context).textTheme.bodyText1),
+                            const SizedBox(width: 20),
+                            Text(sum.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(color: textColor(sum))),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 50),
                   Row(
@@ -237,7 +252,7 @@ class _FriendsState extends State<Friends> {
                           data: data,
                         )
                       : FriendRequestCard(
-                    uid: uid,
+                          uid: uid,
                         ),
                 ],
               );

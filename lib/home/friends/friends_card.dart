@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/data_repository.dart';
 import 'package:debtmanager/home/friends/get_profile_image.dart';
+import 'package:debtmanager/home/friends/profile_picture.dart';
 import 'package:flutter/material.dart';
 
-class FriendsCard extends StatelessWidget {
+class Friends extends StatelessWidget {
   final Map<String, dynamic> data;
 
-  FriendsCard({required this.data});
+  Friends({required this.data});
 
   final DataRepository repository = DataRepository();
 
@@ -16,20 +17,13 @@ class FriendsCard extends StatelessWidget {
         ? Column(
             children: [
               ...(data["friends"] as List).map((friends) {
-                return Container(
+                return Card(
                   margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(3)),
-                            border: Border.all(
-                                width: 1.5,
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary),
-                          ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Row(
+                      children: [
+                        Expanded(
                           child: Padding(
                             padding: const EdgeInsets.all(4),
                             child: Row(
@@ -40,51 +34,15 @@ class FriendsCard extends StatelessWidget {
                                         .getStreamFriends(friends["uid"]),
                                     builder: (builder,
                                         AsyncSnapshot<DocumentSnapshot>
-                                            snapshot) {
+                                        snapshot) {
                                       if (snapshot.hasData) {
                                         Map<String, dynamic> data =
-                                            snapshot.data!.data()
-                                                as Map<String, dynamic>;
+                                        snapshot.data!.data()
+                                        as Map<String, dynamic>;
 
                                         return Row(
                                           children: [
-                                            FutureBuilder(
-                                                future: GetProfileImage()
-                                                    .getImageFromFirebase(
-                                                        data["profilePicture"]),
-                                                builder: (builder, snapshot) {
-                                                  print(snapshot.data);
-                                                  if (snapshot.data == "" ||
-                                                      snapshot.data == null) {
-                                                    return CircleAvatar(
-                                                      backgroundColor:
-                                                          const Color(
-                                                              0xff626262),
-                                                      radius: 15,
-                                                      child: Icon(
-                                                        Icons.person,
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .onSecondary,
-                                                        size: 20,
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    return Container(
-                                                        width: 30.0,
-                                                        height: 30.0,
-                                                        decoration: BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            image: DecorationImage(
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                                image: NetworkImage(
-                                                                    snapshot
-                                                                        .data
-                                                                        .toString()))));
-                                                  }
-                                                }),
+                                            ProfilePicture(data: data),
                                             const SizedBox(
                                               width: 20,
                                             ),
@@ -98,8 +56,8 @@ class FriendsCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               })

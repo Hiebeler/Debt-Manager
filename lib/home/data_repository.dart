@@ -45,21 +45,4 @@ class DataRepository {
   Future<DocumentSnapshot> getFutureFriends(String friendsUid) {
     return collection.doc(friendsUid).get();
   }
-
-/*  Stream<List> getFriendsDebts(String uid) {
-    getStream().listen((event) {
-      List friends = event["friends"];
-      friends.forEach((element) async{
-        await getFutureFriends(element["uid"]).then((value) {
-          List everyFriendsDebts = value["friendsDebts"];
-          everyFriendsDebts.forEach((element) {
-            if (element["friendsUid"] == uid) {
-              friendDebts.add(element);
-            }
-          });
-        });
-      });
-    });
-  return friendDebts;
-  }*/
 }

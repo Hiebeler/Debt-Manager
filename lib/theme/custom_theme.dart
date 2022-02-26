@@ -46,13 +46,13 @@ class CustomTheme {
     ColorScheme colorScheme = const ColorScheme(
       brightness: Brightness.dark,
       primary: Color.fromRGBO(98, 0, 238, 1),
-      secondary: Color.fromRGBO(134, 194, 50, 1),
-      secondaryVariant: Color.fromRGBO(185, 61, 25, 1),
+      secondary: Color.fromRGBO(148, 255, 0, 1.0),
+      secondaryVariant: Color.fromRGBO(255, 55, 0, 1.0),
       background: Color.fromRGBO(18, 19, 20, 1.0),
       onSurface: Color.fromRGBO(255, 255, 255, 1.0),
       onPrimary: Color.fromRGBO(0, 0, 0, 1.0),
       surface: Color.fromRGBO(0, 0, 0, 1.0),
-      primaryVariant: Color.fromRGBO(121, 121, 121, 1.0),
+      primaryVariant: Color.fromRGBO(70, 70, 70, 1),
       error: Color.fromRGBO(0, 0, 0, 1.0),
       onError: Color.fromRGBO(0, 0, 0, 1.0),
       onSecondary: Color.fromRGBO(121, 121, 121, 1.0),
@@ -112,15 +112,15 @@ class CustomTheme {
       primary: Color.fromRGBO(98, 0, 238, 1),
       secondary: Color.fromRGBO(134, 194, 50, 1),
       secondaryVariant: Color.fromRGBO(185, 61, 25, 1),
-      background: Color.fromRGBO(221, 221, 221, 1.0),
-      onSurface: Color.fromRGBO(169, 169, 169, 1.0),
-      onPrimary: Color.fromRGBO(221, 221, 221, 1.0),
-      surface: Color.fromRGBO(221, 221, 221, 1.0),
-      primaryVariant: Color.fromRGBO(121, 121, 121, 1.0),
-      error: Color.fromRGBO(221, 221, 221, 1.0),
-      onError: Color.fromRGBO(221, 221, 221, 1.0),
-      onSecondary: Color.fromRGBO(52, 52, 52, 1.0),
-      onBackground: Color.fromRGBO(95, 95, 95, 1.0),
+      background: Color.fromRGBO(255, 255, 255, 1.0),//background
+      onSurface: Color.fromRGBO(191, 191, 191, 1.0),//nothing
+      onPrimary: Color.fromRGBO(0, 0, 0, 1.0),//App bar text
+      surface: Color.fromRGBO(255, 255, 255, 1.0),//nothing
+      primaryVariant: Color.fromRGBO(221, 221, 221, 1.0),//nothing
+      error: Color.fromRGBO(169, 169, 169, 1.0),//nothing
+      onError: Color.fromRGBO(221, 221, 221, 1.0),//
+      onSecondary: Color.fromRGBO(0, 0, 0, 1.0),//text Color
+      onBackground: Color.fromRGBO(236, 236, 236, 1.0),//background App Bar, background DebtCards
     );
 
     var t = ThemeData.from(colorScheme: colorScheme, textTheme: txtTheme)

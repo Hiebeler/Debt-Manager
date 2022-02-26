@@ -25,7 +25,7 @@ class NavDrawer extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               Theme.of(context).colorScheme.primary,
-              const Color(0x000),
+              const Color(0x00000000),
             ],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(0.0, 1.0),
@@ -60,11 +60,11 @@ class NavDrawer extends StatelessWidget {
               title: Text(S.of(context).profile),
               onTap: () => {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const Friends()))
+                    MaterialPageRoute(builder: (context) => const Profile()))
               },
             ),
             ListTile(
-              leading: const Icon(Icons.person),
+              leading: const Icon(Icons.group),
               title: Text("Friends Debts"),
               onTap: () => {
                 Navigator.of(context).push(MaterialPageRoute(

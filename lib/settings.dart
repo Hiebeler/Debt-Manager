@@ -146,6 +146,39 @@ class _SettingsState extends State<Settings> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "currency",
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  DropdownButton(
+                    elevation: 16,
+                    style:
+                    TextStyle(color: Theme.of(context).colorScheme.primary),
+                    underline: Container(
+                      height: 2,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    onChanged: (String? newValue) {
+
+                    },
+                    items: ["€", "\u0024"]
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ],
           ),
         ));

@@ -29,7 +29,7 @@ class DebtCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(
-                color: const Color.fromRGBO(70, 70, 70, 1), width: 0.8),
+                color: Theme.of(context).colorScheme.primaryVariant, width: 0.8),
             borderRadius: const BorderRadius.all(
               Radius.circular(6.0),
             )),

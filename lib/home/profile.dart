@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/friends/add_friend.dart';
-import 'package:debtmanager/home/friends/friendrequest_card.dart';
+import 'package:debtmanager/home/friends/friendrequests.dart';
 import 'package:debtmanager/home/friends/friends_card.dart';
 import 'package:debtmanager/home/friends/get_profile_image.dart';
 import 'package:debtmanager/home/side_bar.dart';
@@ -15,14 +15,14 @@ import 'package:image_picker/image_picker.dart';
 
 import 'data_repository.dart';
 
-class Friends extends StatefulWidget {
-  const Friends({Key? key}) : super(key: key);
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
 
   @override
-  State<Friends> createState() => _FriendsState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _FriendsState extends State<Friends> {
+class _ProfileState extends State<Profile> {
   final DataRepository repository = DataRepository();
 
   String friendRequestOrFriends = "Friends";
@@ -32,7 +32,7 @@ class _FriendsState extends State<Friends> {
 
   Future<bool> getImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery, maxHeight: 400, maxWidth: 400);
       if (image == null) return false;
 
       final File? imageTemporary = File(image.path);
@@ -254,7 +254,7 @@ class _FriendsState extends State<Friends> {
                     ],
                   ),
                   friendRequestOrFriends == "Friends"
-                      ? FriendsCard(
+                      ? Friends(
                           data: data,
                         )
                       : FriendRequestCard(

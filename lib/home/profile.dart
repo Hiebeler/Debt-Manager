@@ -30,16 +30,18 @@ class _FriendsState extends State<Friends> {
   bool _friendsIsSelected = true;
   File? image;
 
-  Future getImage() async {
+  Future<bool> getImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
+      if (image == null) return false;
 
       final File? imageTemporary = File(image.path);
       this.image = imageTemporary;
+      return true;
     } on PlatformException catch (e) {
       print("failed to pick image $e");
     }
+    return false;
   }
 
   Future uploadProfileImage(String username) async {
@@ -109,7 +111,7 @@ class _FriendsState extends State<Friends> {
         title: const Center(child: Text("Friends")),
         backgroundColor: Theme.of(context).colorScheme.onBackground,
       ),
-    body: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: StreamBuilder(
           stream: repository.getStream(),
@@ -128,8 +130,10 @@ class _FriendsState extends State<Friends> {
                       GestureDetector(
                         onTap: () {
                           getImage().then((value) {
-                            uploadProfileImage(data["username"])
-                                .then((value) => setState(() {}));
+                            if (value) {
+                              uploadProfileImage(data["username"])
+                                  .then((value) => setState(() {}));
+                            }
                           });
                         },
                         child: FutureBuilder(
@@ -156,7 +160,7 @@ class _FriendsState extends State<Friends> {
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.cover,
                                             image: NetworkImage(
                                                 snapshot.data.toString()))));
                               }
@@ -195,7 +199,9 @@ class _FriendsState extends State<Friends> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

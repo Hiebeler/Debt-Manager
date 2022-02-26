@@ -134,11 +134,9 @@ class _AddDebtState extends State<AddDebt> {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return checkIfFriendShouldSee(debtId, uid);
+            return checkIfFriendShouldSee(debtId, uid, person);
           },
         );
-        // addDebtToDB(debtId);
-        // addDebtToFriends(uid, debtId);
       } else {
         addDebtToDB(debtId);
         Navigator.of(context).pop();
@@ -160,7 +158,8 @@ class _AddDebtState extends State<AddDebt> {
           "person": myName,
           "description": description,
           "value": value,
-          "friendsUid": friendsUID
+          "friendsUid": friendsUID,
+          "IOweOrIGet": getIOweOrIGet(),
         }
       ])
     }).then((value) => {print("success")});
@@ -360,7 +359,7 @@ class _AddDebtState extends State<AddDebt> {
     );
   }
 
-  Widget checkIfFriendShouldSee(int debtId, String friendsUid) {
+  Widget checkIfFriendShouldSee(int debtId, String friendsUid, String person) {
     return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
         child: AlertDialog(
@@ -372,13 +371,13 @@ class _AddDebtState extends State<AddDebt> {
                 .bodyText1,
           ),
           content: Text(
-            "Do You Want Kim to see it",
+            "Do You Want $person to see it",
             style: Theme
                 .of(context)
                 .textTheme
                 .bodyText1,
           ),
-          actions: <Widget>[
+          actions: [
             ElevatedButton(
               child: Text("No"),
               style: ElevatedButton.styleFrom(primary: Colors.red),

@@ -13,7 +13,6 @@ class GetProfileImage {
     } on FirebaseException catch (e) {
       return "";
     }
-    print(downloadURL);
     return downloadURL;
   }
 }

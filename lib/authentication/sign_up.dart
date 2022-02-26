@@ -180,7 +180,7 @@ class _SignUpState extends State<SignUp> {
                                   {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
-                                            builder: (context) => Home()))
+                                            builder: (context) => Home(isFriendsDebts: false,)))
                                   }
                               })
                         },
@@ -303,7 +303,7 @@ class _SignUpState extends State<SignUp> {
                                   {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
-                                            builder: (context) => Home()))
+                                            builder: (context) => Home(isFriendsDebts: false,)))
                                   }
                               }),
                         },

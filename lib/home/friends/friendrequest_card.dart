@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/data_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,18 +16,18 @@ class FriendRequestCard extends StatelessWidget {
   void acceptFriendRequest(String username, String friendsUid, List friendRequests) {
     addFriend(friendsUid, firebaseUser!.uid);
     addFriend(firebaseUser!.uid, friendsUid);
-    removeDebt(friendsUid, friendRequests);
+    removeFriendsRequest(friendsUid, friendRequests);
   }
 
-  void removeDebt(String uid, List friendRequests) async {
-    Map rightData = await getDebt(uid, friendRequests);
+  void removeFriendsRequest(String uid, List friendRequests) async {
+    Map rightData = await getFriendsRequest(uid, friendRequests);
     print(rightData);
     FirebaseFirestore.instance.collection("users").doc(uid).update({
       "friendRequests": FieldValue.arrayRemove([rightData])
-    }).whenComplete(() => print("Debt deleted"));
+    }).whenComplete(() => print("Friend request deleted"));
   }
 
-  Future<Map> getDebt(String uid, List friendRequests) async {
+  Future<Map> getFriendsRequest(String uid, List friendRequests) async {
     for (Map friendRequest in friendRequests) {
       if (friendRequest["uid"] == firebaseUser!.uid) {
         return friendRequest;
@@ -95,6 +97,12 @@ class FriendRequestCard extends StatelessWidget {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return checkIfFriendShouldSee(username["uid"], username["friendRequests"], context);
+                                              },
+                                            );
                                             print("decline");
                                           },
                                           child: const Icon(
@@ -135,5 +143,43 @@ class FriendRequestCard extends StatelessWidget {
             return Container();
           }
         });
+  }
+
+  Widget checkIfFriendShouldSee(String friendsUid, List friendRequests, context) {
+    return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+        child: AlertDialog(
+          title: Text(
+            "Debt settings",
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyText1,
+          ),
+          content: Text(
+            "Are You shure you want to decline this friendsrequest",
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyText1,
+          ),
+          actions: [
+            ElevatedButton(
+              child: Text("No"),
+              style: ElevatedButton.styleFrom(primary: Colors.red),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+                child: Text("Yes"),
+                style: ElevatedButton.styleFrom(primary: Colors.green),
+                onPressed: () {
+                  removeFriendsRequest(friendsUid, friendRequests);
+                  Navigator.of(context).pop();
+                }
+            ),
+          ],
+        ));
   }
 }

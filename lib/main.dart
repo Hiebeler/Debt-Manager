@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data == true) {
-                return Home();
+                return Home(isFriendsDebts: false,);
               } else {
                 return SignUp();
               }

@@ -1,5 +1,5 @@
 import 'package:debtmanager/authentication/sign_in.dart';
-import 'package:debtmanager/home/friendsDebts.dart';
+import 'package:debtmanager/home/friends/friendsDebts.dart';
 import 'package:debtmanager/home/profile.dart';
 import 'package:debtmanager/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,7 +44,7 @@ class NavDrawer extends StatelessWidget {
               title: Text(S.of(context).homescreen),
               onTap: () => {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Home()))
+                    .push(MaterialPageRoute(builder: (context) => Home(isFriendsDebts: false,)))
               },
             ),
             ListTile(
@@ -68,7 +68,7 @@ class NavDrawer extends StatelessWidget {
               title: Text("Friends Debts"),
               onTap: () => {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => FriendsDebts()))
+                    builder: (context) => Home(isFriendsDebts: true)))
               },
             ),
             ListTile(

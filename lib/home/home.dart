@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:debtmanager/home/Debt-Card/debt_card.dart';
 import 'package:debtmanager/home/add_debt.dart';
+import 'package:debtmanager/home/friends/friendsDebts.dart';
+import 'package:debtmanager/home/homeDebts.dart';
 import 'package:debtmanager/home/side_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ import '/generated/l10n.dart';
 import 'data_repository.dart';
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  final bool isFriendsDebts;
+  Home({required this.isFriendsDebts});
 
   @override
   State<Home> createState() => _HomeState();
@@ -100,43 +102,12 @@ class _HomeState extends State<Home> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              child: StreamBuilder(
-                  stream: repository.getStream(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<DocumentSnapshot> snapshot) {
-                    if (snapshot.hasData) {
-                      String field = "debts_Iget";
-                      if (isIOwe) {
-                        field = "debts_Iowe";
-                      }
-                      Map<String, dynamic> data =
-                          snapshot.data!.data() as Map<String, dynamic>;
-                      if (data[field] == null) {
-                        return Container();
-                      }
-                      return Column(
-                        children: [
-                          ...(data[field]).map((debt) {
-                            return DebtCard(
-                              field: field,
-                              debtId: debt["id"],
-                              person: debt["person"],
-                              description: debt["description"],
-                              value: debt["value"].toDouble(),
-                              color: homeColor,
-                              isFriendsDebt: false,
-                            );
-                          })
-                        ],
-                      );
-                    }
-                    return const CircularProgressIndicator();
-                  }),
+              child: !widget.isFriendsDebts ? HomeDebts(isIOwe: isIOwe, homeColor: homeColor,): FriendsDebts(isIOwe: isIOwe, homeColor: homeColor,),
             ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: !widget.isFriendsDebts ? FloatingActionButton(
           child: const Icon(
             Icons.add,
             color: Color.fromRGBO(121, 121, 121, 1),
@@ -153,7 +124,7 @@ class _HomeState extends State<Home> {
               color: homeColor,
               width: 1,
             ),
-          )),
+          )): Container(),
     );
   }
 }
@@ -163,7 +134,7 @@ class IGetIOweButton extends StatelessWidget {
   final Function changeIOweOrIGet;
   final bool isIOwe;
 
-  IGetIOweButton({
+  const IGetIOweButton({
     required this.text,
     required this.isIOwe,
     required this.changeIOweOrIGet,

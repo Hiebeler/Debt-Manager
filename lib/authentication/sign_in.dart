@@ -96,7 +96,7 @@ class SignIn extends StatelessWidget {
                                     {
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
-                                              builder: (context) => Home()))
+                                              builder: (context) => Home(isFriendsDebts: false,)))
                                     }
                                 })
                           },
@@ -158,7 +158,7 @@ class SignIn extends StatelessWidget {
                                     {
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
-                                              builder: (context) => Home()))
+                                              builder: (context) => Home(isFriendsDebts: false,)))
                                     }
                                 }),
                           },

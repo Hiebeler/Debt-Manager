@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '/generated/l10n.dart';
 import '../error_dialog.dart';
+import 'package:intl/intl.dart';
 
 class AddDebt extends StatefulWidget {
   Color color;
@@ -168,6 +169,11 @@ class _AddDebtState extends State<AddDebt> {
   }
 
   void addDebtToDB(int debtId) async {
+
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd');
+    String date = formatter.format(now);
+
     await FirebaseFirestore.instance
         .collection("users")
         .doc(firebaseUser!.uid)
@@ -177,7 +183,8 @@ class _AddDebtState extends State<AddDebt> {
           "id": debtId,
           "person": person,
           "description": description,
-          "value": value
+          "value": value,
+          "date": date
         }
       ])
     }).then((value) => {print("success")});

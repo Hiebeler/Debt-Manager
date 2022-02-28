@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
    <application
-        android:label="debtmanager"
+        android:label="Debt Manager"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

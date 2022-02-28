@@ -3,8 +3,8 @@ import 'package:debtmanager/home/data_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'generated/l10n.dart';
-import 'home/side_bar.dart';
+import '../generated/l10n.dart';
+import 'side_bar.dart';
 
 class Stats extends StatelessWidget {
   Stats({Key? key}) : super(key: key);

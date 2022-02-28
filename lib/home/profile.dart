@@ -74,10 +74,21 @@ class _ProfileState extends State<Profile> {
         .update({"profilePicture": url});
   }
 
-  double getTotalDebts(data) {
-    double sum = 0;
-    double sumiget = 0;
+  double getTotalIowe(data){
     double sumiowe = 0;
+
+    if (data["debts_Iowe"] != null) {
+      List iget = data["debts_Iowe"];
+      iget.forEach((element) {
+        sumiowe += element["value"];
+      });
+    }
+
+    return sumiowe;
+  }
+
+  double getTotalIget(data){
+    double sumiget = 0;
 
     if (data["debts_Iget"] != null) {
       List iget = data["debts_Iget"];
@@ -85,13 +96,12 @@ class _ProfileState extends State<Profile> {
         sumiget += element["value"];
       });
     }
-    if (data["debts_Iowe"] != null) {
-      List iget = data["debts_Iowe"];
-      iget.forEach((element) {
-        sumiowe += element["value"];
-      });
-    }
-    sum = sumiget - sumiowe;
+    return sumiget;
+  }
+
+  double getTotalDebts(data) {
+    double sum = 0;
+    sum = getTotalIget(data) - getTotalIowe(data);
     return sum;
   }
 

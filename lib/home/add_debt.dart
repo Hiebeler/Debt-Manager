@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/data_repository.dart';
+import 'package:debtmanager/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -353,21 +354,21 @@ class _AddDebtState extends State<AddDebt> {
           actions: [
             ElevatedButton(
               child: Text("No"),
-              style: ElevatedButton.styleFrom(primary: Colors.red),
+              style: ElevatedButton.styleFrom(primary: Theme.of(context).colorScheme.secondaryVariant),
               onPressed: () {
                 addDebtToDB(debtId);
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => Home.fromAddDebt(isIOwe, false)));
               },
             ),
             ElevatedButton(
                 child: Text("Yes"),
-                style: ElevatedButton.styleFrom(primary: Colors.green),
+                style: ElevatedButton.styleFrom(primary: Theme.of(context).colorScheme.secondary),
                 onPressed: () {
                   addDebtToDB(debtId);
                   addDebtToFriends(friendsUid, debtId);
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Home.fromAddDebt(isIOwe, false)));
                 }),
             ElevatedButton(
               child: Text("Cancel"),

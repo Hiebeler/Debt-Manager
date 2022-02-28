@@ -68,7 +68,7 @@ class _Card_conf_dialogState extends State<Card_conf_dialog> {
           actions: <Widget>[
             ElevatedButton(
               child: Text("Delete"),
-              style: ElevatedButton.styleFrom(primary: Colors.red),
+              style: ElevatedButton.styleFrom(primary: Theme.of(context).colorScheme.secondaryVariant),
               onPressed: () {
                 removeDebt()
                     .then((value) => Navigator.of(context).pop());
@@ -76,7 +76,7 @@ class _Card_conf_dialogState extends State<Card_conf_dialog> {
             ),
             ElevatedButton(
               child: Text("Change"),
-              style: ElevatedButton.styleFrom(primary: Colors.green),
+              style: ElevatedButton.styleFrom(primary: Theme.of(context).colorScheme.secondary),
               onPressed: () {
                 getDebt().then((value) => {
                       Navigator.of(context).push(MaterialPageRoute(

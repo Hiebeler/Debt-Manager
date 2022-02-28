@@ -12,10 +12,14 @@ import 'data_repository.dart';
 
 class Home extends StatefulWidget {
   final bool isFriendsDebts;
+  bool isIOwe = true;
   Home({required this.isFriendsDebts});
 
+
+  Home.fromAddDebt(this.isIOwe, this.isFriendsDebts);
+
   @override
-  State<Home> createState() => _HomeState();
+  State<Home> createState() => _HomeState(this.isIOwe);
 }
 
 class _HomeState extends State<Home> {
@@ -32,6 +36,14 @@ class _HomeState extends State<Home> {
   final Color red = const Color.fromRGBO(255, 58, 0, 1.0);
 
   Color homeColor = const Color.fromRGBO(255, 57, 0, 1.0);
+
+  _HomeState(bool isIOwe) {
+    if (isIOwe == false) {
+      this.isIOwe = isIOwe;
+      IOweOrIGet = "I Get";
+      homeColor = green;
+    }
+  }
 
   changeIOweOrIGet(changeValue) {
     setState(() {

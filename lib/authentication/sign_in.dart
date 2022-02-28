@@ -72,6 +72,7 @@ class SignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.onBackground,
         title: Center(child: Text(S.of(context).signIn)),
       ),

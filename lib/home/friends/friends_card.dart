@@ -17,6 +17,7 @@ class Friends extends StatelessWidget {
         ? Column(
             children: [
               ...(data["friends"] as List).map((friends) {
+                print(data);
                 return Card(
                   margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Padding(

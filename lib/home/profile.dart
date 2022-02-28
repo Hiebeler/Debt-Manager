@@ -140,6 +140,7 @@ class _ProfileState extends State<Profile> {
                             future: GetProfileImage()
                                 .getImageFromFirebase(data["profilePicture"]),
                             builder: (context, snapshot) {
+                              print(snapshot.data);
                               if (snapshot.data == "" ||
                                   snapshot.data == null) {
                                 return CircleAvatar(

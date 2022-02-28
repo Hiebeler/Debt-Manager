@@ -56,10 +56,17 @@ class FriendRequestCard extends StatelessWidget {
           if (snapshot.hasData) {
             List<Map> friendRequests = [];
             snapshot.data!.docs.forEach((element) {
+              String profilePicture = "";
+              try {
+                profilePicture = element["profilePicture"];
+              } catch(e) {
+                profilePicture = "";
+              }
               friendRequests.add({
                 "username": element["username"],
                 "uid": element.id,
-                "friendRequests": element["friendRequests"]
+                "friendRequests": element["friendRequests"],
+                "profilePicture": profilePicture
               });
             });
             print(friendRequests);

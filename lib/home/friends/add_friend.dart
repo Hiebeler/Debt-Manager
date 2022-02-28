@@ -84,7 +84,12 @@ class AddFriend {
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.hasData) {
                           Map personalData = snapshot.data!.data() as Map;
-                          List friendRequests = personalData["friendRequests"];
+                          List friendRequests = [];
+                          try{
+                            friendRequests = personalData["friendRequests"];
+                          } catch (e) {
+
+                          }
                           print(friendsUsernames);
                           return StreamBuilder(
                             stream: repository.getUsernames(username),
@@ -106,10 +111,19 @@ class AddFriend {
                                     }
                                   });
                                   if (personalData["username"] != element["username"] && !isFriend && !isOutgoingFriendRequest) {
-                                    uidAndUsername.add({
-                                      "uid": element.id,
-                                      "username": element["username"]
-                                    });
+                                    try {
+                                      uidAndUsername.add({
+                                        "uid": element.id,
+                                        "username": element["username"],
+                                        "profilePicture": element["profilePicture"]
+                                      });
+                                    } catch(e) {
+                                      uidAndUsername.add({
+                                        "uid": element.id,
+                                        "username": element["username"],
+                                      });
+                                    }
+
                                   }
                                 });
                                 if (username != "" && uidAndUsername == []) {

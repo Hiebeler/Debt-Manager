@@ -46,8 +46,8 @@ class CustomTheme {
     ColorScheme colorScheme = const ColorScheme(
       brightness: Brightness.dark,
       primary: Color.fromRGBO(98, 0, 238, 1),
-      secondary: Color.fromRGBO(148, 255, 0, 1.0),
-      secondaryVariant: Color.fromRGBO(255, 55, 0, 1.0),
+      secondary: Color.fromRGBO(134, 194, 50, 1),
+      secondaryVariant: Color.fromRGBO(185, 61, 25, 1),
       background: Color.fromRGBO(18, 19, 20, 1.0),
       onSurface: Color.fromRGBO(255, 255, 255, 1.0),
       onPrimary: Color.fromRGBO(0, 0, 0, 1.0),

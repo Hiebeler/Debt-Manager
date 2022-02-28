@@ -116,6 +116,7 @@ class _HomeState extends State<Home> {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => AddDebt(
                           color: homeColor,
+                      isIOwe: isIOwe,
                         )))
               },
           backgroundColor: Theme.of(context).colorScheme.background,

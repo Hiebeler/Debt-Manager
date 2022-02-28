@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> {
 
   Future<bool> getImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery, maxHeight: 400, maxWidth: 400);
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery, maxHeight: 700, maxWidth: 700);
       if (image == null) return false;
 
       final File? imageTemporary = File(image.path);

@@ -36,47 +36,58 @@ class _FriendsDebtsState extends State<FriendsDebts> {
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
-          return Column(
-            children: [
-              ...(snapshot.data!["friends"] as List).map((e) {
-                return FutureBuilder(
-                    future: repository.getFutureFriends(e["uid"]),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<DocumentSnapshot> snapshot) {
-                      if (snapshot.hasData) {
-                        Map<String, dynamic> friendsData =
-                            snapshot.data!.data() as Map<String, dynamic>;
-                        if (friendsData.containsKey("friendsDebts")) {
-                          return Column(
-                            children: [
-                              ...(snapshot.data!["friendsDebts"]).map((e) {
-                                return e["friendsUid"] == firebaseUser!.uid && IOweOrIGet(e["IOweOrIGet"])
-                                    ? DebtCard(
-                                        debtId: e["id"],
-                                        field: "IOwe",
-                                        person: e["person"],
-                                        description: e["description"],
-                                        value: e["value"],
-                                        color: widget.homeColor,
-                                        isFriendsDebt: true,
-                                      )
-                                    : Container();
-                              })
-                            ],
-                          );
+          Map<String, dynamic> personalData =
+              snapshot.data!.data() as Map<String, dynamic>;
+          if (personalData.containsKey("friends")) {
+            return Column(
+              children: [
+                ...(snapshot.data!["friends"] as List).map((e) {
+                  return FutureBuilder(
+                      future: repository.getFutureFriends(e["uid"]),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if (snapshot.hasData) {
+                          Map<String, dynamic> friendsData =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          if (friendsData.containsKey("friendsDebts")) {
+                            return Column(
+                              children: [
+                                ...(snapshot.data!["friendsDebts"]).map((e) {
+                                  return e["friendsUid"] == firebaseUser!.uid &&
+                                          IOweOrIGet(e["IOweOrIGet"])
+                                      ? DebtCard(
+                                          debtId: e["id"],
+                                          field: "IOwe",
+                                          person: e["person"],
+                                          description: e["description"],
+                                          value: e["value"],
+                                          color: widget.homeColor,
+                                          isFriendsDebt: true,
+                                        )
+                                      : Container();
+                                })
+                              ],
+                            );
+                          }
                         }
-                      }
-                      return Container();
-                    });
-              }),
-
-/*                    */
-            ],
-          );
+                        return explanationText();
+                      });
+                }),
+              ],
+            );
+          } else {
+            return explanationText();
+          }
         } else {
           return Container();
         }
       },
     );
+  }
+
+  Widget explanationText() {
+    return const Padding(
+        padding: EdgeInsets.all(30),
+        child: Text("here you see debts which your friends has made to you"));
   }
 }

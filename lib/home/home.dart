@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/add_debt.dart';
 import 'package:debtmanager/home/friends/friendsDebts.dart';
-import 'package:debtmanager/home/homeDebts.dart';
+import 'package:debtmanager/home/home_debts.dart';
 import 'package:debtmanager/home/side_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

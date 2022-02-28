@@ -17,7 +17,6 @@ class Friends extends StatelessWidget {
         ? Column(
             children: [
               ...(data["friends"] as List).map((friends) {
-                print(data);
                 return Card(
                   margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Padding(
@@ -38,8 +37,7 @@ class Friends extends StatelessWidget {
                                         snapshot) {
                                       if (snapshot.hasData) {
                                         Map<String, dynamic> data =
-                                        snapshot.data!.data()
-                                        as Map<String, dynamic>;
+                                        snapshot.data!.data() as Map<String, dynamic>;
 
                                         return Row(
                                           children: [

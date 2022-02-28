@@ -28,10 +28,10 @@ class _HomeState extends State<Home> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   var firebaseUser = FirebaseAuth.instance.currentUser;
 
-  final Color green = const Color.fromRGBO(134, 194, 50, 1);
-  final Color red = const Color.fromRGBO(185, 61, 25, 1);
+  final Color green = const Color.fromRGBO(150, 255, 0, 1.0);
+  final Color red = const Color.fromRGBO(255, 58, 0, 1.0);
 
-  Color homeColor = const Color.fromRGBO(185, 61, 25, 1);
+  Color homeColor = const Color.fromRGBO(255, 57, 0, 1.0);
 
   changeIOweOrIGet(changeValue) {
     setState(() {

@@ -22,9 +22,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addDebt": MessageLookupByLibrary.simpleMessage("Add Debt"),
+        "addFriend": MessageLookupByLibrary.simpleMessage("Add Friend"),
         "addNewDebt": MessageLookupByLibrary.simpleMessage("Add new Debt"),
         "alreadyHaveAcc":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
+        "assignedToMe": MessageLookupByLibrary.simpleMessage("Assigned to me"),
+        "balance": MessageLookupByLibrary.simpleMessage("Balance"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "confirmpassword":
             MessageLookupByLibrary.simpleMessage("Confirm your Password"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
@@ -35,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
         "firstname": MessageLookupByLibrary.simpleMessage("First name"),
+        "friendRequests":
+            MessageLookupByLibrary.simpleMessage("Friend Requests"),
         "friends": MessageLookupByLibrary.simpleMessage("Friends"),
         "german": MessageLookupByLibrary.simpleMessage("German"),
         "homescreen": MessageLookupByLibrary.simpleMessage("Home"),
@@ -44,10 +51,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastname": MessageLookupByLibrary.simpleMessage("Last name"),
         "lightMode": MessageLookupByLibrary.simpleMessage("Light Mode"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "or": MessageLookupByLibrary.simpleMessage("or"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "sentFriendRequest":
+            MessageLookupByLibrary.simpleMessage("sent Friend Request"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
         "signIn_google":
@@ -58,6 +68,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "stats": MessageLookupByLibrary.simpleMessage("Statistics"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
-        "value": MessageLookupByLibrary.simpleMessage("Value")
+        "value": MessageLookupByLibrary.simpleMessage("Value"),
+        "wantOtherPersonToSeeDebt1":
+            MessageLookupByLibrary.simpleMessage("Do you want "),
+        "wantOtherPersonToSeeDebt2":
+            MessageLookupByLibrary.simpleMessage(" to see this Debt"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:debtmanager/generated/l10n.dart';
 import 'package:debtmanager/home/data_repository.dart';
 import 'package:debtmanager/home/friends/profile_picture.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,11 +51,11 @@ class AddFriend {
         return Container(
           height: MediaQuery.of(context).size.height * .80,
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
                 Text(
-                  "Add Friend",
+                  S.of(context).addFriend,
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 const SizedBox(
@@ -65,7 +66,7 @@ class AddFriend {
                     username = input;
                   },
                   decoration: InputDecoration(
-                    hintText: "Username",
+                    hintText: S.of(context).username,
                     enabledBorder:
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
@@ -188,7 +189,7 @@ class AddFriend {
 
   void toast(context) {
     Fluttertoast.showToast(
-        msg: "Sent Friendrequest",
+        msg: S.of(context).sentFriendRequest,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 1,

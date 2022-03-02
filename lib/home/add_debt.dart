@@ -214,7 +214,7 @@ class _AddDebtState extends State<AddDebt> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: Center(child: Text(S.of(context).debtManager)),
+        title: Center(child: Text(S.of(context).addDebt)),
       ),
       body: Container(
         color: Theme.of(context).colorScheme.background,
@@ -231,7 +231,7 @@ class _AddDebtState extends State<AddDebt> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ChoiceChip(
-                              label: Text("I Owe", style: Theme.of(context).textTheme.bodyText1,),
+                              label: Text(S.of(context).iOwe, style: Theme.of(context).textTheme.bodyText1,),
                               selected: isIOwe,
                               selectedColor:
                                   Theme.of(context).colorScheme.secondaryVariant,
@@ -245,7 +245,7 @@ class _AddDebtState extends State<AddDebt> {
                               },
                             ),
                             ChoiceChip(
-                              label: Text("I Get", style: Theme.of(context).textTheme.bodyText1,),
+                              label: Text(S.of(context).iGet, style: Theme.of(context).textTheme.bodyText1,),
                               selected: isIGet,
                               selectedColor:
                                   Theme.of(context).colorScheme.secondary,
@@ -284,7 +284,6 @@ class _AddDebtState extends State<AddDebt> {
                       style: Theme.of(context).textTheme.bodyText1,
                     );
                   }, onSelected: (String selection) {
-                    debugPrint('You just selected $selection');
                     person = selection;
                   }),
                   const SizedBox(height: 20),
@@ -350,17 +349,14 @@ class _AddDebtState extends State<AddDebt> {
     return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
         child: AlertDialog(
-          title: Text(
-            "Debt settings",
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
           content: Text(
-            "Do You Want $person to see it",
+            S.of(context).wantOtherPersonToSeeDebt1 + person + S.of(context).wantOtherPersonToSeeDebt2,
             style: Theme.of(context).textTheme.bodyText1,
           ),
+          actionsAlignment: MainAxisAlignment.center,
           actions: [
             ElevatedButton(
-              child: Text("No"),
+              child: Text(S.of(context).no),
               style: ElevatedButton.styleFrom(primary: Theme.of(context).colorScheme.secondaryVariant),
               onPressed: () {
                 addDebtToDB(debtId);
@@ -369,7 +365,7 @@ class _AddDebtState extends State<AddDebt> {
               },
             ),
             ElevatedButton(
-                child: Text("Yes"),
+                child: Text(S.of(context).yes),
                 style: ElevatedButton.styleFrom(primary: Theme.of(context).colorScheme.secondary),
                 onPressed: () {
                   addDebtToDB(debtId);
@@ -378,7 +374,7 @@ class _AddDebtState extends State<AddDebt> {
                       builder: (context) => Home.fromAddDebt(isIOwe, false)));
                 }),
             ElevatedButton(
-              child: Text("Cancel"),
+              child: Text(S.of(context).cancel),
               style: ElevatedButton.styleFrom(primary: Colors.grey),
               onPressed: () {
                 Navigator.of(context).pop();

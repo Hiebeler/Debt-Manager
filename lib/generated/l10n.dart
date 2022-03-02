@@ -210,6 +210,16 @@ class S {
     );
   }
 
+  /// `Add Debt`
+  String get addDebt {
+    return Intl.message(
+      'Add Debt',
+      name: 'addDebt',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Person`
   String get person {
     return Intl.message(
@@ -365,6 +375,106 @@ class S {
     return Intl.message(
       'Profile',
       name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assigned to me`
+  String get assignedToMe {
+    return Intl.message(
+      'Assigned to me',
+      name: 'assignedToMe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Balance`
+  String get balance {
+    return Intl.message(
+      'Balance',
+      name: 'balance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Friend Requests`
+  String get friendRequests {
+    return Intl.message(
+      'Friend Requests',
+      name: 'friendRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Friend`
+  String get addFriend {
+    return Intl.message(
+      'Add Friend',
+      name: 'addFriend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `sent Friend Request`
+  String get sentFriendRequest {
+    return Intl.message(
+      'sent Friend Request',
+      name: 'sentFriendRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want `
+  String get wantOtherPersonToSeeDebt1 {
+    return Intl.message(
+      'Do you want ',
+      name: 'wantOtherPersonToSeeDebt1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` to see this Debt`
+  String get wantOtherPersonToSeeDebt2 {
+    return Intl.message(
+      ' to see this Debt',
+      name: 'wantOtherPersonToSeeDebt2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
       desc: '',
       args: [],
     );

@@ -18,6 +18,7 @@
   "iOwe" : "I Owe",
   "iGet" : "I Get",
 
+  "addDebt": "Add Debt",
   "person" : "Person",
   "description" : "Description",
   "value" : "Value",
@@ -32,13 +33,21 @@
   "german": "German",
 
   "logout": "Logout",
-
   "friends": "Friends",
-
   "homescreen": "Home",
-
   "stats" : "Statistics",
+  "profile" : "Profile",
+  "assignedToMe": "Assigned to me",
 
-  "profile" : "Profile"
+  "balance": "Balance",
+  "friendRequests": "Friend Requests",
+  "addFriend": "Add Friend",
+  "sentFriendRequest": "sent Friend Request",
 
+  "wantOtherPersonToSeeDebt1": "Do you want ",
+  "wantOtherPersonToSeeDebt2": " to see this Debt",
+
+  "no": "No",
+  "yes": "Yes",
+  "cancel": "Cancel"
 }

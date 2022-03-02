@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:debtmanager/authentication/auth_with_google.dart';
 import 'package:debtmanager/authentication/sign_in.dart';
 import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/data_repository.dart';
@@ -53,35 +54,6 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Future<bool> signInwithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount!.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-      await _auth.signInWithCredential(credential);
-      print("success google");
-      checkIfUserExists();
-      return true;
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      return false;
-    }
-  }
-
-  void checkIfUserExists() {
-    var firebaseUser = FirebaseAuth.instance.currentUser;
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(firebaseUser!.uid)
-        .get()
-        .then((value) => {if (!value.exists) addUser()});
-  }
-
   void addUser() {
     final DataRepository repository = DataRepository();
     if (email == "") {
@@ -99,10 +71,6 @@ class _SignUpState extends State<SignUp> {
       errorDialog(context, "your passwords don't match");
       return false;
     }
-    if (!email.toString().contains('@')) {
-      errorDialog(context, "email isnt right");
-      return false;
-    }
 
     subscription = FirebaseFirestore.instance
         .collection('users')
@@ -110,7 +78,7 @@ class _SignUpState extends State<SignUp> {
         .snapshots()
         .listen((data) {
       if (data.docs.isNotEmpty) {
-        errorDialog(context, "username already exits safsadfasdfasdf");
+        errorDialog(context, "username already exits");
       }
     });
 
@@ -139,6 +107,8 @@ class _SignUpState extends State<SignUp> {
         errorDialog(context, "Weak password");
       } else if (e.code == "email-already-in-use") {
         errorDialog(context, "An Account with this E-Mail already exists");
+      } else if (e.code == "invalid-email") {
+        errorDialog(context, "invalid Email");
       }
     } catch (e) {
       errorDialog(context, "An error occured");
@@ -175,12 +145,14 @@ class _SignUpState extends State<SignUp> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () => {
-                          signInwithGoogle().then((value) => {
+                          AuthWithGoogle().signInwithGoogle().then((value) => {
                                 if (value)
                                   {
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) => Home(isFriendsDebts: false,)))
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                            builder: (context) => Home(
+                                                  isFriendsDebts: false,
+                                                )))
                                   }
                               })
                         },
@@ -301,9 +273,11 @@ class _SignUpState extends State<SignUp> {
                           signUp(context).then((value) => {
                                 if (value == true)
                                   {
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) => Home(isFriendsDebts: false,)))
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                            builder: (context) => Home(
+                                                  isFriendsDebts: false,
+                                                )))
                                   }
                               }),
                         },

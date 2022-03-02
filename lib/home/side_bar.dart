@@ -65,7 +65,7 @@ class NavDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.group),
-              title: Text("Friends Debts"),
+              title: Text(S.of(context).assignedToMe),
               onTap: () => {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => Home(isFriendsDebts: true)))

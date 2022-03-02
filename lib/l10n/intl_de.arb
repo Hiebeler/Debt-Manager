@@ -18,10 +18,11 @@
   "iOwe" : "Schulden",
   "iGet" : "Forderungen",
 
+  "addDebt": "Schulde Hinzufügen",
   "person" : "Person",
   "description" : "Beschreibung",
   "value" : "Wert",
-  "addNewDebt" : "Neue Schulden hinzufügens",
+  "addNewDebt" : "Neue Schulden hinzufügen",
 
   "settings": "Einstellungen",
   "theme": "Design",
@@ -32,12 +33,21 @@
   "german": "Deutsch",
 
   "logout": "Ausloggen",
-
   "friends": "Freunde",
-
   "homescreen": "Startseite",
-
   "stats" : "Statistiken",
+  "profile" : "Profil",
+  "assignedToMe": "Mir zugewiesen",
 
-  "profile" : "Profil"
+  "balance": "Balance",
+  "friendRequests": "Freundschaftsanfragen",
+  "addFriend": "Freund hinzufügen",
+  "sentFriendRequest": "Freundschaftsanfrage wurde gesendet",
+
+  "wantOtherPersonToSeeDebt1": "Willst du das ",
+  "wantOtherPersonToSeeDebt2": " diese Schulde auch sieht",
+
+  "no": "Nein",
+  "yes": "Ja",
+  "cancel": "Abbrechen"
 }

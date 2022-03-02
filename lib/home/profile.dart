@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:debtmanager/generated/l10n.dart';
 import 'package:debtmanager/home/friends/add_friend.dart';
 import 'package:debtmanager/home/friends/friendrequests.dart';
 import 'package:debtmanager/home/friends/friends_card.dart';
@@ -118,7 +119,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       drawer: const NavDrawer(),
       appBar: AppBar(
-        title: const Center(child: Text("Friends")),
+        title: Center(child: Text(S.of(context).profile)),
         backgroundColor: Theme.of(context).colorScheme.onBackground,
       ),
       body: Padding(
@@ -200,7 +201,7 @@ class _ProfileState extends State<Profile> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("email: ",
+                            Text(S.of(context).email + ": ",
                                 style: Theme.of(context).textTheme.bodyText1),
                             const SizedBox(width: 20),
                             Text(data["email"],
@@ -239,7 +240,7 @@ class _ProfileState extends State<Profile> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ChoiceChip(
-                        label: const Text("Friends"),
+                        label: Text(S.of(context).friends),
                         selected: _friendsIsSelected,
                         selectedColor: Theme.of(context).colorScheme.primary,
                         onSelected: (newBoolValue) {
@@ -251,7 +252,7 @@ class _ProfileState extends State<Profile> {
                         },
                       ),
                       ChoiceChip(
-                        label: const Text("Friend Request"),
+                        label: Text(S.of(context).friendRequests),
                         selected: _friendRequestIsSelected,
                         selectedColor: Theme.of(context).colorScheme.primary,
                         onSelected: (newBoolValue) {
@@ -284,7 +285,7 @@ class _ProfileState extends State<Profile> {
             AddFriend addFriend = AddFriend();
             addFriend.showModal(context);
           },
-          child: const Text("add friend")),
+          child: Text(S.of(context).addFriend)),
     );
   }
 }

@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
       drawer: const NavDrawer(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: Center(child: Text(S.of(context).debtManager)),
+        title: Center(child: widget.isFriendsDebts ? Text(S.of(context).assignedToMe) : Text(S.of(context).debtManager)),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

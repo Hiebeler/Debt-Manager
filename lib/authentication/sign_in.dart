@@ -1,3 +1,4 @@
+import 'package:debtmanager/authentication/auth_with_google.dart';
 import 'package:debtmanager/authentication/sign_up.dart';
 import 'package:debtmanager/error_dialog.dart';
 import 'package:debtmanager/home/home.dart';
@@ -28,36 +29,19 @@ class SignIn extends StatelessWidget {
       worked = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
         errorDialog(context, "User not found");
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
         errorDialog(context, "Wrong Password");
+      } else if (e.code == "invalid-email") {
+        errorDialog(context, "Invalid Email Address");
+      } else if (e.code == "user-disabled") {
+        errorDialog(context, "this user is blocked");
       }
     }
     return worked;
   }
 
-  Future<bool> signInwithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount!.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-      await _auth.signInWithCredential(credential);
-      print("success google");
-      return true;
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      return false;
-    }
-  }
-
-  errorDialog(BuildContext context, explanation) {
+   errorDialog(BuildContext context, explanation) {
     ErrorDialog alert = ErrorDialog("Error", explanation);
 
     showDialog(
@@ -92,7 +76,7 @@ class SignIn extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () => {
-                            signInwithGoogle().then((value) => {
+                            AuthWithGoogle().signInwithGoogle().then((value) => {
                                   if (value)
                                     {
                                       Navigator.of(context).pushReplacement(

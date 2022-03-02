@@ -22,10 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addDebt": MessageLookupByLibrary.simpleMessage("Schulde Hinzufügen"),
+        "addFriend": MessageLookupByLibrary.simpleMessage("Freund hinzufügen"),
         "addNewDebt":
-            MessageLookupByLibrary.simpleMessage("Neue Schulden hinzufügens"),
+            MessageLookupByLibrary.simpleMessage("Neue Schulden hinzufügen"),
         "alreadyHaveAcc":
             MessageLookupByLibrary.simpleMessage("Schon einen Account?"),
+        "assignedToMe": MessageLookupByLibrary.simpleMessage("Mir zugewiesen"),
+        "balance": MessageLookupByLibrary.simpleMessage("Balance"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
         "confirmpassword":
             MessageLookupByLibrary.simpleMessage("Passwort bestätigen"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dunkler Modus"),
@@ -35,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "english": MessageLookupByLibrary.simpleMessage("Englisch"),
         "firstname": MessageLookupByLibrary.simpleMessage("Vorname"),
+        "friendRequests":
+            MessageLookupByLibrary.simpleMessage("Freundschaftsanfragen"),
         "friends": MessageLookupByLibrary.simpleMessage("Freunde"),
         "german": MessageLookupByLibrary.simpleMessage("Deutsch"),
         "homescreen": MessageLookupByLibrary.simpleMessage("Startseite"),
@@ -44,10 +51,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastname": MessageLookupByLibrary.simpleMessage("Nachname"),
         "lightMode": MessageLookupByLibrary.simpleMessage("Heller Modus"),
         "logout": MessageLookupByLibrary.simpleMessage("Ausloggen"),
+        "no": MessageLookupByLibrary.simpleMessage("Nein"),
         "or": MessageLookupByLibrary.simpleMessage("oder"),
         "password": MessageLookupByLibrary.simpleMessage("Passwort"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "profile": MessageLookupByLibrary.simpleMessage("Profil"),
+        "sentFriendRequest": MessageLookupByLibrary.simpleMessage(
+            "Freundschaftsanfrage wurde gesendet"),
         "settings": MessageLookupByLibrary.simpleMessage("Einstellungen"),
         "signIn": MessageLookupByLibrary.simpleMessage("Einloggen"),
         "signIn_google":
@@ -58,6 +68,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "stats": MessageLookupByLibrary.simpleMessage("Statistiken"),
         "theme": MessageLookupByLibrary.simpleMessage("Design"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
-        "value": MessageLookupByLibrary.simpleMessage("Wert")
+        "value": MessageLookupByLibrary.simpleMessage("Wert"),
+        "wantOtherPersonToSeeDebt1":
+            MessageLookupByLibrary.simpleMessage("Willst du das "),
+        "wantOtherPersonToSeeDebt2":
+            MessageLookupByLibrary.simpleMessage(" diese Schulde auch sieht"),
+        "yes": MessageLookupByLibrary.simpleMessage("Ja")
       };
 }

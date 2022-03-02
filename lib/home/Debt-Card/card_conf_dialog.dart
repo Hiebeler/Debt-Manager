@@ -30,11 +30,29 @@ class _Card_conf_dialogState extends State<Card_conf_dialog> {
     return false;
   }
 
+  void isFriendsDebt() async{
+    var docSnapshot = await collection.doc(firebaseUser!.uid).get();
+    List friendsDebts = docSnapshot.data()!["friendsDebts"];
+    friendsDebts.forEach((element) {
+      if (element["IOweOrIGet"] == widget.field && element["id"] == widget.debtId) {
+        removeFriendsDebt(element);
+        return;
+      }
+    });
+  }
+
+  void removeFriendsDebt(Map friendsDebt) {
+    collection.doc(firebaseUser?.uid).update({
+      "friendsDebts": FieldValue.arrayRemove([friendsDebt])
+    }).whenComplete(() => print("Friends debt deleted"));
+  }
+
   Future<bool> removeDebt() async {
     Map rightData = await getDebt();
     collection.doc(firebaseUser?.uid).update({
       widget.field: FieldValue.arrayRemove([rightData])
     }).whenComplete(() => print("Debt deleted"));
+    isFriendsDebt();
     return true;
   }
 

@@ -21,9 +21,9 @@ class _FriendsDebtsState extends State<FriendsDebts> {
   final firebaseUser = FirebaseAuth.instance.currentUser;
 
   bool IOweOrIGet(String IoweIGet) {
-    if (IoweIGet == "debts_Iget" && !widget.isIOwe) {
+    if (IoweIGet == "debts_Iget" && widget.isIOwe) {
       return true;
-    } else if (IoweIGet == "debts_Iowe" && widget.isIOwe) {
+    } else if (IoweIGet == "debts_Iowe" && !widget.isIOwe) {
       return true;
     }
     return false;

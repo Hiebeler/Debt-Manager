@@ -1,5 +1,5 @@
 import 'package:debtmanager/authentication/sign_in.dart';
-import 'package:debtmanager/home/friends/friendsDebts.dart';
+import 'package:debtmanager/home/friends/friends_debts.dart';
 import 'package:debtmanager/home/profile.dart';
 import 'package:debtmanager/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -6,8 +6,6 @@ import 'package:debtmanager/home/friends/profile_picture.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'get_profile_image.dart';
-
 class FriendRequestCard extends StatelessWidget {
   final String uid;
 

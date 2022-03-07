@@ -5,10 +5,10 @@ import 'package:debtmanager/home/data_repository.dart';
 import 'package:debtmanager/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '/generated/l10n.dart';
 import '../error_dialog.dart';
-import 'package:intl/intl.dart';
 
 class AddDebt extends StatefulWidget {
   Color color;
@@ -36,7 +36,8 @@ class _AddDebtState extends State<AddDebt> {
   double value = 0;
   int id = -1;
 
-  _AddDebtState(this.person, this.description, this.value, this.id, this.isIOwe) {
+  _AddDebtState(
+      this.person, this.description, this.value, this.id, this.isIOwe) {
     isIGet = !isIOwe;
   }
 
@@ -170,7 +171,6 @@ class _AddDebtState extends State<AddDebt> {
   }
 
   void addDebtToDB(int debtId) async {
-
     var now = DateTime.now();
     var formatter = DateFormat('yyyy-MM-dd');
     String date = formatter.format(now);
@@ -228,30 +228,39 @@ class _AddDebtState extends State<AddDebt> {
                 children: [
                   id == -1
                       ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ChoiceChip(
-                              label: Text(S.of(context).iOwe, style: Theme.of(context).textTheme.bodyText1,),
+                              label: Text(
+                                S.of(context).iOwe,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
                               selected: isIOwe,
-                              selectedColor:
-                                  Theme.of(context).colorScheme.secondaryVariant,
+                              selectedColor: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryVariant,
                               onSelected: (newBoolValue) {
                                 setState(() {
-                                  widget.color = Theme.of(context).colorScheme.secondaryVariant;
+                                  widget.color = Theme.of(context)
+                                      .colorScheme
+                                      .secondaryVariant;
                                   isIOwe = true;
                                   isIGet = false;
-
                                 });
                               },
                             ),
                             ChoiceChip(
-                              label: Text(S.of(context).iGet, style: Theme.of(context).textTheme.bodyText1,),
+                              label: Text(
+                                S.of(context).iGet,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
                               selected: isIGet,
                               selectedColor:
                                   Theme.of(context).colorScheme.secondary,
                               onSelected: (newBoolValue) {
                                 setState(() {
-                                  widget.color = Theme.of(context).colorScheme.secondary;
+                                  widget.color =
+                                      Theme.of(context).colorScheme.secondary;
                                   isIOwe = false;
                                   isIGet = true;
                                 });
@@ -261,31 +270,36 @@ class _AddDebtState extends State<AddDebt> {
                         )
                       : Container(),
                   const SizedBox(height: 20),
-                  Autocomplete(
-                      optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text == '') {
-                      return const Iterable<String>.empty();
-                    }
-                    return friends.where((String option) {
-                      return option
-                          .contains(textEditingValue.text.toLowerCase());
-                    });
-                  }, fieldViewBuilder:
-                          (context, controller, focusNode, onEditingComplete) {
-                    controller.text = person;
-                    return TextField(
-                      controller: controller,
-                      focusNode: focusNode,
-                      onEditingComplete: onEditingComplete,
-                      onChanged: (input) => {person = input},
-                      decoration: InputDecoration(
-                        hintText: S.of(context).person,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Autocomplete(optionsBuilder:
+                            (TextEditingValue textEditingValue) {
+                          if (textEditingValue.text == '') {
+                            return friends;
+                          }
+                          return friends.where((String option) {
+                            return option.contains(textEditingValue.text.toLowerCase());
+                          });
+                        }, fieldViewBuilder: (context, controller, focusNode,
+                            onEditingComplete) {
+                          controller.text = person;
+                          return TextField(
+                            controller: controller,
+                            focusNode: focusNode,
+                            onEditingComplete: onEditingComplete,
+                            onChanged: (input) => {person = input},
+                            decoration: InputDecoration(
+                              hintText: S.of(context).person,
+                            ),
+                            style: Theme.of(context).textTheme.bodyText1,
+                          );
+                        }, onSelected: (String selection) {
+                          person = selection;
+                        }),
                       ),
-                      style: Theme.of(context).textTheme.bodyText1,
-                    );
-                  }, onSelected: (String selection) {
-                    person = selection;
-                  }),
+                    ],
+                  ),
                   const SizedBox(height: 20),
                   TextField(
                     controller: TextEditingController(text: description),
@@ -350,14 +364,17 @@ class _AddDebtState extends State<AddDebt> {
         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
         child: AlertDialog(
           content: Text(
-            S.of(context).wantOtherPersonToSeeDebt1 + person + S.of(context).wantOtherPersonToSeeDebt2,
+            S.of(context).wantOtherPersonToSeeDebt1 +
+                person +
+                S.of(context).wantOtherPersonToSeeDebt2,
             style: Theme.of(context).textTheme.bodyText1,
           ),
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             ElevatedButton(
               child: Text(S.of(context).no),
-              style: ElevatedButton.styleFrom(primary: Theme.of(context).colorScheme.secondaryVariant),
+              style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).colorScheme.secondaryVariant),
               onPressed: () {
                 addDebtToDB(debtId);
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -366,7 +383,8 @@ class _AddDebtState extends State<AddDebt> {
             ),
             ElevatedButton(
                 child: Text(S.of(context).yes),
-                style: ElevatedButton.styleFrom(primary: Theme.of(context).colorScheme.secondary),
+                style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).colorScheme.secondary),
                 onPressed: () {
                   addDebtToDB(debtId);
                   addDebtToFriends(friendsUid, debtId);

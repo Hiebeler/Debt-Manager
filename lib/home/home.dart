@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/home/add_debt.dart';
-import 'package:debtmanager/home/friends/friendsDebts.dart';
+import 'package:debtmanager/home/friends/friends_debts.dart';
 import 'package:debtmanager/home/home_debts.dart';
 import 'package:debtmanager/home/side_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,8 +13,8 @@ import 'data_repository.dart';
 class Home extends StatefulWidget {
   final bool isFriendsDebts;
   bool isIOwe = true;
-  Home({required this.isFriendsDebts});
 
+  Home({required this.isFriendsDebts});
 
   Home.fromAddDebt(this.isIOwe, this.isFriendsDebts);
 
@@ -63,7 +63,10 @@ class _HomeState extends State<Home> {
       drawer: const NavDrawer(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: Center(child: widget.isFriendsDebts ? Text(S.of(context).assignedToMe) : Text(S.of(context).debtManager)),
+        title: Center(
+            child: widget.isFriendsDebts
+                ? Text(S.of(context).assignedToMe)
+                : Text(S.of(context).debtManager)),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -114,30 +117,46 @@ class _HomeState extends State<Home> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              child: !widget.isFriendsDebts ? HomeDebts(isIOwe: isIOwe, homeColor: homeColor,): FriendsDebts(isIOwe: isIOwe, homeColor: homeColor,),
+              child: !widget.isFriendsDebts ? Column(
+                children: [
+                  HomeDebts(
+                    isIOwe: isIOwe,
+                    homeColor: homeColor,
+                  ),
+                  FriendsDebts(
+                    isIOwe: isIOwe,
+                    homeColor: homeColor,
+                  ),
+                ],
+              ):  FriendsDebts(
+                isIOwe: isIOwe,
+                homeColor: homeColor,
+              ),
             ),
           ),
         ],
       ),
-      floatingActionButton: !widget.isFriendsDebts ? FloatingActionButton(
-          child: const Icon(
-            Icons.add,
-            color: Color.fromRGBO(121, 121, 121, 1),
-          ),
-          onPressed: () => {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => AddDebt(
-                          color: homeColor,
-                      isIOwe: isIOwe,
-                        )))
-              },
-          backgroundColor: Theme.of(context).colorScheme.background,
-          shape: CircleBorder(
-            side: BorderSide(
-              color: homeColor,
-              width: 1,
-            ),
-          )): Container(),
+      floatingActionButton: !widget.isFriendsDebts
+          ? FloatingActionButton(
+              child: const Icon(
+                Icons.add,
+                color: Color.fromRGBO(121, 121, 121, 1),
+              ),
+              onPressed: () => {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AddDebt(
+                              color: homeColor,
+                              isIOwe: isIOwe,
+                            )))
+                  },
+              backgroundColor: Theme.of(context).colorScheme.background,
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: homeColor,
+                  width: 1,
+                ),
+              ))
+          : Container(),
     );
   }
 }

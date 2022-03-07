@@ -29,7 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyHaveAcc":
             MessageLookupByLibrary.simpleMessage("Schon einen Account?"),
         "assignedToMe": MessageLookupByLibrary.simpleMessage("Mir zugewiesen"),
-        "balance": MessageLookupByLibrary.simpleMessage("Balance"),
+        "balance": MessageLookupByLibrary.simpleMessage("Saldo"),
         "cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
         "confirmpassword":
             MessageLookupByLibrary.simpleMessage("Passwort bestätigen"),

@@ -70,24 +70,18 @@ class _FriendsDebtsState extends State<FriendsDebts> {
                             );
                           }
                         }
-                        return explanationText();
+                        return Container();
                       });
                 }),
               ],
             );
           } else {
-            return explanationText();
+            return Container();
           }
         } else {
           return Container();
         }
       },
     );
-  }
-
-  Widget explanationText() {
-    return const Padding(
-        padding: EdgeInsets.all(30),
-        child: Text("here you see debts which your friends has made to you"));
   }
 }

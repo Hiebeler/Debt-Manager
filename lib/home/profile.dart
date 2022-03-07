@@ -222,7 +222,7 @@ class _ProfileState extends State<Profile> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("Balance: ",
+                            Text(S.of(context).balance + ": ",
                                 style: Theme.of(context).textTheme.bodyText1),
                             const SizedBox(width: 20),
                             Text(sum.toString(),

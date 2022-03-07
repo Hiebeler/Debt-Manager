@@ -49,101 +49,109 @@ class FriendRequestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: repository.getStreamFriendRequests(uid),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        stream: repository.getStream(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasData) {
-            List<Map> friendRequests = [];
-            snapshot.data!.docs.forEach((element) {
-              String profilePicture = "";
-              try {
-                profilePicture = element["profilePicture"];
-              } catch(e) {
-                profilePicture = "";
-              }
-              friendRequests.add({
-                "username": element["username"],
-                "uid": element.id,
-                "friendRequests": element["friendRequests"],
-                "profilePicture": profilePicture
-              });
-            });
-            print(friendRequests);
-            return Column(
-              children: [
-                ...(friendRequests).map(
-                  ((username) {
-                    return Card(
-                        margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Row(
-                            children: [
-                              Expanded(
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            if (data.containsKey("receivedFriendRequest")) {
+              List receivedFriendRequests = data["receivedFriendRequest"];
+
+              return Column(
+                children: [
+                  ...(receivedFriendRequests).map(
+                    ((uid) {
+                      return StreamBuilder(
+                          stream: repository.getStreamFriends(uid),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              Map<String, dynamic> friendData =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              return Card(
+                                margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(4),
+                                  padding: EdgeInsets.all(5),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        children: [
-                                          ProfilePicture(data: username),
-                                          const SizedBox(
-                                            width: 20,
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  ProfilePicture(
+                                                      data: friendData),
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Text(friendData["username"]),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return checkIfFriendShouldSee(
+                                                              friendData["uid"],
+                                                              friendData[
+                                                                  "friendRequests"],
+                                                              context);
+                                                        },
+                                                      );
+                                                      print("decline");
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.close,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  GestureDetector(
+                                                      onTap: () {
+                                                        print("accept");
+                                                        acceptFriendRequest(
+                                                            friendData[
+                                                                "username"],
+                                                            friendData["uid"],
+                                                            friendData[
+                                                                "friendRequests"]);
+                                                      },
+                                                      child: const Icon(
+                                                        Icons.check,
+                                                        color: Colors.green,
+                                                      )),
+                                                ],
+                                              )
+                                            ],
                                           ),
-                                          Text(username["username"]),
-                                        ],
+                                        ),
                                       ),
-                                      Row(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return checkIfFriendShouldSee(
-                                                      username["uid"],
-                                                      username[
-                                                          "friendRequests"],
-                                                      context);
-                                                },
-                                              );
-                                              print("decline");
-                                            },
-                                            child: const Icon(
-                                              Icons.close,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                print("accept");
-                                                acceptFriendRequest(
-                                                    username["username"],
-                                                    username["uid"],
-                                                    username["friendRequests"]);
-                                              },
-                                              child: const Icon(
-                                                Icons.check,
-                                                color: Colors.green,
-                                              )),
-                                        ],
-                                      )
                                     ],
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ));
-                  }),
-                ),
-              ],
-            );
+                              );
+                            }else{
+                              return Container();
+                            }
+                          });
+                    }),
+                  ),
+                ],
+              );
+            } else {
+              return Container();
+            }
           } else {
             return Container();
           }

@@ -15,14 +15,14 @@ class AddFriend {
   List friendsUsernames = [];
   DataRepository repository = DataRepository();
 
-  void addFriendRequest(String uid) {
+  void addFriendRequest(String docUID, String contentUID, String sentOrgetRequest) {
     var firebaseUser = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance
         .collection("users")
-        .doc(firebaseUser!.uid)
+        .doc(docUID)
         .update({
-      "friendRequests": FieldValue.arrayUnion([
-        {"uid": uid}
+      sentOrgetRequest: FieldValue.arrayUnion([
+        {"uid": contentUID}
       ])
     }).then((value) => {print("success")});
   }
@@ -148,8 +148,8 @@ class AddFriend {
                                                         Text(debt["username"], style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),),
                                                         GestureDetector(
                                                           onTap: () {
-                                                            addFriendRequest(
-                                                                debt["uid"]);
+                                                            addFriendRequest(debt["uid"], FirebaseAuth.instance.currentUser!.uid, "receivedFriendRequests");
+                                                            addFriendRequest(FirebaseAuth.instance.currentUser!.uid, debt["uid"], "sentFriendRequests");
                                                             toast(context);
                                                           },
                                                           child: const Icon(Icons

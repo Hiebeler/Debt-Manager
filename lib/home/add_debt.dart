@@ -270,36 +270,31 @@ class _AddDebtState extends State<AddDebt> {
                         )
                       : Container(),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Autocomplete(optionsBuilder:
-                            (TextEditingValue textEditingValue) {
-                          if (textEditingValue.text == '') {
-                            return friends;
-                          }
-                          return friends.where((String option) {
-                            return option.contains(textEditingValue.text.toLowerCase());
-                          });
-                        }, fieldViewBuilder: (context, controller, focusNode,
-                            onEditingComplete) {
-                          controller.text = person;
-                          return TextField(
-                            controller: controller,
-                            focusNode: focusNode,
-                            onEditingComplete: onEditingComplete,
-                            onChanged: (input) => {person = input},
-                            decoration: InputDecoration(
-                              hintText: S.of(context).person,
-                            ),
-                            style: Theme.of(context).textTheme.bodyText1,
-                          );
-                        }, onSelected: (String selection) {
-                          person = selection;
-                        }),
+                  Autocomplete(
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                    if (textEditingValue.text == '') {
+                      return friends;
+                    }
+                    return friends.where((String option) {
+                      return option
+                          .contains(textEditingValue.text.toLowerCase());
+                    });
+                  }, fieldViewBuilder:
+                          (context, controller, focusNode, onEditingComplete) {
+                    controller.text = person;
+                    return TextField(
+                      controller: controller,
+                      focusNode: focusNode,
+                      onEditingComplete: onEditingComplete,
+                      onChanged: (input) => {person = input},
+                      decoration: InputDecoration(
+                        hintText: S.of(context).person,
                       ),
-                    ],
-                  ),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    );
+                  }, onSelected: (String selection) {
+                    person = selection;
+                  }),
                   const SizedBox(height: 20),
                   TextField(
                     controller: TextEditingController(text: description),

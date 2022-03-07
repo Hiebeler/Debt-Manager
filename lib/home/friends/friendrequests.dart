@@ -14,18 +14,18 @@ class FriendRequestCard extends StatelessWidget {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   DataRepository repository = DataRepository();
 
-  void acceptFriendRequest(
-      String username, String friendsUid, List friendRequests) {
+  void acceptFriendRequest(String username, String friendsUid) {
     addFriend(friendsUid, firebaseUser!.uid);
     addFriend(firebaseUser!.uid, friendsUid);
-    removeFriendsRequest(friendsUid, friendRequests);
+    removeFriendsRequest(friendsUid,firebaseUser!.uid, "sentFriendRequests");
+    removeFriendsRequest(firebaseUser!.uid, friendsUid,"receivedFriendRequests");
   }
 
-  void removeFriendsRequest(String uid, List friendRequests) async {
-    Map rightData = await getFriendsRequest(uid, friendRequests);
+  void removeFriendsRequest(String documentUid, String contentUid, String sentUidOrReceived) async {
+    Map rightData = {"uid": contentUid};
     print(rightData);
-    FirebaseFirestore.instance.collection("users").doc(uid).update({
-      "friendRequests": FieldValue.arrayRemove([rightData])
+    FirebaseFirestore.instance.collection("users").doc(documentUid).update({
+      sentUidOrReceived: FieldValue.arrayRemove([rightData])
     }).whenComplete(() => print("Friend request deleted"));
   }
 
@@ -55,15 +55,16 @@ class FriendRequestCard extends StatelessWidget {
           if (snapshot.hasData) {
             Map<String, dynamic> data =
                 snapshot.data!.data() as Map<String, dynamic>;
-            if (data.containsKey("receivedFriendRequest")) {
-              List receivedFriendRequests = data["receivedFriendRequest"];
+            print(data["receivedFriendRequests"]);
+            if (data.containsKey("receivedFriendRequests")) {
+              List receivedFriendRequests = data["receivedFriendRequests"];
 
               return Column(
                 children: [
                   ...(receivedFriendRequests).map(
                     ((uid) {
                       return StreamBuilder(
-                          stream: repository.getStreamFriends(uid),
+                          stream: repository.getStreamFriends(uid["uid"]),
                           builder: (BuildContext context,
                               AsyncSnapshot<DocumentSnapshot> snapshot) {
                             if (snapshot.hasData) {
@@ -101,9 +102,9 @@ class FriendRequestCard extends StatelessWidget {
                                                         builder: (BuildContext
                                                             context) {
                                                           return checkIfFriendShouldSee(
-                                                              friendData["uid"],
+                                                              uid["uid"],
                                                               friendData[
-                                                                  "friendRequests"],
+                                                                  "sentFriendRequests"],
                                                               context);
                                                         },
                                                       );
@@ -121,11 +122,8 @@ class FriendRequestCard extends StatelessWidget {
                                                       onTap: () {
                                                         print("accept");
                                                         acceptFriendRequest(
-                                                            friendData[
-                                                                "username"],
-                                                            friendData["uid"],
-                                                            friendData[
-                                                                "friendRequests"]);
+                                                            friendData["username"],
+                                                            uid["uid"]);
                                                       },
                                                       child: const Icon(
                                                         Icons.check,
@@ -183,7 +181,8 @@ class FriendRequestCard extends StatelessWidget {
                 child: Text("Yes"),
                 style: ElevatedButton.styleFrom(primary: Colors.green),
                 onPressed: () {
-                  removeFriendsRequest(friendsUid, friendRequests);
+                  removeFriendsRequest(friendsUid,firebaseUser!.uid, "sentFriendRequests");
+                  removeFriendsRequest(firebaseUser!.uid, friendsUid,"receivedFriendRequests");
                   Navigator.of(context).pop();
                 }),
           ],

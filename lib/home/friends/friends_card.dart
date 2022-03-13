@@ -60,7 +60,7 @@ class Friends extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         ListTile(
-                                            leading: ProfilePicture(data: data),
+                                            leading: ProfilePicture(data: data, radius: 18, size: 23, imageSize: 35,),
                                             title: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment

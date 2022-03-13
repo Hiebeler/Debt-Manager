@@ -5,12 +5,13 @@ import 'get_profile_image.dart';
 
 class ProfilePicture extends StatelessWidget {
   final Map data;
-
-  const ProfilePicture({Key? key, required this.data}) : super(key: key);
+  final int radius;
+  final int size;
+  final int imageSize;
+  const ProfilePicture({Key? key, required this.data, required this.radius, required this.size, required this.imageSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(data);
     try {
       return FutureBuilder(
           future:
@@ -20,17 +21,17 @@ class ProfilePicture extends StatelessWidget {
             if (snapshot.data == "" || snapshot.data == null) {
               return CircleAvatar(
                 backgroundColor: const Color(0xff1f1f1f),
-                radius: 18,
+                radius: radius.toDouble(),
                 child: Icon(
                   Icons.person,
                   color: Theme.of(context).colorScheme.onSecondary,
-                  size: 23,
+                  size: size.toDouble(),
                 ),
               );
             } else {
               return Container(
-                  width: 30.0,
-                  height: 30.0,
+                  width: imageSize.toDouble(),
+                  height: imageSize.toDouble(),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(

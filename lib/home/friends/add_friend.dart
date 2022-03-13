@@ -139,7 +139,7 @@ class AddFriend {
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 ListTile(
-                                                    leading: ProfilePicture(data: debt),
+                                                    leading: ProfilePicture(data: debt, radius: 18, size: 23, imageSize: 35,),
                                                     title: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment

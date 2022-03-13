@@ -55,7 +55,6 @@ class FriendRequestCard extends StatelessWidget {
           if (snapshot.hasData) {
             Map<String, dynamic> data =
                 snapshot.data!.data() as Map<String, dynamic>;
-            print(data["receivedFriendRequests"]);
             if (data.containsKey("receivedFriendRequests")) {
               List receivedFriendRequests = data["receivedFriendRequests"];
 
@@ -85,8 +84,7 @@ class FriendRequestCard extends StatelessWidget {
                                             children: [
                                               Row(
                                                 children: [
-                                                  ProfilePicture(
-                                                      data: friendData),
+                                                  ProfilePicture(data: friendData, radius: 18, size: 23, imageSize: 35,),
                                                   const SizedBox(
                                                     width: 20,
                                                   ),

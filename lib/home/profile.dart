@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debtmanager/generated/l10n.dart';
 import 'package:debtmanager/home/friends/add_friend.dart';
+import 'package:debtmanager/home/friends/friend_friendrequest_switch.dart';
 import 'package:debtmanager/home/friends/friendrequests.dart';
 import 'package:debtmanager/home/friends/friends_card.dart';
 import 'package:debtmanager/home/friends/get_profile_image.dart';
+import 'package:debtmanager/home/friends/profile_picture.dart';
 import 'package:debtmanager/home/side_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -25,10 +27,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final DataRepository repository = DataRepository();
-
-  String friendRequestOrFriends = "Friends";
-  bool _friendRequestIsSelected = false;
-  bool _friendsIsSelected = true;
   File? image;
 
   Future<bool> getImage() async {
@@ -147,36 +145,7 @@ class _ProfileState extends State<Profile> {
                             }
                           });
                         },
-                        child: FutureBuilder(
-                            future: GetProfileImage()
-                                .getImageFromFirebase(data["profilePicture"]),
-                            builder: (context, snapshot) {
-                              print(snapshot.data);
-                              if (snapshot.data == "" ||
-                                  snapshot.data == null) {
-                                return CircleAvatar(
-                                  backgroundColor: const Color(0xff626262),
-                                  radius: 60,
-                                  child: Icon(
-                                    Icons.person,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary,
-                                    size: 80,
-                                  ),
-                                );
-                              } else {
-                                return Container(
-                                    width: 130.0,
-                                    height: 130.0,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                                snapshot.data.toString()))));
-                              }
-                            }),
+                        child: ProfilePicture(data: data, radius: 60, size: 80, imageSize: 130,)
                       ),
                       Flexible(
                         child: Padding(
@@ -236,42 +205,7 @@ class _ProfileState extends State<Profile> {
                     ],
                   ),
                   const SizedBox(height: 50),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ChoiceChip(
-                        label: Text(S.of(context).friends),
-                        selected: _friendsIsSelected,
-                        selectedColor: Theme.of(context).colorScheme.primary,
-                        onSelected: (newBoolValue) {
-                          setState(() {
-                            _friendsIsSelected = true;
-                            _friendRequestIsSelected = false;
-                            friendRequestOrFriends = "Friends";
-                          });
-                        },
-                      ),
-                      ChoiceChip(
-                        label: Text(S.of(context).friendRequests),
-                        selected: _friendRequestIsSelected,
-                        selectedColor: Theme.of(context).colorScheme.primary,
-                        onSelected: (newBoolValue) {
-                          setState(() {
-                            _friendRequestIsSelected = true;
-                            _friendsIsSelected = false;
-                            friendRequestOrFriends = "Friend Requests";
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                  friendRequestOrFriends == "Friends"
-                      ? Friends(
-                          data: data,
-                        )
-                      : FriendRequestCard(
-                          uid: uid,
-                        ),
+                  FriendFriendrequestSwitch(data: data,uid: uid,),
                 ],
               );
             } else {

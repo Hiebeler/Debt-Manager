@@ -5,31 +5,44 @@ class DebtCard extends StatelessWidget {
   final String person;
   final String description;
   final double value;
+  String valueString = "";
   final Color color;
   final int debtId;
   final String field;
   final bool isFriendsDebt;
 
-  const DebtCard(
-      {
-        required this.debtId,
-        required this.field,
-        required this.person,
-      required this.description,
-      required this.value,
-      required this.color,
-      required this.isFriendsDebt});
+   DebtCard({
+    required this.debtId,
+    required this.field,
+    required this.person,
+    required this.description,
+    required this.value,
+    required this.color,
+    required this.isFriendsDebt}) {
+     String decimals = value.toString().split('.')[1];
+     if (decimals.length == 1) {
+       valueString = value.toStringAsFixed(2);
+     } else {
+       valueString = value.toString();
+     }
+   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(20),
       elevation: 4,
-      color: Theme.of(context).colorScheme.onBackground,
+      color: Theme
+          .of(context)
+          .colorScheme
+          .onBackground,
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(
-                color: Theme.of(context).colorScheme.primaryVariant, width: 0.8),
+                color: Theme
+                    .of(context)
+                    .colorScheme
+                    .primaryVariant, width: 0.8),
             borderRadius: const BorderRadius.all(
               Radius.circular(6.0),
             )),
@@ -47,7 +60,10 @@ class DebtCard extends StatelessWidget {
                     child: Text(person,
                         style: TextStyle(
                             fontSize: 20,
-                            color: Theme.of(context).colorScheme.onSecondary)),
+                            color: Theme
+                                .of(context)
+                                .colorScheme
+                                .onSecondary)),
                   ),
                   !isFriendsDebt ?
                   Align(
@@ -57,7 +73,8 @@ class DebtCard extends StatelessWidget {
                       constraints: const BoxConstraints(),
                       icon: const Icon(Icons.more_vert),
                       onPressed: () {
-                        Card_conf_dialog alert = Card_conf_dialog(debtId: debtId, field: field, color: color,);
+                        Card_conf_dialog alert = Card_conf_dialog(
+                          debtId: debtId, field: field, color: color,);
 
                         showDialog(
                           context: context,
@@ -74,14 +91,17 @@ class DebtCard extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Text(value.toString() + " €",
+                    child: Text(valueString + " €",
                         style: TextStyle(fontSize: 17, color: color)),
                   ),
                   Expanded(
                     child: Text(
                       description,
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSecondary),
+                          color: Theme
+                              .of(context)
+                              .colorScheme
+                              .onSecondary),
                       textAlign: TextAlign.right,
                     ),
                   ),

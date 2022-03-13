@@ -9,12 +9,22 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '/generated/l10n.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   SignIn({Key? key}) : super(key: key);
 
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   String email = "";
+
   String password = "";
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  bool _isHidden = true;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   get user => _auth.currentUser;
@@ -41,7 +51,7 @@ class SignIn extends StatelessWidget {
     return worked;
   }
 
-   errorDialog(BuildContext context, explanation) {
+  errorDialog(BuildContext context, explanation) {
     ErrorDialog alert = ErrorDialog("Error", explanation);
 
     showDialog(
@@ -50,6 +60,12 @@ class SignIn extends StatelessWidget {
         return alert;
       },
     );
+  }
+
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 
   @override
@@ -76,14 +92,18 @@ class SignIn extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () => {
-                            AuthWithGoogle().signInwithGoogle().then((value) => {
-                                  if (value)
-                                    {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) => Home(isFriendsDebts: false,)))
-                                    }
-                                })
+                            AuthWithGoogle()
+                                .signInwithGoogle()
+                                .then((value) => {
+                                      if (value)
+                                        {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) => Home(
+                                                        isFriendsDebts: false,
+                                                      )))
+                                        }
+                                    })
                           },
                           child: Text(
                             S.of(context).signIn_google,
@@ -127,9 +147,17 @@ class SignIn extends StatelessWidget {
                           Theme.of(context).inputDecorationTheme.enabledBorder,
                       focusedBorder:
                           Theme.of(context).inputDecorationTheme.focusedBorder,
+                      suffixIcon: InkWell(
+                        onTap: _togglePasswordView,
+                        child: Icon(
+                          _isHidden
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                      ),
                     ),
                     style: Theme.of(context).textTheme.bodyText1,
-                    obscureText: true,
+                    obscureText: _isHidden,
                   ),
                   const SizedBox(height: 40),
                   Row(
@@ -141,9 +169,11 @@ class SignIn extends StatelessWidget {
                                   print(value),
                                   if (value == true)
                                     {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) => Home(isFriendsDebts: false,)))
+                                      Navigator.of(context)
+                                          .pushReplacement(MaterialPageRoute(
+                                              builder: (context) => Home(
+                                                    isFriendsDebts: false,
+                                                  )))
                                     }
                                 }),
                           },

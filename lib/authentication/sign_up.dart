@@ -32,6 +32,7 @@ class _SignUpState extends State<SignUp> {
   String password = "";
 
   String confpassword = "";
+  bool _isHidden = true;
 
   Color usernameBorderColor = const Color.fromRGBO(121, 121, 121, 1);
 
@@ -88,7 +89,6 @@ class _SignUpState extends State<SignUp> {
   //SIGN UP METHOD
   Future<bool> signUp(BuildContext context) async {
     bool worked = false;
-
     bool parametersAreRight = await checkIfParametersAreRight(context);
     if (!parametersAreRight) {
       return false;
@@ -122,6 +122,12 @@ class _SignUpState extends State<SignUp> {
       return true;
     }
     return false;
+  }
+
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 
   @override
@@ -245,9 +251,15 @@ class _SignUpState extends State<SignUp> {
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
                         Theme.of(context).inputDecorationTheme.focusedBorder,
+                    suffixIcon: InkWell(
+                      onTap: _togglePasswordView,
+                      child: Icon(
+                        _isHidden ? Icons.visibility : Icons.visibility_off,
+                      ),
+                    ),
                   ),
                   style: Theme.of(context).textTheme.bodyText1,
-                  obscureText: true,
+                  obscureText: _isHidden,
                 ),
                 const SizedBox(height: 20),
                 TextField(
@@ -260,9 +272,15 @@ class _SignUpState extends State<SignUp> {
                         Theme.of(context).inputDecorationTheme.enabledBorder,
                     focusedBorder:
                         Theme.of(context).inputDecorationTheme.focusedBorder,
+                    suffixIcon: InkWell(
+                      onTap: _togglePasswordView,
+                      child: Icon(
+                        _isHidden ? Icons.visibility : Icons.visibility_off,
+                      ),
+                    ),
                   ),
                   style: Theme.of(context).textTheme.bodyText1,
-                  obscureText: true,
+                  obscureText: _isHidden,
                 ),
                 const SizedBox(height: 40),
                 Row(

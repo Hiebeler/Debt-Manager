@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddFriend {
-
   AddFriend() {
     getFriendsUsernames();
   }
@@ -15,12 +14,10 @@ class AddFriend {
   List friendsUsernames = [];
   DataRepository repository = DataRepository();
 
-  void addFriendRequest(String docUID, String contentUID, String sentOrgetRequest) {
+  void addFriendRequest(
+      String docUID, String contentUID, String sentOrgetRequest) {
     var firebaseUser = FirebaseAuth.instance.currentUser;
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(docUID)
-        .update({
+    FirebaseFirestore.instance.collection("users").doc(docUID).update({
       sentOrgetRequest: FieldValue.arrayUnion([
         {"uid": contentUID}
       ])
@@ -37,9 +34,6 @@ class AddFriend {
       });
     });
   }
-
-
-
 
   void showModal(context) {
     String username = "";
@@ -86,11 +80,9 @@ class AddFriend {
                         if (snapshot.hasData) {
                           Map personalData = snapshot.data!.data() as Map;
                           List friendRequests = [];
-                          try{
-                            friendRequests = personalData["friendRequests"];
-                          } catch (e) {
-
-                          }
+                          try {
+                            friendRequests = personalData["sentFriendRequests"];
+                          } catch (e) {}
                           print(friendsUsernames);
                           return StreamBuilder(
                             stream: repository.getUsernames(username),
@@ -102,8 +94,9 @@ class AddFriend {
                                   bool isFriend = false;
                                   bool isOutgoingFriendRequest = false;
                                   friendsUsernames.forEach((friendsUsername) {
-                                    if (element["username"] == friendsUsername) {
-                                     isFriend = true;
+                                    if (element["username"] ==
+                                        friendsUsername) {
+                                      isFriend = true;
                                     }
                                   });
                                   friendRequests.forEach((friendsUid) {
@@ -111,20 +104,23 @@ class AddFriend {
                                       isOutgoingFriendRequest = true;
                                     }
                                   });
-                                  if (personalData["username"] != element["username"] && !isFriend && !isOutgoingFriendRequest) {
+                                  if (personalData["username"] !=
+                                          element["username"] &&
+                                      !isFriend &&
+                                      !isOutgoingFriendRequest) {
                                     try {
                                       uidAndUsername.add({
                                         "uid": element.id,
                                         "username": element["username"],
-                                        "profilePicture": element["profilePicture"]
+                                        "profilePicture":
+                                            element["profilePicture"]
                                       });
-                                    } catch(e) {
+                                    } catch (e) {
                                       uidAndUsername.add({
                                         "uid": element.id,
                                         "username": element["username"],
                                       });
                                     }
-
                                   }
                                 });
                                 if (username != "" && uidAndUsername == []) {
@@ -139,17 +135,41 @@ class AddFriend {
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 ListTile(
-                                                    leading: ProfilePicture(data: debt, radius: 18, size: 23, imageSize: 35,),
+                                                    leading: ProfilePicture(
+                                                      data: debt,
+                                                      radius: 18,
+                                                      size: 23,
+                                                      imageSize: 35,
+                                                    ),
                                                     title: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceBetween,
                                                       children: [
-                                                        Text(debt["username"], style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),),
+                                                        Text(
+                                                          debt["username"],
+                                                          style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onSecondary),
+                                                        ),
                                                         GestureDetector(
                                                           onTap: () {
-                                                            addFriendRequest(debt["uid"], FirebaseAuth.instance.currentUser!.uid, "receivedFriendRequests");
-                                                            addFriendRequest(FirebaseAuth.instance.currentUser!.uid, debt["uid"], "sentFriendRequests");
+                                                            addFriendRequest(
+                                                                debt["uid"],
+                                                                FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser!
+                                                                    .uid,
+                                                                "receivedFriendRequests");
+                                                            addFriendRequest(
+                                                                FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser!
+                                                                    .uid,
+                                                                debt["uid"],
+                                                                "sentFriendRequests");
                                                             toast(context);
                                                           },
                                                           child: const Icon(Icons
@@ -195,7 +215,6 @@ class AddFriend {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.black,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 }
